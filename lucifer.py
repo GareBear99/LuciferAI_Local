@@ -186,12 +186,45 @@ def download_with_progress(url: str, dest: Path, description: str) -> bool:
         return False
 
 
+def assemble_llamafile_from_parts() -> bool:
+    """Assemble llamafile from split parts if needed."""
+    project_bin = Path(__file__).parent / "bin"
+    llamafile_path = project_bin / "llamafile"
+    part_aa = project_bin / "llamafile.part.aa"
+    
+    # If llamafile exists, we're good
+    if llamafile_path.exists():
+        return True
+    
+    # Check if parts exist
+    if not part_aa.exists():
+        return False
+    
+    print(f"{BLUE}🔧 Assembling llamafile from parts...{RESET}")
+    try:
+        import glob
+        parts = sorted(glob.glob(str(project_bin / "llamafile.part.*")))
+        with open(llamafile_path, 'wb') as outfile:
+            for part in parts:
+                with open(part, 'rb') as infile:
+                    outfile.write(infile.read())
+        os.chmod(llamafile_path, 0o755)
+        print(f"{GREEN}✅ llamafile assembled{RESET}")
+        return True
+    except Exception as e:
+        print(f"{RED}❌ Failed to assemble llamafile: {e}{RESET}")
+        return False
+
+
 def check_and_install_models() -> bool:
     """
     Check if TinyLlama and llamafile are installed.
     If not, prompt user to install them.
     Returns True if models are available (or user declined), False on error.
     """
+    # First try to assemble llamafile from parts (if cloned from repo)
+    assemble_llamafile_from_parts()
+    
     llamafile_path = BIN_DIR / LLAMAFILE_FILE
     tinyllama_path = MODELS_DIR / TINYLLAMA_FILE
     
@@ -199,7 +232,9 @@ def check_and_install_models() -> bool:
     project_models = Path(__file__).parent / "models"
     project_tinyllama = list(project_models.glob("*tinyllama*")) if project_models.exists() else []
     
-    llamafile_exists = llamafile_path.exists()
+    # Also check project bin directory for assembled llamafile
+    project_llamafile = Path(__file__).parent / "bin" / "llamafile"
+    llamafile_exists = llamafile_path.exists() or project_llamafile.exists()
     tinyllama_exists = tinyllama_path.exists() or len(project_tinyllama) > 0
     
     # If both exist, we're good
