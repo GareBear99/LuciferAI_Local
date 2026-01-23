@@ -504,11 +504,15 @@ class NativeLlamafileBackend:
                 start_time = time.time()
                 last_activity = time.time()  # Track last token received
                 timeout = kwargs.get('timeout', 600)  # Total timeout (10 min absolute max)
-                inactivity_timeout = kwargs.get('inactivity_timeout', 30)  # Timeout if no tokens for 30s (resets every token generated)
+                inactivity_timeout = kwargs.get('inactivity_timeout', 45)  # Timeout if no tokens for 45s (model loading)
                 stream_callback = kwargs.get('stream_callback', None)  # Optional callback for live updates
+                show_progress = kwargs.get('show_progress', True)  # Show token counter
                 
-                # If callback provided, collect output before calling it
-                accumulated_output = []
+                # Token counting for visual feedback
+                char_count = 0
+                token_estimate = 0
+                last_progress_update = time.time()
+                model_loading = True  # Flag for loading phase
                 
                 while True:
                     try:
@@ -516,33 +520,67 @@ class NativeLlamafileBackend:
                         if char is None:  # Completion signal
                             break
                         
+                        # First token received - model is loaded
+                        if model_loading:
+                            model_loading = False
+                            load_time = time.time() - start_time
+                            if show_progress:
+                                sys.stdout.write(f"\r{GREEN}✓ Model loaded ({load_time:.1f}s){RESET}\n")
+                                sys.stdout.flush()
+                        
+                        char_count += 1
+                        token_estimate = char_count // 4  # ~4 chars per token
+                        
                         if stream_callback:
-                            # Use callback to display (allows custom formatting with token counter)
-                            accumulated_output.append(char)
-                            # Estimate tokens from accumulated text
-                            current_text = ''.join(accumulated_output)
-                            # Call callback every ~5 characters (roughly 1 token)
-                            if len(accumulated_output) % 5 == 0:
-                                stream_callback(current_text, len(accumulated_output))
+                            full_output.append(char)
+                            current_text = ''.join(full_output)
+                            if char_count % 5 == 0:
+                                stream_callback(current_text, char_count)
                         else:
-                            # Default: write directly to stdout
+                            # Default: write directly to stdout with token counter
                             sys.stdout.write(char)
                             sys.stdout.flush()
                         
                         last_activity = time.time()  # Update activity timestamp
+                        
+                        # Show token counter every 20 chars (~5 tokens)
+                        if show_progress and char_count % 20 == 0:
+                            elapsed = time.time() - start_time
+                            # Don't overwrite output - show inline progress occasionally
+                            pass  # Token count shown at end
+                            
                     except queue.Empty:
                         current_time = time.time()
-                        
-                        # Check for inactivity (no tokens generated)
                         time_since_activity = current_time - last_activity
-                        if time_since_activity > inactivity_timeout:
+                        elapsed_total = current_time - start_time
+                        
+                        # Show waiting indicator during model loading
+                        if model_loading and show_progress:
+                            dots = int(elapsed_total) % 4
+                            wait_msg = f"\r{GOLD}⏳ Loading model{'.' * dots}{' ' * (3-dots)} ({elapsed_total:.0f}s){RESET}"
+                            sys.stdout.write(wait_msg)
+                            sys.stdout.flush()
+                        elif show_progress and time_since_activity > 3:
+                            # Show stall warning if no tokens for 3+ seconds
+                            sys.stdout.write(f" {GOLD}[waiting {time_since_activity:.0f}s]{RESET}")
+                            sys.stdout.flush()
+                        
+                        # Check for inactivity (no tokens generated after model loaded)
+                        if not model_loading and time_since_activity > inactivity_timeout:
                             process.kill()
-                            raise RuntimeError(f"Llamafile stuck - no output for {time_since_activity:.0f}s (inactivity timeout)")
+                            raise RuntimeError(f"\n{RED}❌ Generation stalled - no tokens for {time_since_activity:.0f}s{RESET}")
+                        
+                        # Extended timeout during model loading (90s), shorter after (45s)
+                        loading_timeout = 90 if model_loading else inactivity_timeout
+                        if time_since_activity > loading_timeout:
+                            process.kill()
+                            phase = "loading" if model_loading else "generating"
+                            raise RuntimeError(f"\n{RED}❌ Timeout during {phase} - no activity for {time_since_activity:.0f}s{RESET}")
                         
                         # Check total timeout (absolute maximum)
-                        if current_time - start_time > timeout:
+                        if elapsed_total > timeout:
                             process.kill()
-                            raise RuntimeError(f"Llamafile request timed out ({timeout}s total timeout)")
+                            raise RuntimeError(f"\n{RED}❌ Total timeout ({timeout}s) exceeded{RESET}")
                         continue
                 
                 # Wait for process to complete and capture stderr for token stats
