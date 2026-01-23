@@ -1557,7 +1557,7 @@ class EnhancedLuciferAgent:
         
         # Bundled models directory
         if 'bundled models' in user_lower or 'bundled model' in user_lower:
-            from pathlib import Path
+            # Path is already imported globally at top of file
             project_root = Path(__file__).parent.parent
             models_dir = project_root / '.luciferai' / 'models'
             return self._handle_list_directory(str(models_dir))
