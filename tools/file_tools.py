@@ -272,6 +272,67 @@ def grep_search(query: str, path: str = ".", file_pattern: str = "*") -> Dict[st
         }
 
 
+def move_file(source: str, destination: str, overwrite: bool = False) -> Dict[str, Any]:
+    """
+    Move a file or directory to a new location.
+    
+    Args:
+        source: Path to file or directory to move
+        destination: Destination path
+        overwrite: If True, overwrite existing files
+    
+    Returns:
+        Dict with status and metadata
+    """
+    try:
+        import shutil
+        
+        source_path = Path(source).expanduser().resolve()
+        dest_path = Path(destination).expanduser().resolve()
+        
+        # Check if source exists
+        if not source_path.exists():
+            return {
+                "success": False,
+                "error": f"Source not found: {source}",
+                "source": str(source_path)
+            }
+        
+        # Check if destination exists
+        if dest_path.exists() and not overwrite:
+            return {
+                "success": False,
+                "error": f"Destination already exists: {destination}. Use overwrite=True to replace.",
+                "destination": str(dest_path)
+            }
+        
+        # If destination is a directory, move into it
+        if dest_path.is_dir():
+            dest_path = dest_path / source_path.name
+        
+        # Create parent directories if needed
+        dest_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Perform the move
+        shutil.move(str(source_path), str(dest_path))
+        
+        return {
+            "success": True,
+            "source": str(source_path),
+            "destination": str(dest_path),
+            "type": "directory" if dest_path.is_dir() else "file",
+            "size": dest_path.stat().st_size if dest_path.is_file() else None
+        }
+    
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "source": source,
+            "destination": destination
+        }
+
+
 def list_directory(path: str = ".", show_hidden: bool = False) -> Dict[str, Any]:
     """
     List directory contents with metadata.

@@ -1,0 +1,164 @@
+⚔️  BATTLE LOG ⚔️
+════════════════════════════════════════════════════════════════════════════════
+🔥 Phoenix (Level 100)
+    VS
+🐉 Cerberus (Level 100)
+════════════════════════════════════════════════════════════════════════════════
+
+LOADOUTS:
+🔥 Phoenix weapons:
+  - Holy Halo
+
+🐉 Cerberus weapons:
+  - Laser
+
+════════════════════════════════════════════════════════════════════════════════
+
+BATTLE LOG:
+[0.0s] 🔥 Phoenix equips Holy Halo
+[0.0s] 🐉 Cerberus equips Laser
+[0.0s] 🔥 Phoenix jumps!
+[0.0s] 🐉 Cerberus jumps!
+[1.2s] 🔥 Phoenix jumps!
+[1.5s] 🐉 Cerberus jumps!
+[2.4s] 🔥 Phoenix jumps!
+[3.0s] 🐉 Cerberus jumps!
+[3.7s] 🔥 Phoenix jumps!
+[4.6s] 🐉 Cerberus jumps!
+[4.9s] 🔥 Phoenix jumps!
+[6.1s] 🐉 Cerberus jumps!
+[6.2s] 🔥 Phoenix jumps!
+[7.4s] 🔥 Phoenix jumps!
+[7.7s] 🐉 Cerberus jumps!
+[8.6s] 🔥 Phoenix jumps!
+[9.2s] 🐉 Cerberus jumps!
+[9.9s] 🔥 Phoenix jumps!
+[10.7s] 🐉 Cerberus jumps!
+[11.1s] 🔥 Phoenix jumps!
+[12.2s] 🐉 Cerberus jumps!
+[12.3s] 🔥 Phoenix jumps!
+[13.5s] 🔥 Phoenix jumps!
+[13.7s] 🐉 Cerberus jumps!
+[14.7s] 🔥 Phoenix jumps!
+[15.2s] 🐉 Cerberus jumps!
+[15.9s] 🔥 Phoenix jumps!
+[16.7s] 🐉 Cerberus jumps!
+[17.1s] 🔥 Phoenix jumps!
+[18.2s] 🐉 Cerberus jumps!
+[18.3s] 🔥 Phoenix jumps!
+[19.3s] 🐉 Cerberus fires Laser!
+[19.5s] 🔥 Phoenix jumps!
+[19.6s] * hits 🔥 Phoenix for 8.9 dmg!
+[19.7s] 🐉 Cerberus jumps!
+[20.7s] 🔥 Phoenix jumps!
+[20.8s] 🐉 Cerberus fires Laser!
+[21.2s] 🐉 Cerberus jumps!
+[21.9s] 🔥 Phoenix jumps!
+[22.3s] 🐉 Cerberus fires Laser!
+[22.3s] * hits 🔥 Phoenix for 8.9 dmg!
+[22.7s] 🐉 Cerberus jumps!
+[23.1s] 🔥 Phoenix jumps!
+[23.8s] 🐉 Cerberus fires Laser!
+[23.8s] * hits 🔥 Phoenix for 8.9 dmg!
+[24.2s] 🐉 Cerberus jumps!
+[24.3s] 🔥 Phoenix jumps!
+[25.3s] 🐉 Cerberus fires Laser!
+[25.3s] * hits 🔥 Phoenix for 8.9 dmg!
+[25.5s] 🔥 Phoenix jumps!
+[25.7s] 🐉 Cerberus jumps!
+[26.7s] 🔥 Phoenix jumps!
+[26.8s] 🐉 Cerberus fires Laser!
+[26.8s] * hits 🔥 Phoenix for 8.9 dmg!
+[27.2s] 🐉 Cerberus jumps!
+[27.9s] 🔥 Phoenix jumps!
+[28.3s] 🐉 Cerberus fires Laser!
+[28.3s] * hits 🔥 Phoenix for 8.9 dmg!
+[28.7s] 🐉 Cerberus jumps!
+[29.1s] 🔥 Phoenix jumps!
+[29.8s] 🐉 Cerberus fires Laser!
+[29.8s] * hits 🔥 Phoenix for 8.9 dmg!
+[30.2s] 🐉 Cerberus jumps!
+[30.3s] 🔥 Phoenix jumps!
+[31.3s] 🐉 Cerberus fires Laser!
+[31.3s] * hits 🔥 Phoenix for 8.9 dmg!
+[31.5s] 🔥 Phoenix jumps!
+[31.7s] 🐉 Cerberus jumps!
+[32.7s] 🔥 Phoenix jumps!
+[32.8s] 🐉 Cerberus fires Laser!
+[32.8s] * hits 🔥 Phoenix for 8.9 dmg!
+[33.3s] 🐉 Cerberus jumps!
+[34.0s] 🔥 Phoenix jumps!
+[34.4s] 🐉 Cerberus fires Laser!
+[34.4s] * hits 🔥 Phoenix for 8.9 dmg!
+[34.8s] 🐉 Cerberus jumps!
+[35.2s] 🔥 Phoenix jumps!
+[35.9s] 🐉 Cerberus fires Laser!
+[35.9s] * hits 🔥 Phoenix for 8.9 dmg!
+[36.4s] 🐉 Cerberus jumps!
+[36.5s] 🔥 Phoenix jumps!
+[37.5s] 🐉 Cerberus fires Laser!
+[37.5s] * hits 🔥 Phoenix for 8.9 dmg!
+[37.7s] 🔥 Phoenix jumps!
+[37.9s] 🐉 Cerberus jumps!
+[38.9s] 🔥 Phoenix jumps!
+[39.0s] 🐉 Cerberus fires Laser!
+[39.0s] * hits 🔥 Phoenix for 8.9 dmg!
+[39.4s] 🐉 Cerberus jumps!
+[40.2s] 🔥 Phoenix jumps!
+[40.5s] 🐉 Cerberus fires Laser!
+[40.5s] * hits 🔥 Phoenix for 8.9 dmg!
+[41.0s] 🐉 Cerberus jumps!
+[41.4s] 🔥 Phoenix jumps!
+[42.1s] 🐉 Cerberus fires Laser!
+[42.1s] * hits 🔥 Phoenix for 8.9 dmg!
+[42.5s] 🐉 Cerberus jumps!
+[42.7s] 🔥 Phoenix jumps!
+[43.6s] 🐉 Cerberus fires Laser!
+[43.6s] * hits 🔥 Phoenix for 8.9 dmg!
+[43.9s] 🔥 Phoenix jumps!
+[44.1s] 🐉 Cerberus jumps!
+[45.2s] 🔥 Phoenix jumps!
+[45.2s] 🐉 Cerberus fires Laser!
+[45.2s] * hits 🔥 Phoenix for 8.9 dmg!
+[45.6s] 🐉 Cerberus jumps!
+[46.4s] 🔥 Phoenix jumps!
+[46.7s] 🐉 Cerberus fires Laser!
+[46.7s] * hits 🔥 Phoenix for 8.9 dmg!
+[47.2s] 🐉 Cerberus jumps!
+[47.7s] 🔥 Phoenix jumps!
+[48.3s] 🐉 Cerberus fires Laser!
+[48.3s] * hits 🔥 Phoenix for 8.9 dmg!
+[48.7s] 🐉 Cerberus jumps!
+[48.9s] 🔥 Phoenix jumps!
+[49.8s] 🐉 Cerberus fires Laser!
+[49.8s] * hits 🔥 Phoenix for 8.9 dmg!
+[50.2s] 🔥 Phoenix jumps!
+[50.3s] 🐉 Cerberus jumps!
+[51.4s] 🐉 Cerberus fires Laser!
+[51.4s] * hits 🔥 Phoenix for 8.9 dmg!
+[51.4s] 🔥 Phoenix jumps!
+[51.8s] 🐉 Cerberus jumps!
+[52.7s] 🔥 Phoenix jumps!
+[52.9s] 🐉 Cerberus fires Laser!
+[52.9s] * hits 🔥 Phoenix for 8.9 dmg!
+[53.4s] 🐉 Cerberus jumps!
+[53.9s] 🔥 Phoenix jumps!
+[54.5s] 🐉 Cerberus fires Laser!
+[54.5s] * hits 🔥 Phoenix for 8.9 dmg!
+[54.9s] 🐉 Cerberus jumps!
+[55.0s] 🔥 Phoenix hits with Holy Halo for 8.4 dmg!
+[55.2s] 🔥 Phoenix jumps!
+[56.3s] 🔥 Phoenix hits with Holy Halo for 8.4 dmg!
+[56.4s] 🔥 Phoenix jumps!
+[56.5s] 🐉 Cerberus jumps!
+[57.5s] 🔥 Phoenix hits with Holy Halo for 8.4 dmg!
+[57.7s] 🔥 Phoenix jumps!
+[58.0s] 🐉 Cerberus jumps!
+[58.8s] 🔥 Phoenix hits with Holy Halo for 8.4 dmg!
+[58.9s] 🔥 Phoenix jumps!
+[59.6s] 🐉 Cerberus jumps!
+[60.0s] TIME OUT! 🐉 Cerberus WINS by HP!
+
+════════════════════════════════════════════════════════════════════════════════
+Battle Duration: 60.0s
+Final HP: 🔥 538 | 🐉 709

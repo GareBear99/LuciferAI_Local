@@ -1,0 +1,55 @@
+⚔️  BATTLE LOG ⚔️
+════════════════════════════════════════════════════════════════════════════════
+⚡ Thor (Level 50)
+    VS
+🏹 Apollo (Level 50)
+════════════════════════════════════════════════════════════════════════════════
+
+LOADOUTS:
+⚡ Thor weapons:
+  - Gungnir
+  - Excalibur
+  - Aegis Shield
+
+🏹 Apollo weapons:
+  - Aegis Shield
+  - Artemis's Bow
+
+════════════════════════════════════════════════════════════════════════════════
+
+BATTLE LOG:
+[0.0s] ⚡ Thor equips Excalibur
+[0.0s] 🏹 Apollo equips Artemis's Bow
+[22.4s] 🏹 Apollo fires Artemis's Bow!
+[24.9s] 🏹 Apollo fires Artemis's Bow!
+[27.4s] 🏹 Apollo fires Artemis's Bow!
+[27.5s] → hits ⚡ Thor for 8.9 dmg!
+[29.9s] 🏹 Apollo fires Artemis's Bow!
+[30.0s] → hits ⚡ Thor for 8.9 dmg!
+[32.4s] 🏹 Apollo fires Artemis's Bow!
+[32.5s] → hits ⚡ Thor for 8.9 dmg!
+[35.0s] 🏹 Apollo fires Artemis's Bow!
+[35.0s] → hits ⚡ Thor for 8.9 dmg!
+[37.5s] 🏹 Apollo fires Artemis's Bow!
+[37.6s] → hits ⚡ Thor for 8.9 dmg!
+[40.0s] 🏹 Apollo fires Artemis's Bow!
+[40.1s] → hits ⚡ Thor for 8.9 dmg!
+[42.6s] 🏹 Apollo fires Artemis's Bow!
+[42.6s] → hits ⚡ Thor for 8.9 dmg!
+[45.1s] 🏹 Apollo fires Artemis's Bow!
+[45.2s] → hits ⚡ Thor for 8.9 dmg!
+[47.7s] 🏹 Apollo fires Artemis's Bow!
+[47.7s] → hits ⚡ Thor for 8.9 dmg!
+[50.2s] 🏹 Apollo fires Artemis's Bow!
+[50.3s] → hits ⚡ Thor for 8.9 dmg!
+[52.8s] 🏹 Apollo fires Artemis's Bow!
+[52.8s] → hits ⚡ Thor for 8.9 dmg!
+[55.3s] 🏹 Apollo fires Artemis's Bow!
+[55.4s] → hits ⚡ Thor for 8.9 dmg!
+[57.9s] 🏹 Apollo fires Artemis's Bow!
+[57.9s] → hits ⚡ Thor for 8.9 dmg!
+[60.0s] TIME OUT! 🏹 Apollo WINS by HP!
+
+════════════════════════════════════════════════════════════════════════════════
+Battle Duration: 60.0s
+Final HP: ⚡ 473 | 🏹 590

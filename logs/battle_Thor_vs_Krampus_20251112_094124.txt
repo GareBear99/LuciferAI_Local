@@ -1,0 +1,136 @@
+⚔️  BATTLE LOG ⚔️
+================================================================================
+⚡ Thor (Level 100)
+    VS
+👹 Krampus (Level 100)
+================================================================================
+
+[0.0s] ⚡ Thor equips Artemis's Bow
+[0.0s] 👹 Krampus equips Zeus's Bolt
+[16.7s] ⚡ Thor fires Artemis's Bow!
+[16.7s] 👹 Krampus fires Zeus's Bolt!
+[17.0s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[17.5s] 👹 Krampus fires Zeus's Bolt!
+[17.8s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[18.3s] 👹 Krampus fires Zeus's Bolt!
+[18.6s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[19.1s] 👹 Krampus fires Zeus's Bolt!
+[19.2s] ⚡ Thor fires Artemis's Bow!
+[19.4s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[19.9s] 👹 Krampus fires Zeus's Bolt!
+[20.2s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[20.7s] 👹 Krampus fires Zeus's Bolt!
+[21.0s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[21.5s] 👹 Krampus fires Zeus's Bolt!
+[21.7s] ⚡ Thor fires Artemis's Bow!
+[21.8s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[22.3s] 👹 Krampus fires Zeus's Bolt!
+[22.6s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[23.1s] 👹 Krampus fires Zeus's Bolt!
+[23.4s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[23.9s] 👹 Krampus fires Zeus's Bolt!
+[24.2s] ⚡ Thor fires Artemis's Bow!
+[24.2s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[24.7s] 👹 Krampus fires Zeus's Bolt!
+[25.0s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[25.5s] 👹 Krampus fires Zeus's Bolt!
+[25.8s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[26.3s] 👹 Krampus fires Zeus's Bolt!
+[26.6s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[26.7s] ⚡ Thor fires Artemis's Bow!
+[27.1s] 👹 Krampus fires Zeus's Bolt!
+[27.4s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[27.9s] 👹 Krampus fires Zeus's Bolt!
+[28.2s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[28.7s] 👹 Krampus fires Zeus's Bolt!
+[29.0s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[29.2s] ⚡ Thor fires Artemis's Bow!
+[29.5s] 👹 Krampus fires Zeus's Bolt!
+[29.8s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[30.3s] 👹 Krampus fires Zeus's Bolt!
+[30.6s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[31.1s] 👹 Krampus fires Zeus's Bolt!
+[31.4s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[31.7s] ⚡ Thor fires Artemis's Bow!
+[31.9s] 👹 Krampus fires Zeus's Bolt!
+[32.2s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[32.7s] 👹 Krampus fires Zeus's Bolt!
+[33.1s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[33.6s] 👹 Krampus fires Zeus's Bolt!
+[33.9s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[34.2s] ⚡ Thor fires Artemis's Bow!
+[34.4s] 👹 Krampus fires Zeus's Bolt!
+[34.8s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[35.3s] 👹 Krampus fires Zeus's Bolt!
+[35.6s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[36.1s] 👹 Krampus fires Zeus's Bolt!
+[36.5s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[36.8s] ⚡ Thor fires Artemis's Bow!
+[37.0s] 👹 Krampus fires Zeus's Bolt!
+[37.3s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[37.8s] 👹 Krampus fires Zeus's Bolt!
+[38.1s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[38.6s] 👹 Krampus fires Zeus's Bolt!
+[39.0s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[39.3s] ⚡ Thor fires Artemis's Bow!
+[39.5s] 👹 Krampus fires Zeus's Bolt!
+[39.8s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[40.3s] 👹 Krampus fires Zeus's Bolt!
+[40.7s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[41.2s] 👹 Krampus fires Zeus's Bolt!
+[41.5s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[41.8s] ⚡ Thor fires Artemis's Bow!
+[42.0s] 👹 Krampus fires Zeus's Bolt!
+[42.4s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[42.9s] 👹 Krampus fires Zeus's Bolt!
+[43.2s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[43.7s] 👹 Krampus fires Zeus's Bolt!
+[44.1s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[44.4s] ⚡ Thor fires Artemis's Bow!
+[44.6s] 👹 Krampus fires Zeus's Bolt!
+[44.9s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[45.4s] 👹 Krampus fires Zeus's Bolt!
+[45.8s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[46.3s] 👹 Krampus fires Zeus's Bolt!
+[46.6s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[46.9s] ⚡ Thor fires Artemis's Bow!
+[47.1s] 👹 Krampus fires Zeus's Bolt!
+[47.5s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[48.0s] 👹 Krampus fires Zeus's Bolt!
+[48.3s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[48.8s] 👹 Krampus fires Zeus's Bolt!
+[49.2s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[49.5s] ⚡ Thor fires Artemis's Bow!
+[49.7s] 👹 Krampus fires Zeus's Bolt!
+[50.0s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[50.5s] 👹 Krampus fires Zeus's Bolt!
+[50.9s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[51.4s] 👹 Krampus fires Zeus's Bolt!
+[51.7s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[52.0s] ⚡ Thor fires Artemis's Bow!
+[52.2s] 👹 Krampus fires Zeus's Bolt!
+[52.6s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[53.1s] 👹 Krampus fires Zeus's Bolt!
+[53.4s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[53.9s] 👹 Krampus fires Zeus's Bolt!
+[54.3s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[54.6s] ⚡ Thor fires Artemis's Bow!
+[54.8s] 👹 Krampus fires Zeus's Bolt!
+[55.1s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[55.6s] 👹 Krampus fires Zeus's Bolt!
+[56.0s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[56.5s] 👹 Krampus fires Zeus's Bolt!
+[56.8s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[57.1s] ⚡ Thor fires Artemis's Bow!
+[57.3s] 👹 Krampus fires Zeus's Bolt!
+[57.7s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[58.2s] 👹 Krampus fires Zeus's Bolt!
+[58.5s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[59.0s] 👹 Krampus fires Zeus's Bolt!
+[59.4s] ⚡ hits ⚡ Thor for 11.9 dmg!
+[59.7s] ⚡ Thor fires Artemis's Bow!
+[59.9s] 👹 Krampus fires Zeus's Bolt!
+
+================================================================================
+Battle Duration: 60.0s
+Final HP: ⚡ 471 | 👹 991

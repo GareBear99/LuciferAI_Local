@@ -1,0 +1,241 @@
+⚔️  BATTLE LOG ⚔️
+════════════════════════════════════════════════════════════════════════════════
+⚡ Thor (Level 50)
+    VS
+🏹 Apollo (Level 50)
+════════════════════════════════════════════════════════════════════════════════
+
+LOADOUTS:
+⚡ Thor weapons:
+  - Spear of Destiny
+  - Aegis Shield
+
+🏹 Apollo weapons:
+  - Celestial Lance
+  - Aegis Shield
+
+════════════════════════════════════════════════════════════════════════════════
+
+BATTLE LOG:
+[0.0s] ⚡ Thor equips Spear of Destiny
+[0.0s] 🏹 Apollo equips Celestial Lance
+[0.0s] ⚡ Thor jumps!
+[0.0s] 🏹 Apollo jumps!
+[1.0s] ⚡ Thor jumps!
+[1.6s] 🏹 Apollo jumps!
+[2.0s] ⚡ Thor jumps!
+[3.0s] ⚡ Thor jumps!
+[3.2s] 🏹 Apollo jumps!
+[4.1s] ⚡ Thor jumps!
+[4.9s] 🏹 Apollo jumps!
+[5.1s] ⚡ Thor jumps!
+[6.2s] ⚡ Thor jumps!
+[6.5s] 🏹 Apollo jumps!
+[7.2s] ⚡ Thor jumps!
+[8.2s] 🏹 Apollo jumps!
+[8.2s] ⚡ Thor jumps!
+[9.2s] ⚡ Thor jumps!
+[9.8s] 🏹 Apollo jumps!
+[10.3s] ⚡ Thor jumps!
+[11.3s] ⚡ Thor jumps!
+[11.4s] 🏹 Apollo jumps!
+[12.3s] ⚡ Thor jumps!
+[13.0s] 🏹 Apollo jumps!
+[13.3s] ⚡ Thor jumps!
+[14.3s] ⚡ Thor jumps!
+[14.6s] 🏹 Apollo jumps!
+[15.3s] ⚡ Thor jumps!
+[16.2s] 🏹 Apollo jumps!
+[16.3s] ⚡ Thor jumps!
+[17.3s] ⚡ Thor jumps!
+[17.8s] 🏹 Apollo jumps!
+[18.3s] ⚡ Thor jumps!
+[19.3s] ⚡ Thor jumps!
+[19.4s] 🏹 Apollo jumps!
+[20.3s] ⚡ Thor jumps!
+[21.0s] 🏹 Apollo jumps!
+[21.3s] ⚡ Thor jumps!
+[22.3s] ⚡ Thor jumps!
+[22.6s] 🏹 Apollo jumps!
+[22.6s] ⚡ Thor fires Spear of Destiny!
+[22.6s] 🏹 Apollo fires Celestial Lance!
+[23.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[23.1s] 💫 hits ⚡ Thor for 9.9 dmg!
+[23.3s] ⚡ Thor jumps!
+[23.6s] ⚡ Thor fires Spear of Destiny!
+[24.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[24.2s] 🏹 Apollo jumps!
+[24.2s] 🏹 Apollo fires Celestial Lance!
+[24.3s] ⚡ Thor jumps!
+[24.6s] ⚡ Thor fires Spear of Destiny!
+[24.7s] 💫 hits ⚡ Thor for 9.9 dmg!
+[25.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[25.3s] ⚡ Thor jumps!
+[25.6s] ⚡ Thor fires Spear of Destiny!
+[25.8s] 🏹 Apollo jumps!
+[25.8s] 🏹 Apollo fires Celestial Lance!
+[26.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[26.3s] ⚡ Thor jumps!
+[26.3s] 💫 hits ⚡ Thor for 9.9 dmg!
+[26.6s] ⚡ Thor fires Spear of Destiny!
+[27.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[27.3s] ⚡ Thor jumps!
+[27.4s] 🏹 Apollo jumps!
+[27.4s] 🏹 Apollo fires Celestial Lance!
+[27.6s] ⚡ Thor fires Spear of Destiny!
+[27.9s] 💫 hits ⚡ Thor for 9.9 dmg!
+[28.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[28.3s] ⚡ Thor jumps!
+[28.6s] ⚡ Thor fires Spear of Destiny!
+[29.0s] 🏹 Apollo jumps!
+[29.0s] 🏹 Apollo fires Celestial Lance!
+[29.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[29.3s] ⚡ Thor jumps!
+[29.5s] 💫 hits ⚡ Thor for 9.9 dmg!
+[29.6s] ⚡ Thor fires Spear of Destiny!
+[30.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[30.3s] ⚡ Thor jumps!
+[30.6s] 🏹 Apollo jumps!
+[30.6s] ⚡ Thor fires Spear of Destiny!
+[30.6s] 🏹 Apollo fires Celestial Lance!
+[31.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[31.1s] 💫 hits ⚡ Thor for 9.9 dmg!
+[31.3s] ⚡ Thor jumps!
+[31.6s] ⚡ Thor fires Spear of Destiny!
+[32.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[32.2s] 🏹 Apollo jumps!
+[32.2s] 🏹 Apollo fires Celestial Lance!
+[32.3s] ⚡ Thor jumps!
+[32.7s] ⚡ Thor fires Spear of Destiny!
+[32.7s] 💫 hits ⚡ Thor for 9.9 dmg!
+[33.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[33.4s] ⚡ Thor jumps!
+[33.7s] ⚡ Thor fires Spear of Destiny!
+[33.9s] 🏹 Apollo jumps!
+[33.9s] 🏹 Apollo fires Celestial Lance!
+[34.2s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[34.3s] 💫 hits ⚡ Thor for 9.9 dmg!
+[34.4s] ⚡ Thor jumps!
+[34.8s] ⚡ Thor fires Spear of Destiny!
+[35.2s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[35.5s] ⚡ Thor jumps!
+[35.5s] 🏹 Apollo jumps!
+[35.5s] 🏹 Apollo fires Celestial Lance!
+[35.8s] ⚡ Thor fires Spear of Destiny!
+[36.0s] 💫 hits ⚡ Thor for 9.9 dmg!
+[36.3s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[36.5s] ⚡ Thor jumps!
+[36.9s] ⚡ Thor fires Spear of Destiny!
+[37.2s] 🏹 Apollo jumps!
+[37.2s] 🏹 Apollo fires Celestial Lance!
+[37.3s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[37.6s] ⚡ Thor jumps!
+[37.6s] 💫 hits ⚡ Thor for 9.9 dmg!
+[37.9s] ⚡ Thor fires Spear of Destiny!
+[38.3s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[38.6s] ⚡ Thor jumps!
+[38.8s] 🏹 Apollo jumps!
+[38.8s] 🏹 Apollo fires Celestial Lance!
+[38.9s] ⚡ Thor fires Spear of Destiny!
+[39.2s] 💫 hits ⚡ Thor for 9.9 dmg!
+[39.4s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[39.6s] ⚡ Thor jumps!
+[40.0s] ⚡ Thor fires Spear of Destiny!
+[40.4s] 🏹 Apollo jumps!
+[40.4s] 🏹 Apollo fires Celestial Lance!
+[40.4s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[40.7s] ⚡ Thor jumps!
+[40.9s] 💫 hits ⚡ Thor for 9.9 dmg!
+[41.0s] ⚡ Thor fires Spear of Destiny!
+[41.5s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[41.7s] ⚡ Thor jumps!
+[42.1s] 🏹 Apollo jumps!
+[42.1s] ⚡ Thor fires Spear of Destiny!
+[42.1s] 🏹 Apollo fires Celestial Lance!
+[42.5s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[42.5s] 💫 hits ⚡ Thor for 9.9 dmg!
+[42.8s] ⚡ Thor jumps!
+[43.1s] ⚡ Thor fires Spear of Destiny!
+[43.6s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[43.7s] 🏹 Apollo jumps!
+[43.7s] 🏹 Apollo fires Celestial Lance!
+[43.8s] ⚡ Thor jumps!
+[44.2s] ⚡ Thor fires Spear of Destiny!
+[44.2s] 💫 hits ⚡ Thor for 9.9 dmg!
+[44.6s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[44.9s] ⚡ Thor jumps!
+[45.2s] ⚡ Thor fires Spear of Destiny!
+[45.4s] 🏹 Apollo jumps!
+[45.4s] 🏹 Apollo fires Celestial Lance!
+[45.7s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[45.8s] 💫 hits ⚡ Thor for 9.9 dmg!
+[45.9s] ⚡ Thor jumps!
+[46.3s] ⚡ Thor fires Spear of Destiny!
+[46.7s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[47.0s] ⚡ Thor jumps!
+[47.0s] 🏹 Apollo jumps!
+[47.0s] 🏹 Apollo fires Celestial Lance!
+[47.3s] ⚡ Thor fires Spear of Destiny!
+[47.5s] 💫 hits ⚡ Thor for 9.9 dmg!
+[47.8s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[48.0s] ⚡ Thor jumps!
+[48.4s] ⚡ Thor fires Spear of Destiny!
+[48.7s] 🏹 Apollo jumps!
+[48.7s] 🏹 Apollo fires Celestial Lance!
+[48.8s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[49.1s] ⚡ Thor jumps!
+[49.1s] 💫 hits ⚡ Thor for 9.9 dmg!
+[49.4s] ⚡ Thor fires Spear of Destiny!
+[49.9s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[50.1s] ⚡ Thor jumps!
+[50.3s] 🏹 Apollo jumps!
+[50.3s] 🏹 Apollo fires Celestial Lance!
+[50.5s] ⚡ Thor fires Spear of Destiny!
+[50.8s] 💫 hits ⚡ Thor for 9.9 dmg!
+[50.9s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[51.2s] ⚡ Thor jumps!
+[51.5s] ⚡ Thor fires Spear of Destiny!
+[52.0s] 🏹 Apollo jumps!
+[52.0s] 🏹 Apollo fires Celestial Lance!
+[52.0s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[52.2s] ⚡ Thor jumps!
+[52.4s] 💫 hits ⚡ Thor for 9.9 dmg!
+[52.6s] ⚡ Thor fires Spear of Destiny!
+[53.0s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[53.3s] ⚡ Thor jumps!
+[53.6s] 🏹 Apollo jumps!
+[53.6s] ⚡ Thor fires Spear of Destiny!
+[53.6s] 🏹 Apollo fires Celestial Lance!
+[54.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[54.1s] 💫 hits ⚡ Thor for 9.9 dmg!
+[54.3s] ⚡ Thor jumps!
+[54.7s] ⚡ Thor fires Spear of Destiny!
+[55.1s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[55.3s] 🏹 Apollo jumps!
+[55.3s] 🏹 Apollo fires Celestial Lance!
+[55.4s] ⚡ Thor jumps!
+[55.7s] ⚡ Thor fires Spear of Destiny!
+[55.7s] 💫 hits ⚡ Thor for 9.9 dmg!
+[56.2s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[56.4s] ⚡ Thor jumps!
+[56.8s] ⚡ Thor fires Spear of Destiny!
+[56.9s] 🏹 Apollo jumps!
+[56.9s] 🏹 Apollo fires Celestial Lance!
+[57.2s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[57.4s] 💫 hits ⚡ Thor for 9.9 dmg!
+[57.5s] ⚡ Thor jumps!
+[57.8s] ⚡ Thor fires Spear of Destiny!
+[58.3s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[58.5s] ⚡ Thor jumps!
+[58.6s] 🏹 Apollo jumps!
+[58.6s] 🏹 Apollo fires Celestial Lance!
+[58.9s] ⚡ Thor fires Spear of Destiny!
+[59.0s] 💫 hits ⚡ Thor for 9.9 dmg!
+[59.3s] 👑 hits 🏹 Apollo for 11.9 dmg!
+[59.6s] ⚡ Thor jumps!
+[59.9s] ⚡ Thor fires Spear of Destiny!
+[60.0s] TIME OUT! ⚡ Thor WINS by HP!
+
+════════════════════════════════════════════════════════════════════════════════
+Battle Duration: 60.0s
+Final HP: ⚡ 361 | 🏹 159

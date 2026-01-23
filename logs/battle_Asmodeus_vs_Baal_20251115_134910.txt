@@ -1,0 +1,203 @@
+⚔️  BATTLE LOG ⚔️
+════════════════════════════════════════════════════════════════════════════════
+🔥 Asmodeus (Level 100)
+    VS
+😈 Baal (Level 100)
+════════════════════════════════════════════════════════════════════════════════
+
+LOADOUTS:
+🔥 Asmodeus weapons:
+  - Archery
+  - Blades of Exile
+
+😈 Baal weapons:
+  - Holy Halo
+  - Zeus's Bolt
+
+════════════════════════════════════════════════════════════════════════════════
+
+BATTLE LOG:
+[0.0s] 🔥 Asmodeus equips Blades of Exile
+[0.0s] 😈 Baal equips Zeus's Bolt
+[0.0s] 🔥 Asmodeus jumps!
+[0.0s] 😈 Baal jumps!
+[1.0s] 😈 Baal jumps!
+[1.9s] 😈 Baal jumps!
+[2.2s] 🔥 Asmodeus jumps!
+[2.8s] 😈 Baal jumps!
+[3.8s] 😈 Baal jumps!
+[4.4s] 🔥 Asmodeus jumps!
+[4.7s] 😈 Baal jumps!
+[5.7s] 😈 Baal jumps!
+[6.6s] 😈 Baal jumps!
+[6.7s] 🔥 Asmodeus jumps!
+[7.6s] 😈 Baal jumps!
+[8.5s] 😈 Baal jumps!
+[8.9s] 🔥 Asmodeus jumps!
+[9.5s] 😈 Baal jumps!
+[10.5s] 😈 Baal jumps!
+[11.1s] 🔥 Asmodeus jumps!
+[11.4s] 😈 Baal jumps!
+[12.4s] 😈 Baal jumps!
+[13.3s] 🔥 Asmodeus jumps!
+[13.3s] 😈 Baal jumps!
+[14.3s] 😈 Baal jumps!
+[15.2s] 😈 Baal jumps!
+[15.5s] 🔥 Asmodeus jumps!
+[16.2s] 😈 Baal jumps!
+[17.1s] 😈 Baal jumps!
+[17.7s] 🔥 Asmodeus jumps!
+[18.1s] 😈 Baal jumps!
+[19.0s] 😈 Baal jumps!
+[19.3s] 😈 Baal fires Zeus's Bolt!
+[19.6s] ⚡ hits 🔥 Asmodeus for 11.9 dmg!
+[19.9s] 🔥 Asmodeus jumps!
+[20.0s] 😈 Baal jumps!
+[20.1s] 😈 Baal fires Zeus's Bolt!
+[20.9s] 😈 Baal fires Zeus's Bolt!
+[20.9s] 😈 Baal jumps!
+[21.1s] 🔥 Asmodeus attacks with Blades of Exile!
+[21.3s] 🔥 hits 😈 Baal for 10.9 dmg!
+[21.7s] 😈 Baal fires Zeus's Bolt!
+[21.9s] 😈 Baal jumps!
+[22.1s] 🔥 Asmodeus jumps!
+[22.5s] 😈 Baal fires Zeus's Bolt!
+[22.8s] 😈 Baal jumps!
+[23.3s] 😈 Baal fires Zeus's Bolt!
+[23.3s] 🔥 Asmodeus attacks with Blades of Exile!
+[23.5s] 🔥 hits 😈 Baal for 10.9 dmg!
+[23.8s] 😈 Baal jumps!
+[24.1s] 😈 Baal fires Zeus's Bolt!
+[24.3s] 🔥 Asmodeus jumps!
+[24.7s] 😈 Baal jumps!
+[24.9s] 😈 Baal fires Zeus's Bolt!
+[25.5s] 🔥 Asmodeus attacks with Blades of Exile!
+[25.7s] 😈 Baal jumps!
+[25.7s] 😈 Baal fires Zeus's Bolt!
+[25.7s] 🔥 hits 😈 Baal for 10.9 dmg!
+[26.5s] 😈 Baal fires Zeus's Bolt!
+[26.5s] 🔥 Asmodeus jumps!
+[26.6s] 😈 Baal jumps!
+[27.3s] 😈 Baal fires Zeus's Bolt!
+[27.6s] 😈 Baal jumps!
+[27.7s] 🔥 Asmodeus attacks with Blades of Exile!
+[27.9s] 🔥 hits 😈 Baal for 10.9 dmg!
+[28.1s] 😈 Baal fires Zeus's Bolt!
+[28.5s] 😈 Baal jumps!
+[28.7s] 🔥 Asmodeus jumps!
+[28.9s] 😈 Baal fires Zeus's Bolt!
+[29.5s] 😈 Baal jumps!
+[29.7s] 😈 Baal fires Zeus's Bolt!
+[29.9s] 🔥 Asmodeus attacks with Blades of Exile!
+[30.1s] 🔥 hits 😈 Baal for 10.9 dmg!
+[30.4s] 😈 Baal jumps!
+[30.5s] 😈 Baal fires Zeus's Bolt!
+[30.9s] 🔥 Asmodeus jumps!
+[31.3s] 😈 Baal fires Zeus's Bolt!
+[31.4s] 😈 Baal jumps!
+[32.1s] 😈 Baal fires Zeus's Bolt!
+[32.1s] 🔥 Asmodeus attacks with Blades of Exile!
+[32.3s] 😈 Baal jumps!
+[32.3s] 🔥 hits 😈 Baal for 10.9 dmg!
+[32.9s] 😈 Baal fires Zeus's Bolt!
+[33.2s] 🔥 Asmodeus jumps!
+[33.3s] 😈 Baal jumps!
+[33.8s] 😈 Baal fires Zeus's Bolt!
+[34.2s] 😈 Baal jumps!
+[34.4s] 🔥 Asmodeus attacks with Blades of Exile!
+[34.6s] 🔥 hits 😈 Baal for 10.9 dmg!
+[34.6s] 😈 Baal fires Zeus's Bolt!
+[35.2s] 😈 Baal jumps!
+[35.4s] 🔥 Asmodeus jumps!
+[35.5s] 😈 Baal fires Zeus's Bolt!
+[36.1s] 😈 Baal jumps!
+[36.3s] 😈 Baal fires Zeus's Bolt!
+[36.6s] 🔥 Asmodeus attacks with Blades of Exile!
+[36.8s] 🔥 hits 😈 Baal for 10.9 dmg!
+[37.1s] 😈 Baal jumps!
+[37.2s] 😈 Baal fires Zeus's Bolt!
+[37.6s] 🔥 Asmodeus jumps!
+[38.0s] 😈 Baal jumps!
+[38.0s] 😈 Baal fires Zeus's Bolt!
+[38.8s] 🔥 Asmodeus attacks with Blades of Exile!
+[38.8s] 😈 Baal fires Zeus's Bolt!
+[38.9s] 😈 Baal jumps!
+[39.0s] 🔥 hits 😈 Baal for 10.9 dmg!
+[39.7s] 😈 Baal fires Zeus's Bolt!
+[39.9s] 🔥 Asmodeus jumps!
+[39.9s] 😈 Baal jumps!
+[40.5s] 😈 Baal fires Zeus's Bolt!
+[40.8s] 😈 Baal jumps!
+[41.1s] 🔥 Asmodeus attacks with Blades of Exile!
+[41.3s] 🔥 hits 😈 Baal for 10.9 dmg!
+[41.4s] 😈 Baal fires Zeus's Bolt!
+[41.8s] 😈 Baal jumps!
+[42.1s] 🔥 Asmodeus jumps!
+[42.2s] 😈 Baal fires Zeus's Bolt!
+[42.7s] 😈 Baal jumps!
+[43.1s] 😈 Baal fires Zeus's Bolt!
+[43.3s] 🔥 Asmodeus attacks with Blades of Exile!
+[43.5s] 🔥 hits 😈 Baal for 10.9 dmg!
+[43.7s] 😈 Baal jumps!
+[43.9s] 😈 Baal fires Zeus's Bolt!
+[44.4s] 🔥 Asmodeus jumps!
+[44.6s] 😈 Baal jumps!
+[44.8s] 😈 Baal fires Zeus's Bolt!
+[45.6s] 😈 Baal jumps!
+[45.6s] 🔥 Asmodeus attacks with Blades of Exile!
+[45.6s] 😈 Baal fires Zeus's Bolt!
+[45.8s] 🔥 hits 😈 Baal for 10.9 dmg!
+[46.5s] 😈 Baal fires Zeus's Bolt!
+[46.5s] 😈 Baal jumps!
+[46.6s] 🔥 Asmodeus jumps!
+[47.3s] 😈 Baal fires Zeus's Bolt!
+[47.5s] 😈 Baal jumps!
+[47.8s] 🔥 Asmodeus attacks with Blades of Exile!
+[48.0s] 🔥 hits 😈 Baal for 10.9 dmg!
+[48.2s] 😈 Baal fires Zeus's Bolt!
+[48.4s] 😈 Baal jumps!
+[48.9s] 🔥 Asmodeus jumps!
+[49.0s] 😈 Baal fires Zeus's Bolt!
+[49.4s] 😈 Baal jumps!
+[49.9s] 😈 Baal fires Zeus's Bolt!
+[50.1s] 🔥 Asmodeus attacks with Blades of Exile!
+[50.3s] 🔥 hits 😈 Baal for 10.9 dmg!
+[50.3s] 😈 Baal jumps!
+[50.7s] 😈 Baal fires Zeus's Bolt!
+[51.1s] 🔥 Asmodeus jumps!
+[51.3s] 😈 Baal jumps!
+[51.6s] 😈 Baal fires Zeus's Bolt!
+[52.2s] 😈 Baal jumps!
+[52.3s] 🔥 Asmodeus attacks with Blades of Exile!
+[52.4s] 😈 Baal fires Zeus's Bolt!
+[52.5s] 🔥 hits 😈 Baal for 10.9 dmg!
+[53.2s] 😈 Baal jumps!
+[53.3s] 😈 Baal fires Zeus's Bolt!
+[53.4s] 🔥 Asmodeus jumps!
+[54.1s] 😈 Baal jumps!
+[54.1s] 😈 Baal fires Zeus's Bolt!
+[54.6s] 🔥 Asmodeus attacks with Blades of Exile!
+[54.8s] 🔥 hits 😈 Baal for 10.9 dmg!
+[55.0s] 😈 Baal fires Zeus's Bolt!
+[55.1s] 😈 Baal jumps!
+[55.6s] 🔥 Asmodeus jumps!
+[55.8s] 😈 Baal fires Zeus's Bolt!
+[56.0s] 😈 Baal jumps!
+[56.7s] 😈 Baal fires Zeus's Bolt!
+[56.8s] 🔥 Asmodeus attacks with Blades of Exile!
+[57.0s] 😈 Baal jumps!
+[57.0s] 🔥 hits 😈 Baal for 10.9 dmg!
+[57.5s] 😈 Baal fires Zeus's Bolt!
+[57.9s] 🔥 Asmodeus jumps!
+[57.9s] 😈 Baal jumps!
+[58.4s] 😈 Baal fires Zeus's Bolt!
+[58.9s] 😈 Baal jumps!
+[59.1s] 🔥 Asmodeus attacks with Blades of Exile!
+[59.2s] 😈 Baal fires Zeus's Bolt!
+[59.3s] 🔥 hits 😈 Baal for 10.9 dmg!
+[59.8s] 😈 Baal jumps!
+[60.0s] TIME OUT! 🔥 Asmodeus WINS by HP!
+
+════════════════════════════════════════════════════════════════════════════════
+Battle Duration: 60.0s
+Final HP: 🔥 979 | 😈 794

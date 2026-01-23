@@ -1,0 +1,35 @@
+⚔️  BATTLE LOG ⚔️
+════════════════════════════════════════════════════════════════════════════════
+✨ Azazel (Level 500)
+    VS
+⚡ Thor (Level 500)
+════════════════════════════════════════════════════════════════════════════════
+
+LOADOUTS:
+✨ Azazel weapons:
+  - Gungnir
+  - Aegis Shield
+
+⚡ Thor weapons:
+  - Spear of Destiny
+  - Excalibur
+  - Surtr's Sword
+
+════════════════════════════════════════════════════════════════════════════════
+
+BATTLE LOG:
+[0.0s] ✨ Azazel equips Gungnir
+[0.0s] ⚡ Thor equips Excalibur
+[0.0s] ✨ Azazel jumps!
+[0.0s] ⚡ Thor jumps!
+[1.3s] ✨ Azazel jumps!
+[1.5s] ⚡ Thor jumps!
+[2.6s] ✨ Azazel jumps!
+[3.0s] ⚡ Thor jumps!
+[4.0s] ✨ Azazel jumps!
+[4.6s] ⚡ Thor jumps!
+[5.0s] TIME OUT! DRAW!
+
+════════════════════════════════════════════════════════════════════════════════
+Battle Duration: 5.0s
+Final HP: ✨ 5090 | ⚡ 5090

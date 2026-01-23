@@ -1,0 +1,32 @@
+⚔️  BATTLE LOG ⚔️
+════════════════════════════════════════════════════════════════════════════════
+✨ Azazel (Level 999)
+    VS
+⚡ Thor (Level 999)
+════════════════════════════════════════════════════════════════════════════════
+
+LOADOUTS:
+✨ Azazel weapons:
+  - Gungnir
+  - Aegis Shield
+  - Durandal
+
+⚡ Thor weapons:
+  - Celestial Lance
+  - Surtr's Sword
+  - Aegis Shield
+
+════════════════════════════════════════════════════════════════════════════════
+
+BATTLE LOG:
+[0.0s] ✨ Azazel equips Durandal
+[0.0s] ⚡ Thor equips Celestial Lance
+[0.0s] ✨ Azazel jumps!
+[0.0s] ⚡ Thor jumps!
+[1.6s] ⚡ Thor jumps!
+[1.8s] ✨ Azazel jumps!
+[2.0s] TIME OUT! DRAW!
+
+════════════════════════════════════════════════════════════════════════════════
+Battle Duration: 2.0s
+Final HP: ✨ 10080 | ⚡ 10080

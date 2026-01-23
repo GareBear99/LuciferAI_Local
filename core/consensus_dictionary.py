@@ -66,6 +66,9 @@ class ConsensusDictionary:
         
         # Cluster analysis
         self.error_clusters = self._load_clusters()
+        
+        # Vote tracking (one vote per user per fix)
+        self.user_votes = self._load_user_votes()
     
     def _load_json(self, path: Path) -> Any:
         """Load JSON with fallback."""
@@ -132,6 +135,18 @@ class ConsensusDictionary:
         """Load error clusters."""
         path = Path.home() / ".luciferai" / "data" / "error_clusters.json"
         return self._load_json(path)
+    
+    def _load_user_votes(self) -> Dict[str, Dict[str, str]]:
+        """Load user vote history (one vote per user per fix)."""
+        path = Path.home() / ".luciferai" / "data" / "user_votes.json"
+        return self._load_json(path)
+    
+    def _save_user_votes(self):
+        """Save user vote history."""
+        path = Path.home() / ".luciferai" / "data" / "user_votes.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with open(path, 'w') as f:
+            json.dump(self.user_votes, f, indent=2)
     
     def calculate_consensus(self, fix_hash: str) -> Dict[str, Any]:
         """
@@ -465,6 +480,112 @@ class ConsensusDictionary:
         self._save_user_reputations()
         
         print(f"{BLUE}👤 Reputation updated: {user_id[:8]} -> {rep['reputation_score']:.2f} ({rep['tier']}){RESET}")
+    
+    def vote_on_fix_success(self, fix_hash: str, user_id: str, succeeded: bool) -> Dict[str, Any]:
+        """
+        Vote on whether a fix was successful.
+        Each validated user can only vote once per fix.
+        
+        Args:
+            fix_hash: Hash of the fix to vote on
+            user_id: Validated user ID (must be GH-* format)
+            succeeded: True if fix worked, False if it failed
+        
+        Returns:
+            {
+                "success": bool,
+                "message": str,
+                "previous_vote": str or None
+            }
+        """
+        # Validate user ID format (must be GitHub validated: GH-*)
+        if not user_id or not user_id.startswith('GH-'):
+            return {
+                "success": False,
+                "message": "Only validated GitHub users can vote on fixes",
+                "previous_vote": None
+            }
+        
+        # Check if user already voted on this fix
+        if fix_hash not in self.user_votes:
+            self.user_votes[fix_hash] = {}
+        
+        previous_vote = self.user_votes[fix_hash].get(user_id)
+        
+        if previous_vote is not None:
+            return {
+                "success": False,
+                "message": f"You already voted '{previous_vote}' on this fix. Each user can only vote once.",
+                "previous_vote": previous_vote
+            }
+        
+        # Record the vote
+        vote_value = "success" if succeeded else "failure"
+        self.user_votes[fix_hash][user_id] = vote_value
+        
+        # Save to disk
+        self._save_user_votes()
+        
+        # Update consensus cache
+        if fix_hash in self.consensus_cache:
+            del self.consensus_cache[fix_hash]
+        
+        print(f"{GREEN}✓ Vote recorded: {user_id[:12]} voted '{vote_value}' on fix {fix_hash[:12]}{RESET}")
+        
+        return {
+            "success": True,
+            "message": f"Vote recorded: {vote_value}",
+            "previous_vote": None
+        }
+    
+    def get_user_vote(self, fix_hash: str, user_id: str) -> Optional[str]:
+        """
+        Get a user's vote on a specific fix.
+        
+        Returns:
+            "success", "failure", or None if not voted
+        """
+        if fix_hash not in self.user_votes:
+            return None
+        
+        return self.user_votes[fix_hash].get(user_id)
+    
+    def get_vote_statistics(self, fix_hash: str) -> Dict[str, Any]:
+        """
+        Get voting statistics for a fix.
+        
+        Returns:
+            {
+                "total_votes": int,
+                "success_votes": int,
+                "failure_votes": int,
+                "success_rate": float,
+                "unique_voters": int
+            }
+        """
+        if fix_hash not in self.user_votes:
+            return {
+                "total_votes": 0,
+                "success_votes": 0,
+                "failure_votes": 0,
+                "success_rate": 0.0,
+                "unique_voters": 0
+            }
+        
+        votes = self.user_votes[fix_hash]
+        success_votes = sum(1 for v in votes.values() if v == "success")
+        failure_votes = sum(1 for v in votes.values() if v == "failure")
+        total_votes = len(votes)
+        
+        success_rate = success_votes / total_votes if total_votes > 0 else 0.0
+        
+        return {
+            "total_votes": total_votes,
+            "success_votes": success_votes,
+            "failure_votes": failure_votes,
+            "success_rate": success_rate,
+            "unique_voters": total_votes
+        }
     
     def get_reputation_weighted_consensus(self, fix_hash: str) -> float:
         """

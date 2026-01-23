@@ -1,0 +1,29 @@
+⚔️  BATTLE LOG ⚔️
+════════════════════════════════════════════════════════════════════════════════
+✨ Azazel (Level 999)
+    VS
+⚡ Thor (Level 999)
+════════════════════════════════════════════════════════════════════════════════
+
+LOADOUTS:
+✨ Azazel weapons:
+  - Excalibur
+  - Spear of Destiny
+
+⚡ Thor weapons:
+  - Aegis Shield
+  - Artemis's Bow
+
+════════════════════════════════════════════════════════════════════════════════
+
+BATTLE LOG:
+[0.0s] ✨ Azazel equips Excalibur
+[0.0s] ⚡ Thor equips Artemis's Bow
+[0.0s] ✨ Azazel jumps!
+[0.0s] ⚡ Thor jumps!
+[1.5s] ✨ Azazel jumps!
+[2.0s] TIME OUT! DRAW!
+
+════════════════════════════════════════════════════════════════════════════════
+Battle Duration: 2.0s
+Final HP: ✨ 10080 | ⚡ 10080

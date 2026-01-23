@@ -140,7 +140,9 @@ User IDs are anonymized hashes.
                         script_path: str,
                         error: str,
                         solution: str,
-                        context: Dict[str, Any]) -> Dict[str, Any]:
+                        context: Dict[str, Any],
+                        inspired_by: Optional[str] = None,
+                        variation_reason: Optional[str] = None) -> Dict[str, Any]:
         """
         Create a fix patch with metadata.
         
@@ -149,6 +151,8 @@ User IDs are anonymized hashes.
             error: Original error message
             solution: Applied fix/solution
             context: Additional context
+            inspired_by: Hash of fix that inspired this one
+            variation_reason: Why this variation exists
         
         Returns:
             Dict with patch info
@@ -161,11 +165,15 @@ User IDs are anonymized hashes.
             "user_id": self.user_id,
             "timestamp": datetime.now().isoformat(),
             "script": script_name,
+            "script_path": script_path,
             "error_type": self._classify_error(error),
             "error": error[:500],  # Truncate for privacy
             "solution": solution[:1000],
             "context": context,
-            "device": os.uname().nodename if hasattr(os, 'uname') else "unknown"
+            "device": os.uname().nodename if hasattr(os, 'uname') else "unknown",
+            "inspired_by": inspired_by,
+            "variation_reason": variation_reason,
+            "is_variant": inspired_by is not None
         }
         
         # Calculate hash
@@ -289,8 +297,8 @@ User IDs are anonymized hashes.
                 with open(refs_file) as f:
                     refs = json.load(f)
             
-            # Add anonymized reference
-            refs.append({
+            # Add anonymized reference with branching metadata
+            ref_entry = {
                 "fix_hash": patch_data["fix_hash"],
                 "user_id": self.user_id,
                 "timestamp": patch_data["timestamp"],
@@ -298,7 +306,15 @@ User IDs are anonymized hashes.
                 "script": patch_data["script"],
                 "encrypted_file": enc_dest.name,
                 "signature_file": sig_dest.name
-            })
+            }
+            
+            # Include branching info if this is a variant
+            if patch_data.get("is_variant"):
+                ref_entry["inspired_by"] = patch_data["inspired_by"]
+                ref_entry["variation_reason"] = patch_data["variation_reason"]
+                ref_entry["relationship_type"] = "context_variant"
+            
+            refs.append(ref_entry)
             
             with open(refs_file, 'w') as f:
                 json.dump(refs, f, indent=2)
@@ -357,8 +373,9 @@ User IDs are anonymized hashes.
                             error: str,
                             solution: str,
                             context: Dict[str, Any] = None,
-                            inspired_by: Optional[Dict] = None,
-                            force_upload: bool = False) -> Tuple[Optional[str], bool]:
+                            inspired_by: Optional[str] = None,
+                            variation_reason: Optional[str] = None,
+                            force_upload: bool = False) -> Tuple[Optional[str], bool, Optional[str]]:
         """
         Complete flow: create → filter → encrypt → sign → upload.
         
@@ -367,11 +384,12 @@ User IDs are anonymized hashes.
             error: Original error
             solution: Fix solution
             context: Additional context
-            inspired_by: Dict with fix_hash if inspired by another fix
+            inspired_by: Hash of fix that inspired this one
+            variation_reason: Why this variation was needed
             force_upload: Skip smart filter (for testing)
         
         Returns:
-            (commit_url, was_uploaded)
+            (commit_url, was_uploaded, fix_hash)
         """
         print(f"\n{PURPLE}{'='*60}{RESET}")
         print(f"{PURPLE}🌐 LuciferAI FixNet Upload{RESET}")
@@ -386,7 +404,7 @@ User IDs are anonymized hashes.
                 error=error,
                 solution=solution,
                 error_type=error_type,
-                inspired_by=inspired_by
+                inspired_by={'fix_hash': inspired_by} if inspired_by else None
             )
             
             print(f"{GOLD}[0/4] Smart upload filter:{RESET}")
@@ -394,27 +412,39 @@ User IDs are anonymized hashes.
             
             if not should_upload:
                 # Still create patch locally for dictionary
-                patch_info = self.create_fix_patch(script_path, error, solution, context)
+                patch_info = self.create_fix_patch(
+                    script_path, error, solution, context,
+                    inspired_by=inspired_by,
+                    variation_reason=variation_reason
+                )
                 print(f"\n{BLUE}📝 Fix saved locally (not uploaded globally){RESET}")
-                return (None, False)
+                return (None, False, patch_info['fix_hash'])
             
             print(f"      {GREEN}✓ Proceeding with upload{RESET}\n")
         
         # Step 1: Create patch
         print(f"{GOLD}[1/4] Creating fix patch...{RESET}")
-        patch_info = self.create_fix_patch(script_path, error, solution, context)
+        if inspired_by:
+            print(f"{PURPLE}      🌿 Branched from: {inspired_by[:12]}...{RESET}")
+            if variation_reason:
+                print(f"{CYAN}      📝 Reason: {variation_reason}{RESET}")
+        patch_info = self.create_fix_patch(
+            script_path, error, solution, context,
+            inspired_by=inspired_by,
+            variation_reason=variation_reason
+        )
         
         # Step 2: Encrypt
         print(f"{GOLD}[2/4] Encrypting patch...{RESET}")
         encrypted = self.encrypt_patch(patch_info["patch_file"])
         if not encrypted:
-            return (None, False)
+            return (None, False, patch_info['fix_hash'])
         
         # Step 3: Sign
         print(f"{GOLD}[3/4] Creating signature...{RESET}")
         signature = self.sign_file(encrypted)
         if not signature:
-            return (None, False)
+            return (None, False, patch_info['fix_hash'])
         
         # Step 4: Upload
         print(f"{GOLD}[4/4] Uploading to GitHub...{RESET}")
@@ -423,10 +453,13 @@ User IDs are anonymized hashes.
         if commit_url:
             print(f"\n{GREEN}✅ Fix successfully uploaded!{RESET}")
             print(f"{BLUE}🔗 Link: {commit_url}{RESET}")
-            print(f"{GOLD}📊 Fix Hash: {patch_info['fix_hash'][:12]}...{RESET}\n")
-            return (commit_url, True)
+            print(f"{GOLD}📊 Fix Hash: {patch_info['fix_hash'][:12]}...{RESET}")
+            if inspired_by:
+                print(f"{PURPLE}🌳 Context branch created in consensus{RESET}")
+            print()
+            return (commit_url, True, patch_info['fix_hash'])
         
-        return (None, False)
+        return (None, False, patch_info['fix_hash'])
     
     def _classify_error(self, error: str) -> str:
         """Classify error type for dictionary."""

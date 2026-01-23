@@ -24,6 +24,8 @@ wheels/
 venv/
 env/
 ENV/
+.venv/
+Luci_Environments/
 
 # IDEs
 .vscode/
@@ -50,3 +52,24 @@ coverage.xml
 *.tmp
 .temp/
 temp/
+.luc/
+output.txt
+
+# Backup files
+*.bak
+*.bak2
+*.bak3
+*.current_backup
+
+# LuciferAI local data
+.luciferai/
+
+# Model files (large binaries)
+models/*.gguf
+models/custom_models/*.gguf
+
+# Image assets (optional - remove if you want to include)
+*.webp
+
+# Session/history files
+.luciferai_history

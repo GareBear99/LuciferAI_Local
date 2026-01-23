@@ -1,0 +1,32 @@
+⚔️  BATTLE LOG ⚔️
+================================================================================
+⚡ Thor (Level 100)
+    VS
+👹 Krampus (Level 100)
+================================================================================
+
+[0.0s] ⚡ Thor equips Artemis's Bow
+[0.0s] 👹 Krampus equips Leviathan Axe
+[16.7s] ⚡ Thor fires Artemis's Bow!
+[18.1s] 👹 Krampus throws Leviathan Axe!
+[18.5s] 🪓 hits ⚡ Thor for 11.9 dmg!
+[19.2s] ⚡ Thor fires Artemis's Bow!
+[21.7s] ⚡ Thor fires Artemis's Bow!
+[24.2s] ⚡ Thor fires Artemis's Bow!
+[26.7s] ⚡ Thor fires Artemis's Bow!
+[29.2s] ⚡ Thor fires Artemis's Bow!
+[31.7s] ⚡ Thor fires Artemis's Bow!
+[34.2s] ⚡ Thor fires Artemis's Bow!
+[36.8s] ⚡ Thor fires Artemis's Bow!
+[39.3s] ⚡ Thor fires Artemis's Bow!
+[41.8s] ⚡ Thor fires Artemis's Bow!
+[44.4s] ⚡ Thor fires Artemis's Bow!
+[46.9s] ⚡ Thor fires Artemis's Bow!
+[49.5s] ⚡ Thor fires Artemis's Bow!
+[52.0s] ⚡ Thor fires Artemis's Bow!
+[54.6s] ⚡ Thor fires Artemis's Bow!
+[57.1s] ⚡ Thor fires Artemis's Bow!
+
+================================================================================
+Battle Duration: 57.9s
+Final HP: ⚡ 1078 | 👹 991

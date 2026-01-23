@@ -5,6 +5,10 @@ Interactive terminal assistant
 """
 import sys
 import os
+import readline
+import threading
+import time
+from datetime import datetime
 from pathlib import Path
 
 # Add core to path
@@ -18,9 +22,117 @@ GREEN = "\033[32m"
 RED = "\033[31m"
 GOLD = "\033[33m"
 BLUE = "\033[34m"
+CYAN = "\033[36m"
+DIM = "\033[2m"
 RESET = "\033[0m"
 BOLD = "\033[1m"
 
+# Heartbeat animation state
+HEARTBEAT_ACTIVE = False
+HEARTBEAT_THREAD = None
+UPLOAD_SPEED = "--"
+DOWNLOAD_SPEED = "--"
+
+# Processing animation state
+PROCESSING_ACTIVE = False
+PROCESSING_THREAD = None
+PROCESSING_MESSAGE = "Processing..."
+
+def update_speeds(upload: str = None, download: str = None):
+    """Update upload/download speeds for display."""
+    global UPLOAD_SPEED, DOWNLOAD_SPEED
+    if upload:
+        UPLOAD_SPEED = upload
+    if download:
+        DOWNLOAD_SPEED = download
+
+
+def heartbeat_animation():
+    """Idle heartbeat animation with status line."""
+    hearts = ['💀', '🩸', '💜', '🩸']
+    colors = [PURPLE, RED, CYAN, GREEN, GOLD]
+    CLEAR_LINE = "\033[K"
+    idx = 0
+    
+    while HEARTBEAT_ACTIVE:
+        color = colors[idx % len(hearts)]
+        heart = hearts[idx % len(hearts)]
+        # Save cursor, move UP 1 line, clear line, print status, restore cursor
+        # \0337 = save cursor, \033[1A = move up 1 line, \0338 = restore cursor
+        status_line = f"\0337\033[1A\r{color}{heart} Idle, awaiting commands... ↑{UPLOAD_SPEED} ↓{DOWNLOAD_SPEED}{RESET}{CLEAR_LINE}\0338"
+        os.write(1, status_line.encode())
+        time.sleep(0.5)
+        idx += 1
+    
+    # Clear the status line when done
+    clear_msg = f"\0337\033[1A\r{CLEAR_LINE}\0338"
+    os.write(1, clear_msg.encode())
+
+def start_heartbeat():
+    """Start idle heartbeat animation."""
+    global HEARTBEAT_ACTIVE, HEARTBEAT_THREAD
+    if not HEARTBEAT_ACTIVE:
+        HEARTBEAT_ACTIVE = True
+        HEARTBEAT_THREAD = threading.Thread(target=heartbeat_animation, daemon=True)
+        HEARTBEAT_THREAD.start()
+
+def stop_heartbeat():
+    """Stop idle heartbeat animation."""
+    global HEARTBEAT_ACTIVE, HEARTBEAT_THREAD
+    HEARTBEAT_ACTIVE = False
+    if HEARTBEAT_THREAD and HEARTBEAT_THREAD.is_alive():
+        HEARTBEAT_THREAD.join(timeout=1)
+    HEARTBEAT_THREAD = None
+
+def processing_animation():
+    """Processing animation while model is loading/generating."""
+    spinners = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
+    idx = 0
+    
+    while PROCESSING_ACTIVE:
+        spinner = spinners[idx % len(spinners)]
+        # Print on same line with carriage return
+        sys.stdout.write(f"\r{CYAN}{spinner} {PROCESSING_MESSAGE}{RESET}")
+        sys.stdout.flush()
+        time.sleep(0.1)
+        idx += 1
+    
+    # Clear the line when done
+    sys.stdout.write("\r" + " " * 80 + "\r")
+    sys.stdout.flush()
+
+def start_processing(message="Processing..."):
+    """Start processing animation."""
+    global PROCESSING_ACTIVE, PROCESSING_THREAD, PROCESSING_MESSAGE
+    PROCESSING_MESSAGE = message
+    if not PROCESSING_ACTIVE:
+        PROCESSING_ACTIVE = True
+        PROCESSING_THREAD = threading.Thread(target=processing_animation, daemon=True)
+        PROCESSING_THREAD.start()
+
+def stop_processing():
+    """Stop processing animation."""
+    global PROCESSING_ACTIVE, PROCESSING_THREAD
+    PROCESSING_ACTIVE = False
+    if PROCESSING_THREAD and PROCESSING_THREAD.is_alive():
+        PROCESSING_THREAD.join(timeout=1)
+    PROCESSING_THREAD = None
+
+def print_main_menu():
+    """Print main menu screen."""
+    print(f"\n{PURPLE}╔{'═'*60}╗{RESET}")
+    print(f"{PURPLE}║{BOLD}              👾  LuciferAI Terminal{' '*19}║{RESET}")
+    print(f"{PURPLE}║{BOLD}     Self-Healing • Authenticated • Reflective AI Core{' '*5}║{RESET}")
+    print(f"{PURPLE}║{' '*60}║{RESET}")
+    print(f"{PURPLE}║{GOLD}{BOLD}              \"Forged in Silence, Born of Neon.\"{' '*14}║{RESET}")
+    print(f"{PURPLE}╚{'═'*60}╝{RESET}\n")
+    
+    print(f"{CYAN}Mode:{RESET} Mistral (Tier 2)")
+    print(f"{CYAN}Output:{RESET} Interactive mode with idle heartbeat animation")
+    print(f"{CYAN}Perfect for:{RESET} Real-time command execution and monitoring\n")
+    
+    print(f"{GOLD}💡 Type 'help' to see what I can do, 'exit' to quit{RESET}\n")
+    print(f"{DIM}────────────────────────────────────────────────────────────{RESET}\n")
 
 def print_banner():
     """Print startup banner."""
@@ -34,29 +146,76 @@ def print_banner():
 
 def main():
     """Main interactive loop."""
-    print_banner()
-    
     # Initialize agent
     agent = LuciferAgent()
+    
+    # Check if command was passed as argument
+    if len(sys.argv) > 1:
+        # Join all arguments after script name as the command
+        pre_input_command = ' '.join(sys.argv[1:])
+        
+        # Show startup banner briefly
+        print(f"\n{PURPLE}{'═'*70}{RESET}")
+        print(f"{PURPLE}║{BOLD}    👾 LuciferAI - Processing Command{RESET}{PURPLE}{' '*29}║{RESET}")
+        print(f"{PURPLE}{'═'*70}{RESET}\n")
+        
+        # Show user request with timestamp
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"{DIM}[{timestamp}]{RESET}")
+        print(f"{CYAN}You:{RESET} {pre_input_command}")
+        
+        # Process the command and exit
+        print(f"\n{BLUE}LuciferAI >{RESET}", end=" ")
+        response = agent.process_request(pre_input_command)
+        print(response)
+        print()  # Extra newline
+        return  # Exit after processing
+    
+    # Show main menu (uses agent's built-in display) and print any selection result
+    menu_response = agent._handle_main_menu()
+    if menu_response:
+        print(menu_response)
+    
+    # Setup command history (last 120 commands)
+    histfile = Path.home() / ".luciferai_history"
+    try:
+        readline.read_history_file(histfile)
+        readline.set_history_length(120)
+    except (FileNotFoundError, OSError, IOError) as e:
+        # History file doesn't exist or is corrupted/unreadable
+        # This is fine - it will be created on exit
+        pass
     
     # Interactive loop
     while True:
         try:
+            # Start heartbeat animation (shows status line below prompt)
+            start_heartbeat()
+            
             # Prompt
-            user_input = input(f"\n{PURPLE}You >{RESET} ").strip()
+            user_input = input(f"\n{PURPLE}LuciferAI >{RESET} ").strip()
+            
+            # Stop heartbeat
+            stop_heartbeat()
             
             if not user_input:
                 continue
             
+            # Show user request with timestamp
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            print(f"\n{DIM}[{timestamp}]{RESET}")
+            print(f"{CYAN}You:{RESET} {user_input}")
+            
             # Handle exit
             if user_input.lower() in ['exit', 'quit', 'q']:
+                stop_heartbeat()  # Ensure heartbeat is stopped
                 print(f"\n{PURPLE}👋 Farewell, mortal. LuciferAI signing off.{RESET}\n")
                 break
             
             # Handle clear
             if user_input.lower() in ['clear', 'cls']:
                 os.system('clear' if os.name != 'nt' else 'cls')
-                print_banner()
+                print_main_menu()
                 continue
             
             # Handle history clear
@@ -70,10 +229,30 @@ def main():
             print(response)
         
         except KeyboardInterrupt:
-            print(f"\n\n{GOLD}⚠️  Interrupted. Type 'exit' to quit.{RESET}")
-            continue
+            stop_heartbeat()  # Stop animation
+            print(f"\n\n{GOLD}⚠️  Interrupted.{RESET}")
+            # Next Ctrl+C will exit
+            try:
+                next_input = input(f"\n{PURPLE}LuciferAI >{RESET} ").strip()
+                if not next_input:
+                    continue
+                # Process the input normally
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                print(f"\n{DIM}[{timestamp}]{RESET}")
+                print(f"{CYAN}You:{RESET} {next_input}")
+                if next_input.lower() in ['exit', 'quit', 'q']:
+                    print(f"\n{PURPLE}👋 Farewell, mortal. LuciferAI signing off.{RESET}\n")
+                    break
+                print(f"\n{BLUE}LuciferAI >{RESET}", end=" ")
+                response = agent.process_request(next_input)
+                print(response)
+            except KeyboardInterrupt:
+                # Second Ctrl+C exits
+                print(f"\n\n{PURPLE}👋 Exiting LuciferAI{RESET}\n")
+                break
         
         except EOFError:
+            stop_heartbeat()  # Stop animation on EOF
             print(f"\n{PURPLE}👋 EOF detected. Exiting.{RESET}\n")
             break
         
@@ -86,5 +265,20 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
+        stop_heartbeat()
         print(f"\n{PURPLE}👋 Exiting LuciferAI{RESET}\n")
         sys.exit(0)
+    finally:
+        # Save command history
+        histfile = Path.home() / ".luciferai_history"
+        try:
+            # Ensure parent directory exists
+            histfile.parent.mkdir(parents=True, exist_ok=True)
+            readline.write_history_file(histfile)
+        except (OSError, IOError, PermissionError) as e:
+            # Silently fail if history file can't be written
+            # This can happen if filesystem is readonly or corrupted
+            pass
+        except Exception:
+            # Catch any other unexpected exceptions
+            pass

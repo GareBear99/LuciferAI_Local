@@ -1,0 +1,146 @@
+⚔️  BATTLE LOG ⚔️
+════════════════════════════════════════════════════════════════════════════════
+⚡ Thor (Level 50)
+    VS
+🏹 Apollo (Level 50)
+════════════════════════════════════════════════════════════════════════════════
+
+LOADOUTS:
+⚡ Thor weapons:
+  - Durandal
+  - Aegis Shield
+  - Excalibur
+
+🏹 Apollo weapons:
+  - Celestial Lance
+  - Aegis Shield
+  - Spear of Destiny
+
+════════════════════════════════════════════════════════════════════════════════
+
+BATTLE LOG:
+[0.0s] ⚡ Thor equips Durandal
+[0.0s] 🏹 Apollo equips Celestial Lance
+[0.0s] ⚡ Thor jumps!
+[0.0s] 🏹 Apollo jumps!
+[1.6s] 🏹 Apollo jumps!
+[1.8s] ⚡ Thor jumps!
+[3.2s] 🏹 Apollo jumps!
+[3.6s] ⚡ Thor jumps!
+[4.9s] 🏹 Apollo jumps!
+[5.5s] ⚡ Thor jumps!
+[6.5s] 🏹 Apollo jumps!
+[7.3s] ⚡ Thor jumps!
+[8.2s] 🏹 Apollo jumps!
+[9.1s] ⚡ Thor jumps!
+[9.8s] 🏹 Apollo jumps!
+[11.0s] ⚡ Thor jumps!
+[11.4s] 🏹 Apollo jumps!
+[12.8s] ⚡ Thor jumps!
+[13.0s] 🏹 Apollo jumps!
+[14.6s] ⚡ Thor jumps!
+[14.6s] 🏹 Apollo jumps!
+[16.2s] 🏹 Apollo jumps!
+[16.4s] ⚡ Thor jumps!
+[17.8s] 🏹 Apollo jumps!
+[18.2s] ⚡ Thor jumps!
+[19.4s] 🏹 Apollo jumps!
+[19.6s] 🏹 Apollo fires Celestial Lance!
+[20.0s] ⚡ Thor jumps!
+[20.1s] 💫 hits ⚡ Thor for 9.9 dmg!
+[21.0s] 🏹 Apollo jumps!
+[21.2s] 🏹 Apollo fires Celestial Lance!
+[21.8s] ⚡ Thor jumps!
+[22.6s] 🏹 Apollo jumps!
+[22.8s] 🏹 Apollo fires Celestial Lance!
+[22.9s] 💫 hits ⚡ Thor for 9.9 dmg!
+[23.6s] ⚡ Thor jumps!
+[24.2s] 🏹 Apollo jumps!
+[24.4s] 🏹 Apollo fires Celestial Lance!
+[24.5s] 💫 hits ⚡ Thor for 9.9 dmg!
+[25.4s] ⚡ Thor jumps!
+[25.8s] 🏹 Apollo jumps!
+[26.0s] 🏹 Apollo fires Celestial Lance!
+[26.1s] 💫 hits ⚡ Thor for 9.9 dmg!
+[27.2s] ⚡ Thor jumps!
+[27.4s] 🏹 Apollo jumps!
+[27.6s] 🏹 Apollo fires Celestial Lance!
+[27.7s] 💫 hits ⚡ Thor for 9.9 dmg!
+[29.0s] ⚡ Thor jumps!
+[29.0s] 🏹 Apollo jumps!
+[29.2s] 🏹 Apollo fires Celestial Lance!
+[29.3s] 💫 hits ⚡ Thor for 9.9 dmg!
+[30.6s] 🏹 Apollo jumps!
+[30.8s] ⚡ Thor jumps!
+[30.8s] 🏹 Apollo fires Celestial Lance!
+[30.9s] 💫 hits ⚡ Thor for 9.9 dmg!
+[32.2s] 🏹 Apollo jumps!
+[32.5s] 🏹 Apollo fires Celestial Lance!
+[32.5s] 💫 hits ⚡ Thor for 9.9 dmg!
+[32.6s] ⚡ Thor jumps!
+[33.9s] 🏹 Apollo jumps!
+[34.1s] 🏹 Apollo fires Celestial Lance!
+[34.2s] 💫 hits ⚡ Thor for 9.9 dmg!
+[34.5s] ⚡ Thor jumps!
+[35.5s] 🏹 Apollo jumps!
+[35.8s] 🏹 Apollo fires Celestial Lance!
+[35.8s] 💫 hits ⚡ Thor for 9.9 dmg!
+[36.3s] ⚡ Thor jumps!
+[37.2s] 🏹 Apollo jumps!
+[37.4s] 🏹 Apollo fires Celestial Lance!
+[37.5s] 💫 hits ⚡ Thor for 9.9 dmg!
+[38.1s] ⚡ Thor jumps!
+[38.8s] 🏹 Apollo jumps!
+[39.0s] 🏹 Apollo fires Celestial Lance!
+[39.1s] 💫 hits ⚡ Thor for 9.9 dmg!
+[40.0s] ⚡ Thor jumps!
+[40.4s] 🏹 Apollo jumps!
+[40.7s] 🏹 Apollo fires Celestial Lance!
+[40.7s] 💫 hits ⚡ Thor for 9.9 dmg!
+[41.8s] ⚡ Thor jumps!
+[42.1s] 🏹 Apollo jumps!
+[42.3s] 🏹 Apollo fires Celestial Lance!
+[42.4s] 💫 hits ⚡ Thor for 9.9 dmg!
+[43.7s] ⚡ Thor jumps!
+[43.7s] 🏹 Apollo jumps!
+[44.0s] 🏹 Apollo fires Celestial Lance!
+[44.0s] 💫 hits ⚡ Thor for 9.9 dmg!
+[45.4s] 🏹 Apollo jumps!
+[45.5s] ⚡ Thor jumps!
+[45.6s] 🏹 Apollo fires Celestial Lance!
+[45.7s] 💫 hits ⚡ Thor for 9.9 dmg!
+[47.0s] 🏹 Apollo jumps!
+[47.3s] 🏹 Apollo fires Celestial Lance!
+[47.3s] 💫 hits ⚡ Thor for 9.9 dmg!
+[47.4s] ⚡ Thor jumps!
+[48.7s] 🏹 Apollo jumps!
+[48.9s] 🏹 Apollo fires Celestial Lance!
+[49.0s] 💫 hits ⚡ Thor for 9.9 dmg!
+[49.2s] ⚡ Thor jumps!
+[50.3s] 🏹 Apollo jumps!
+[50.6s] 🏹 Apollo fires Celestial Lance!
+[50.6s] 💫 hits ⚡ Thor for 9.9 dmg!
+[51.1s] ⚡ Thor jumps!
+[52.0s] 🏹 Apollo jumps!
+[52.2s] 🏹 Apollo fires Celestial Lance!
+[52.3s] 💫 hits ⚡ Thor for 9.9 dmg!
+[52.9s] ⚡ Thor jumps!
+[53.6s] 🏹 Apollo jumps!
+[53.9s] 🏹 Apollo fires Celestial Lance!
+[53.9s] 💫 hits ⚡ Thor for 9.9 dmg!
+[54.8s] ⚡ Thor jumps!
+[55.3s] 🏹 Apollo jumps!
+[55.5s] 🏹 Apollo fires Celestial Lance!
+[55.6s] 💫 hits ⚡ Thor for 9.9 dmg!
+[55.9s] ⚡ Thor hits with Durandal for 10.4 dmg!
+[56.6s] ⚡ Thor jumps!
+[56.9s] 🏹 Apollo jumps!
+[57.8s] ⚡ Thor hits with Durandal for 10.4 dmg!
+[58.5s] ⚡ Thor jumps!
+[58.6s] 🏹 Apollo jumps!
+[59.6s] ⚡ Thor hits with Durandal for 10.4 dmg!
+[60.0s] TIME OUT! 🏹 Apollo WINS by HP!
+
+════════════════════════════════════════════════════════════════════════════════
+Battle Duration: 60.0s
+Final HP: ⚡ 371 | 🏹 558
