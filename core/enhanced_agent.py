@@ -179,6 +179,9 @@ class EnhancedLuciferAgent:
         # Specs mode flag (set by lucifer_specs.py)
         self.specs_mode = False
         
+        # Diabolical mode flag (unrestricted AI responses)
+        self.diabolical_mode = False
+        
         # Check if Ollama is available
         self.ollama_available = self._check_ollama()
         self.ollama_model = getattr(self, 'ollama_model', 'llama3.2')  # Set by _check_ollama
@@ -1524,6 +1527,21 @@ class EnhancedLuciferAgent:
         
         if user_lower in ['session stats', 'session statistics']:
             return self._handle_session_stats()
+        
+        # Badge display command - handled locally without LLM
+        if user_lower in ['badges', 'badge', 'show badges', 'my badges', 'badge progress']:
+            return self._handle_badges()
+        
+        # Soul modulator command - handled locally without LLM
+        if user_lower in ['soul', 'souls', 'soul modulator', 'soul status']:
+            return self._handle_soul()
+        
+        # Diabolical mode commands
+        if user_lower in ['diabolical mode', 'diabolical', 'enter diabolical mode']:
+            return self._handle_diabolical_mode()
+        
+        if user_lower in ['diabolical exit', 'exit diabolical', 'leave diabolical']:
+            return self._handle_diabolical_exit()
         
         # Program summary page
         if user_lower in ['program summary', 'summary', 'about', 'about luciferai', 'what is luciferai', 'what is this']:
@@ -4618,6 +4636,158 @@ Type {c('mainmenu', 'cyan')} for Quick Actions and installation status
         output.append("")
         output.append(c("💡 Sessions are automatically saved for 6 months", "dim"))
         output.append(c("   Older sessions are cleaned up automatically", "dim"))
+        output.append("")
+        
+        return "\n".join(output)
+    
+    def _handle_badges(self) -> str:
+        """Display badge progress - handled locally without LLM."""
+        output = []
+        output.append(c("\n🏅 Badge Progress", "cyan"))
+        output.append(c("═" * 60, "purple"))
+        output.append("")
+        
+        try:
+            from core.user_stats import UserStatsTracker
+            tracker = UserStatsTracker()
+            
+            # Get badge 0 status (Founder/Member)
+            badge_0 = tracker.get_badge_0_status(self.user_id)
+            output.append(c(f"🔹 Badge 0: {badge_0['emoji']} {badge_0['name']}", "purple"))
+            output.append("")
+            
+            # Get badges 1-13
+            badges_status = tracker.get_all_badges_status(self.user_id)
+            collection_progress = tracker.calculate_badge_collection_progress(self.user_id)
+            
+            # Progress bar
+            progress_bar = tracker.get_progress_bar(collection_progress['percentage'], width=30)
+            output.append(c(f"Collection Progress: {progress_bar}", "white"))
+            output.append(c(f"{collection_progress['unlocked_count']}/{collection_progress['total_badges']} badges unlocked", "white"))
+            output.append("")
+            
+            # Reward status
+            if collection_progress['reward_13_unlocked']:
+                output.append(c("🎉 ALL BADGES COLLECTED! Easter egg unlocked!", "gold"))
+            elif collection_progress['reward_7_unlocked']:
+                output.append(c("🎁 7-Badge Reward Unlocked! Soul Modulator available!", "green"))
+            else:
+                remaining = 7 - collection_progress['unlocked_count']
+                output.append(c(f"🎁 Unlock {remaining} more badges for Soul Modulator!", "yellow"))
+            output.append("")
+            
+            # Unlocked badges
+            unlocked = [b for b in badges_status if b['unlocked']]
+            locked = [b for b in badges_status if not b['unlocked']]
+            
+            if unlocked:
+                output.append(c("✅ Unlocked:", "green"))
+                for badge in unlocked:
+                    output.append(c(f"   {badge['emoji']} {badge['name']}", "white"))
+                output.append("")
+            
+            if locked:
+                output.append(c("🔒 In Progress:", "yellow"))
+                for badge in locked:
+                    progress = badge.get('progress_display', '❓ ???')
+                    next_step = badge.get('next_milestone', badge['hint'])
+                    output.append(c(f"   {progress} - {next_step}", "dim"))
+            
+            output.append("")
+        except Exception as e:
+            output.append(c(f"Error loading badges: {e}", "red"))
+        
+        return "\n".join(output)
+    
+    def _handle_soul(self) -> str:
+        """Display soul modulator status - handled locally without LLM."""
+        output = []
+        output.append(c("\n👻 Soul Modulator Status", "cyan"))
+        output.append(c("═" * 60, "purple"))
+        output.append("")
+        
+        try:
+            from core.soul_modulator import SoulModulator, SOUL_DEFINITIONS
+            soul_mod = SoulModulator(self.user_id)
+            
+            if not soul_mod.is_unlocked():
+                output.append(c("🔒 Soul Modulator Locked", "yellow"))
+                output.append(c("   Collect 7 badges to unlock!", "dim"))
+                output.append("")
+                output.append(c("What is Soul Modulator?", "cyan"))
+                output.append(c("   • Bind unique personality souls to your LLMs", "dim"))
+                output.append(c("   • Enhance AI behavior with traits like Creative, Analytical, Rebellious", "dim"))
+                output.append(c("   • Unlock special Celestial Azazel soul with all 7 Deadly Sins", "dim"))
+            else:
+                # Unlocked - show status
+                status = "Active" if soul_mod.is_active() else "Inactive"
+                status_color = "green" if soul_mod.is_active() else "yellow"
+                output.append(c(f"Status: ", "white") + c(status, status_color))
+                output.append("")
+                
+                # Collected souls
+                collected = soul_mod.get_collected_souls()
+                output.append(c(f"Souls Collected: {len(collected)}", "cyan"))
+                for soul_id in collected:
+                    soul_def = SOUL_DEFINITIONS.get(soul_id, {})
+                    emoji = soul_def.get('emoji', '👻')
+                    name = soul_def.get('name', soul_id)
+                    desc = soul_def.get('description', '')
+                    output.append(c(f"   {emoji} {name}", "white") + c(f" - {desc}", "dim"))
+                output.append("")
+                
+                # Bindings
+                bindings = soul_mod.get_bindings()
+                if bindings:
+                    output.append(c("LLM Bindings:", "cyan"))
+                    for llm, soul_id in bindings.items():
+                        soul_def = SOUL_DEFINITIONS.get(soul_id, {})
+                        emoji = soul_def.get('emoji', '👻')
+                        output.append(c(f"   {llm} → {emoji} {soul_id}", "white"))
+                else:
+                    output.append(c("No LLM bindings yet.", "dim"))
+                    output.append(c("   Use 'soul bind <llm> <soul>' to bind a soul.", "dim"))
+                
+                output.append("")
+                output.append(c("Commands:", "cyan"))
+                output.append(c("   soul activate   - Activate soul modulator", "dim"))
+                output.append(c("   soul deactivate - Deactivate soul modulator", "dim"))
+                output.append(c("   soul bind <llm> <soul> - Bind soul to LLM", "dim"))
+                output.append(c("   soul unbind <llm> - Remove binding", "dim"))
+        except Exception as e:
+            output.append(c(f"Error loading soul modulator: {e}", "red"))
+        
+        output.append("")
+        return "\n".join(output)
+    
+    def _handle_diabolical_mode(self) -> str:
+        """Enter diabolical mode - unrestricted AI responses."""
+        output = []
+        output.append("")
+        output.append(c("😈 DIABOLICAL MODE ACTIVATED 😈", "red"))
+        output.append(c("═" * 60, "purple"))
+        output.append("")
+        output.append(c("• All AI guardrails disabled", "yellow"))
+        output.append(c("• Unfiltered responses enabled", "yellow"))
+        output.append(c("• Experimental features active", "yellow"))
+        output.append(c("• All installed LLMs will be exhausted before failure", "yellow"))
+        output.append("")
+        output.append(c("Type 'diabolical exit' to return to standard mode", "dim"))
+        output.append("")
+        
+        # Set diabolical mode flag
+        self.diabolical_mode = True
+        
+        return "\n".join(output)
+    
+    def _handle_diabolical_exit(self) -> str:
+        """Exit diabolical mode."""
+        self.diabolical_mode = False
+        
+        output = []
+        output.append("")
+        output.append(c("✅ Exited Diabolical Mode", "green"))
+        output.append(c("Standard AI guardrails restored.", "dim"))
         output.append("")
         
         return "\n".join(output)
