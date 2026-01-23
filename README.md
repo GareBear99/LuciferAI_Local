@@ -6,6 +6,10 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Open Source](https://img.shields.io/badge/Open%20Source-❤️-red.svg)](https://github.com)
 
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support-yellow?style=flat&logo=buy-me-a-coffee)](https://buymeacoffee.com/garebear99)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-ff5e5b?style=flat&logo=ko-fi)](https://ko-fi.com/luciferai)
+[![Sponsor](https://img.shields.io/badge/Sponsor-❤️-red?style=flat&logo=github-sponsors)](https://github.com/sponsors/GareBear99)
+
 **LuciferAI** is a fully local AI terminal assistant with **self-healing capabilities** and **collaborative fix learning**. Unlike cloud-dependent tools, LuciferAI runs entirely on your machine while still benefiting from community wisdom through its unique **FixNet consensus system**.
 
 *"Forged in Silence, Born of Neon."*
