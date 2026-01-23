@@ -9599,6 +9599,75 @@ Show all 85+ supported models organized by tier.
         # Get best model
         best_model = self._get_best_available_model()
         
+        # If NO models available, check template consensus first
+        if not best_model:
+            print()
+            print(c("⚠️  No LLM available - checking template consensus...", "yellow"))
+            print()
+            
+            # Try to find relevant template from consensus
+            try:
+                from core.smart_template_manager import SmartTemplateManager
+                template_mgr = SmartTemplateManager()
+                
+                # Search for relevant templates
+                matches = template_mgr.search_relevant_templates(user_input, top_k=3)
+                
+                if matches and matches[0]['relevance_score'] >= 6.0:
+                    best_match = matches[0]
+                    print(c(f"📚 Found consensus template: {best_match['name']}", "cyan"))
+                    print(c(f"   Relevance: {best_match['relevance_score']}/10", "dim"))
+                    print(c(f"   Description: {best_match['description']}", "dim"))
+                    print()
+                    
+                    # Use template for file creation
+                    file_path = task_result.args.get('file')
+                    if file_path:
+                        from pathlib import Path
+                        Path(file_path).parent.mkdir(parents=True, exist_ok=True)
+                        Path(file_path).write_text(best_match['template'])
+                        
+                        print(c(f"✅ Created {Path(file_path).name} from template", "green"))
+                        print(c(f"   Template: {best_match['name']}", "dim"))
+                        print()
+                        
+                        return ""
+                    else:
+                        print(c("❌ Could not determine file path", "red"))
+                else:
+                    if matches:
+                        print(c(f"💡 Found template but relevance too low ({matches[0]['relevance_score']}/10)", "yellow"))
+                    else:
+                        print(c("💡 No relevant templates found in consensus", "yellow"))
+                    print()
+            except Exception as e:
+                print(c(f"⚠️  Template search failed: {e}", "yellow"))
+                print()
+            
+            # Fallback: Show installation recommendation
+            print(c("💡 Recommendation: Install TinyLlama for AI-powered script generation", "yellow"))
+            print(c("   Run: ./setup_bundled_models.sh", "dim"))
+            print()
+            print(c("📝 Alternative: Create file manually with template suggestion", "cyan"))
+            print()
+            
+            # Create empty file with comment
+            file_path = task_result.args.get('file')
+            if file_path:
+                from pathlib import Path
+                Path(file_path).parent.mkdir(parents=True, exist_ok=True)
+                
+                # Create with helpful comment
+                comment_text = f"# TODO: {user_input}\n# No LLM available - please implement manually\n# Or install TinyLlama: ./setup_bundled_models.sh\n\n"
+                Path(file_path).write_text(comment_text)
+                
+                print(c(f"📝 Created placeholder: {Path(file_path).name}", "green"))
+                print(c(f"   Location: {file_path}", "dim"))
+                print(c(f"   Contains: TODO comment with task description", "dim"))
+                print()
+            
+            return ""
+        
         # Show bypass routing
         if best_model:
             from core.model_tiers import get_model_tier
