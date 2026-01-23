@@ -33,7 +33,7 @@ RESET = '\033[0m'
 LUCIFER_HOME = Path.home() / ".luciferai"
 FALLBACK_ENV = LUCIFER_HOME / "envs" / "lucifer_env"
 FALLBACK_BIN = Path("/tmp/lucifer_fallback_bin")
-MIRROR_URL = "https://github.com/FreshOfBreatheAir/LuciferAI-Mirror/releases"
+MIRROR_URL = "https://github.com/GareBear99/LuciferAI_Mirror/releases"
 REQUIREMENTS_FILE = LUCIFER_HOME / "data" / "requirements.txt"
 
 # Logs

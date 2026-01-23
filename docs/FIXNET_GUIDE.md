@@ -250,8 +250,8 @@ dictionary.create_branch(
 
 1. **Configure GitHub Remote** (one-time)
    ```bash
-   cd ~/.luciferai/fixnet
-   git remote add origin https://github.com/YOUR_USERNAME/luciferai-fixnet.git
+cd ~/.luciferai/fixnet
+   git remote add origin https://github.com/GareBear99/LuciferAI_FixNet.git
    git branch -M main
    git push -u origin main
    ```
@@ -450,6 +450,6 @@ Error → Local Dictionary → Best Fix (0.92 score)
 ---
 
 For issues or contributions:
-- GitHub: https://github.com/FreshOfBreatheAir/luciferai-fixnet
+- GitHub: https://github.com/GareBear99/LuciferAI_FixNet
 - Docs: This file
 - License: MIT

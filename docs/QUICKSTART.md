@@ -140,11 +140,8 @@ fixnet.print_statistics()
 ```bash
 cd ~/.luciferai/fixnet
 
-# Add your GitHub repo
-git remote add origin https://github.com/YOUR_USERNAME/luciferai-fixnet.git
-
-# Or use the official public repo
-git remote add origin https://github.com/FreshOfBreatheAir/luciferai-fixnet.git
+# Add your GitHub repo (or use the official one)
+git remote add origin https://github.com/GareBear99/LuciferAI_FixNet.git
 
 # Push your fixes
 git push -u origin master

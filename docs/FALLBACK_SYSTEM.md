@@ -341,7 +341,7 @@ Emergency mode runs without admin privileges to prevent security risks.
 ### **Trusted Mirror Sources**
 
 Only verified mirror repositories are used:
-- GitHub releases: `https://github.com/FreshOfBreatheAir/LuciferAI-Mirror/releases`
+- GitHub releases: `https://github.com/GareBear99/LuciferAI_Mirror/releases`
 
 ---
 
@@ -468,8 +468,8 @@ Persistent environment issues.
 
 ## Credits
 
-**Design:** FreshOfBreatheAir  
-**System:** LuciferAI  
+**Design:** GareBear99  
+**System:** LuciferAI
 **Version:** 1.0  
 
 **Inspired by:** Military-grade fault tolerance systems

@@ -28,8 +28,8 @@ AUTH_FILE = LUCIFER_HOME / "data" / "auth.key"
 COMMIT_LOG = SYNC_DIR / "commit_links.json"
 FIX_DICTIONARY = LUCIFER_HOME / "data" / "fix_dictionary.json"
 
-# GitHub repo (user should set their own)
-GITHUB_REPO = "https://github.com/FreshOfBreatheAir/luciferai-fixnet"
+# GitHub repo for FixNet sync
+GITHUB_REPO = "https://github.com/GareBear99/LuciferAI_FixNet"
 FIXNET_LOCAL = LUCIFER_HOME / "fixnet"
 
 # Create directories
