@@ -45,11 +45,24 @@ class ConsensusDictionary:
     - Reputation-weighted scoring
     """
     
-    def __init__(self, local_dict_path: Path, remote_refs_path: Path, user_id: str = None):
-        self.local_dict = self._load_json(local_dict_path)
-        self.remote_refs = self._load_json(remote_refs_path)
-        self.consensus_cache = {}
+    def __init__(self, relevance_dict: 'RelevanceDictionary' = None, user_id: str = None):
+        """
+        Initialize consensus dictionary with reference to relevance_dictionary.
+        
+        Args:
+            relevance_dict: RelevanceDictionary instance (storage layer)
+            user_id: Optional user ID
+        """
+        # Storage layer reference (read-only access)
+        self.relevance_dict = relevance_dict
         self.user_id = user_id or "anonymous"
+        
+        # Read-only access to data through relevance_dict
+        self.local_dict = relevance_dict.dictionary if relevance_dict else {}
+        self.remote_refs = relevance_dict.remote_refs if relevance_dict else []
+        
+        # Consensus cache - now persisted!
+        self.consensus_cache = self._load_consensus_cache()
         
         # User reputation tracking
         self.user_reputations = self._load_user_reputations()
@@ -76,6 +89,21 @@ class ConsensusDictionary:
             with open(path) as f:
                 return json.load(f)
         return {}
+    
+    def _load_consensus_cache(self) -> Dict[str, Dict]:
+        """Load consensus cache from disk (persisted)."""
+        if self.relevance_dict:
+            cache_path = Path.home() / ".luciferai" / "data" / "consensus_cache.json"
+            return self._load_json(cache_path)
+        return {}
+    
+    def _save_consensus_cache(self):
+        """Save consensus cache to disk for persistence across restarts."""
+        if self.relevance_dict:
+            cache_path = Path.home() / ".luciferai" / "data" / "consensus_cache.json"
+            cache_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(cache_path, 'w') as f:
+                json.dump(self.consensus_cache, f, indent=2)
     
     def _load_user_reputations(self) -> Dict[str, Dict]:
         """Load user reputation scores."""
@@ -323,6 +351,9 @@ class ConsensusDictionary:
         self.consensus_cache[fix_hash]['attempts'] += 1
         if succeeded:
             self.consensus_cache[fix_hash]['successes'] += 1
+        
+        # Persist cache to disk
+        self._save_consensus_cache()
         
         return result
     

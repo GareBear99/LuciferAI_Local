@@ -363,11 +363,13 @@ Interactive guide for precision laser fabrication using xTool systems. Covers de
 
 ### **LuciferAI + Robotics Integration**
 
-**Future Development:**
-- `lucifer robot design [spec]` - Generate CAD models and bill of materials
-- `lucifer fabricate [component]` - Interface with xTool laser cutters
-- `lucifer sim [robot]` - Physics simulation for robot testing
-- `lucifer calibrate [actuator]` - Auto-tune servo/motor parameters
+**Future Development Roadmap:**
+- `lucifer robot design [spec]` - Generate CAD models and bill of materials (planned)
+- `lucifer fabricate [component]` - Interface with xTool laser cutters (planned)
+- `lucifer sim [robot]` - Physics simulation for robot testing (planned)
+- `lucifer calibrate [actuator]` - Auto-tune servo/motor parameters (planned)
+
+*Note: These commands are in the design phase. Current robotics projects focus on research, documentation, and proof-of-concept development.*
 
 **Why This Matters:**
 LuciferAI's self-healing fix system (FixNet) can apply to **physical systems**, not just code:
@@ -848,6 +850,8 @@ LuciferAI > fix my_broken_script.py
 ## 📚 Dynamic Command Quickselect
 
 **Jump to any command instantly:**
+
+📘 **[Complete Command Reference](docs/COMMANDS.md)** — Full documentation of all 80+ commands
 
 <details>
 <summary><b>🗂️ File Operations</b> (7 commands)</summary>

@@ -11,6 +11,7 @@ from typing import Dict, Any, Optional, Tuple
 from fixnet_uploader import FixNetUploader
 from relevance_dictionary import RelevanceDictionary
 from smart_upload_filter import SmartUploadFilter
+from consensus_dictionary import ConsensusDictionary
 
 PURPLE = "\033[35m"
 GREEN = "\033[32m"
@@ -31,15 +32,26 @@ class IntegratedFixNet:
     def __init__(self, user_id: Optional[str] = None):
         print(f"{PURPLE}🌐 Initializing Integrated FixNet...{RESET}")
         
-        # Initialize components
+        # Initialize components (order matters!)
         self.uploader = FixNetUploader(user_id=user_id)
+        
+        # Storage layer: RelevanceDictionary (owns all file I/O)
         self.dictionary = RelevanceDictionary(user_id=self.uploader.user_id)
+        
+        # Analytics layer: ConsensusDictionary (read-only, calculates scores)
+        self.consensus = ConsensusDictionary(
+            relevance_dict=self.dictionary,
+            user_id=self.uploader.user_id
+        )
+        
+        # Upload filter
         self.smart_filter = SmartUploadFilter(self.dictionary, self.uploader)
         
         # Wire components together
         self.uploader.smart_filter = self.smart_filter
         
-        print(f"{GREEN}✅ FixNet ready (User: {self.uploader.user_id}){RESET}\n")
+        print(f"{GREEN}✅ FixNet ready (User: {self.uploader.user_id}){RESET}")
+        print(f"{BLUE}   📊 Consensus tracking: enabled{RESET}\n")
     
     def apply_fix(self,
                   script_path: str,

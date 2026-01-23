@@ -25,10 +25,12 @@ RESET = "\033[0m"
 LUCIFER_HOME = Path.home() / ".luciferai"
 DICT_FILE = LUCIFER_HOME / "data" / "fix_dictionary.json"
 LOCAL_BRANCHES = LUCIFER_HOME / "data" / "user_branches.json"
-REMOTE_REFS = LUCIFER_HOME / "sync" / "remote_fix_refs.json"
+# UNIFIED: Single source of truth for remote refs
 FIXNET_REFS = LUCIFER_HOME / "fixnet" / "refs.json"
 CONTEXT_BRANCHES = LUCIFER_HOME / "data" / "context_branches.json"
 SCRIPT_COUNTERS = LUCIFER_HOME / "data" / "script_counters.json"
+# DEPRECATED: Old location - migrated to FIXNET_REFS
+REMOTE_REFS_DEPRECATED = LUCIFER_HOME / "sync" / "remote_fix_refs.json"
 
 # Ensure directories
 DICT_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -78,23 +80,40 @@ class RelevanceDictionary:
             json.dump(self.branches, f, indent=2)
     
     def _load_remote_refs(self) -> List[Dict]:
-        """Load remote fix references from FixNet."""
+        """
+        Load remote fix references from FixNet.
+        UNIFIED: Single source of truth at ~/.luciferai/fixnet/refs.json
+        Migrates from deprecated location if needed.
+        """
         refs = []
         
-        # Load from local FixNet repo
+        # Load from UNIFIED location
         if FIXNET_REFS.exists():
             with open(FIXNET_REFS) as f:
                 refs = json.load(f)
         
-        # Also check cached remote refs
-        if REMOTE_REFS.exists():
-            with open(REMOTE_REFS) as f:
-                cached = json.load(f)
-                # Merge unique refs
-                ref_hashes = {r['fix_hash'] for r in refs}
-                for cached_ref in cached:
-                    if cached_ref['fix_hash'] not in ref_hashes:
-                        refs.append(cached_ref)
+        # MIGRATION: Check deprecated location and merge
+        if REMOTE_REFS_DEPRECATED.exists():
+            with open(REMOTE_REFS_DEPRECATED) as f:
+                deprecated_refs = json.load(f)
+                
+                if deprecated_refs:
+                    # Merge unique refs from deprecated location
+                    ref_hashes = {r.get('fix_hash') for r in refs if r.get('fix_hash')}
+                    migrated_count = 0
+                    
+                    for dep_ref in deprecated_refs:
+                        if dep_ref.get('fix_hash') and dep_ref['fix_hash'] not in ref_hashes:
+                            refs.append(dep_ref)
+                            ref_hashes.add(dep_ref['fix_hash'])
+                            migrated_count += 1
+                    
+                    # Save merged refs to unified location
+                    if migrated_count > 0:
+                        FIXNET_REFS.parent.mkdir(parents=True, exist_ok=True)
+                        with open(FIXNET_REFS, 'w') as f:
+                            json.dump(refs, f, indent=2)
+                        print(f"{GREEN}🔄 Migrated {migrated_count} refs from deprecated location to {FIXNET_REFS}{RESET}")
         
         return refs
     
@@ -185,7 +204,10 @@ class RelevanceDictionary:
     def _check_hash_conflicts(self, fix_hash: str, exclude_key: str = None) -> bool:
         """
         Check if a hash conflicts with existing fixes in LOCAL and GLOBAL consensus.
-        Cross-checks both local dictionary and remote fixes.
+        Cross-checks:
+        1. Local dictionary fixes
+        2. Remote FixNet refs (from all sources)
+        3. Consensus dictionary remote refs
         
         Args:
             fix_hash: Hash to check
@@ -194,7 +216,7 @@ class RelevanceDictionary:
         Returns:
             True if conflict exists, False otherwise
         """
-        # Check LOCAL consensus
+        # Check LOCAL dictionary
         for key, fixes in self.dictionary.items():
             if exclude_key and key == exclude_key:
                 continue
@@ -202,10 +224,13 @@ class RelevanceDictionary:
                 if fix.get('fix_hash') == fix_hash:
                     return True
         
-        # Check GLOBAL (remote) consensus
+        # Check REMOTE refs (loaded from all sources)
         for remote_fix in self.remote_refs:
             if remote_fix.get('fix_hash') == fix_hash:
                 return True
+        
+        # NOTE: remote_refs already includes both FIXNET_REFS and REMOTE_REFS
+        # from _load_remote_refs() which merges them
         
         return False
     
@@ -854,14 +879,16 @@ class RelevanceDictionary:
         """
         Sync local dictionary with remote FixNet references.
         Updates relevance scores based on collective usage.
+        UNIFIED: Uses single source at ~/.luciferai/fixnet/refs.json
         """
         print(f"{BLUE}🔄 Syncing with FixNet...{RESET}")
         
-        # Reload remote refs
+        # Reload remote refs (includes migration from deprecated location)
         self.remote_refs = self._load_remote_refs()
         
-        # Cache for faster searches
-        with open(REMOTE_REFS, 'w') as f:
+        # Save to UNIFIED location
+        FIXNET_REFS.parent.mkdir(parents=True, exist_ok=True)
+        with open(FIXNET_REFS, 'w') as f:
             json.dump(self.remote_refs, f, indent=2)
         
         print(f"{GREEN}✅ Synced {len(self.remote_refs)} remote fixes{RESET}")
