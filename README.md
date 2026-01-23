@@ -198,16 +198,123 @@ LuciferAI > create a Python script that sorts a list
 LuciferAI > fix my_broken_script.py
 ```
 
-### Key Commands
+---
 
+## 📚 Complete Command Reference
+
+### 📁 File Operations
+| Command | Description | Example |
+|---------|-------------|----------|
+| `copy <src> <dest>` | Copy files/folders | `copy file.txt backup.txt` |
+| `move <src> <dest>` | Move files/folders | `move old.txt new.txt` |
+| `delete <target>` | Move to trash with confirmation | `delete old_file.txt` |
+| `open <file>` | Open with app selection | `open README.md` |
+| `read <file>` | Display file contents | `read config.json` |
+| `list <path>` | List directory contents | `list ~/Documents` |
+| `find <pattern>` | Search for files | `find *.py` |
+
+### 🏗️ Build Commands
+| Command | Description | Example |
+|---------|-------------|----------|
+| `create folder <name>` | Create folder on Desktop | `create folder myproject` |
+| `create file <name>` | Create file with template | `create file script.py` |
+
+### 🔍 Daemon/Watcher & Fix
+| Command | Description | Example |
+|---------|-------------|----------|
+| `run <script>` | Run script with smart finding | `run test_script.py` |
+| `fix <script>` | Fix script using consensus | `fix broken_script.py` |
+| `daemon watch <script>` | Watch script for errors | `daemon watch calculator.py` |
+
+### 🤖 AI Model Management
 | Command | Description |
 |---------|-------------|
-| `help` | Show available commands |
-| `llm list` | Show available models |
-| `llm enable <model>` | Enable a specific model |
-| `llm status` | Show current model status |
-| `clear history` | Clear conversation history |
-| `exit` / `quit` | Exit LuciferAI |
+| `llm list` | Show installed models |
+| `llm list all` | Show ALL 85+ supported models |
+| `llm enable <model>` | Enable a model |
+| `llm disable <model>` | Disable a model |
+| `llm enable all` | Enable all installed models |
+| `llm enable tier0-3` | Enable all models in a tier |
+| `backup models` | Set backup models directory |
+
+### 📦 Model Installation
+| Command | Description | Size |
+|---------|-------------|------|
+| `install core models` | Install 4 essential models | ~20-30 GB |
+| `install all models` | Install ALL 85+ models | ~350-450 GB |
+| `install tier 0` | Install Tier 0 (Basic) | ~3-4 GB |
+| `install tier 1` | Install Tier 1 (General) | ~30-35 GB |
+| `install tier 2` | Install Tier 2 (Advanced) | ~50-60 GB |
+| `install tier 3` | Install Tier 3 (Expert) | ~80-100 GB |
+| `install tier 4` | Install Tier 4 (Ultra) | ~200-250 GB |
+
+### 📝 Session Management
+| Command | Description |
+|---------|-------------|
+| `session list` | List recent sessions (last 10) |
+| `session open <id>` | View full session log |
+| `session info` | Current session statistics |
+| `session stats` | Overall session statistics |
+
+### 🐍 Virtual Environments
+| Command | Description |
+|---------|-------------|
+| `environments` / `envs` | List ALL virtual environments |
+| `env search <query>` | Search for specific environments |
+| `activate <env>` | Activate an environment |
+
+### 🔗 GitHub Sync
+| Command | Description |
+|---------|-------------|
+| `github link` | Link GitHub account |
+| `github upload [project]` | Upload project to GitHub |
+| `github update [project]` | Update existing repo |
+| `github status` | Show GitHub status |
+| `github projects` | List your repositories |
+
+### 🎮 Soul Combat System
+- **5 Rarity Tiers**: Common, Uncommon, Angelic, Demonic, Celestial
+- **Combat Stats**: Attack, Defense, Base Damage, Speed, Weapons
+- **Leveling**: Souls level up by processing requests, fixing scripts, using templates
+- **Weapons**: Rare (Angelic), Legendary (Demonic), Divine (Celestial)
+- **Max Levels**: Common 50, Uncommon 99, Angelic 256, Demonic 999, Celestial 9999
+
+### 🏅 Badge System (13 Achievements)
+| Badge | Requirement | Levels |
+|-------|-------------|--------|
+| 🌱 First Contribution | 20 contributions | 1 |
+| 🌿 Active Contributor | 200 contributions | 4 |
+| 🌳 Veteran Contributor | 1000 contributions | 4 |
+| ⭐ Elite Contributor | 2000 contributions | 4 |
+| 📚 Template Master | 400 templates | 4 |
+| 🔧 Fix Specialist | 400 fixes | 4 |
+| 🌟 Community Favorite | 2000 downloads | 4 |
+| 💎 Quality Contributor | 4.5+ avg rating | 4 |
+| 🌐 First Fix to FixNet | 20 fixes uploaded | 1 |
+| 📦 First Template to FixNet | 20 templates uploaded | 1 |
+| 🔴 Learning Experience | 20 fixes tested by others | 1 |
+| ✅ Problem Solver | 20 successful fixes | 1 |
+| 🚀 Template Pioneer | 20 templates used | 1 |
+
+**Rewards**: 7 badges → Special gift | 13 badges → Easter egg + secret content
+
+### 😈 Diabolical Mode
+| Command | Description |
+|---------|-------------|
+| `diabolical mode` | Enter unrestricted AI mode |
+| `diabolical exit` | Return to standard mode |
+| `soul` | Manage Soul Modulator (unlock at 7 badges) |
+| `demo test tournament` | Run physics combat demo |
+
+### ⌨️ Shortcuts
+| Key | Action |
+|-----|--------|
+| Up/Down arrows | Navigate command history (120 commands) |
+| Ctrl+C | Graceful shutdown |
+| `clear` | Clear screen |
+| `exit` | Exit LuciferAI |
+
+---
 
 ### FixNet Integration
 
