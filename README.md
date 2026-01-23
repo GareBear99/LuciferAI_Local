@@ -545,6 +545,12 @@ LuciferAI > fix my_broken_script.py
 | `create folder <name>` | Create folder on Desktop | `create folder myproject` |
 | `create file <name>` | Create file with template | `create file script.py` |
 
+### 📦 Compression (Zip/Unzip)
+| Command | Description | Example |
+|---------|-------------|----------|
+| `zip <target>` | Create zip archive | `zip my_folder` |
+| `unzip <file>` | Extract zip archive | `unzip archive.zip` |
+
 ### 🔍 Daemon/Watcher & Fix
 | Command | Description | Example |
 |---------|-------------|----------|
@@ -582,6 +588,18 @@ LuciferAI > fix my_broken_script.py
 | `session info` | Current session statistics |
 | `session stats` | Overall session statistics |
 
+### 🖼️ Image Operations (Tier 2+)
+*Requires Mistral or DeepSeek model enabled*
+
+| Command | Description | Example |
+|---------|-------------|----------|
+| `image search <query>` | Search for images | `image search cute cats` |
+| `image download <query>` | Download images (5) | `image download mountains` |
+| `image list` | List cached images | `image list` |
+| `image clear` | Clear image cache | `image clear` |
+
+**Note:** Downloaded images are saved to `~/.luciferai/images/`
+
 ### 🐍 Virtual Environments
 | Command | Description |
 |---------|-------------|
@@ -597,6 +615,13 @@ LuciferAI > fix my_broken_script.py
 | `github update [project]` | Update existing repo |
 | `github status` | Show GitHub status |
 | `github projects` | List your repositories |
+
+### 🌐 FixNet Commands
+| Command | Description |
+|---------|-------------|
+| `fixnet sync` | Sync fixes with FixNet |
+| `fixnet stats` | Show FixNet statistics |
+| `fixnet search <error>` | Search for known fixes |
 
 ### 🎮 Soul Combat System
 - **5 Rarity Tiers**: Common, Uncommon, Angelic, Demonic, Celestial
