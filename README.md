@@ -573,6 +573,365 @@ LuciferAI > fix my_broken_script.py
 
 ---
 
+## 📚 Dynamic Command Quickselect
+
+**Jump to any command instantly:**
+
+<details>
+<summary><b>🗂️ File Operations</b> (7 commands)</summary>
+
+### File Operations
+| Command | Description | Example |
+|---------|-------------|----------|
+| `copy <src> <dest>` | Copy files/folders | `copy file.txt backup.txt` |
+| `move <src> <dest>` | Move files/folders | `move old.txt new.txt` |
+| `delete <target>` | Move to trash with confirmation | `delete old_file.txt` |
+| `open <file>` | Open with app selection | `open README.md` |
+| `read <file>` | Display file contents | `read config.json` |
+| `list <path>` | List directory contents | `list ~/Documents` |
+| `find <pattern>` | Search for files | `find *.py` |
+
+**Works Offline:** ✅ Yes (100% local)  
+**LLM Required:** ❌ No
+
+</details>
+
+<details>
+<summary><b>🏗️ Build & Create</b> (6 commands)</summary>
+
+### Build Commands
+| Command | Description | Example |
+|---------|-------------|----------|
+| `create folder <name>` | Create folder on Desktop | `create folder myproject` |
+| `create file <name>` | Create file with template | `create file script.py` |
+| `write a script that...` | Generate code from description | `write a script that sorts files` |
+| `make me a program...` | Build complete programs | `make me a program that checks weather` |
+| `build something that...` | AI-powered code generation | `build something that downloads images` |
+| `generate <type>` | Template generation | `generate flask app` |
+
+**Works Offline:** ⚠️ Partial (basic templates work, AI needs LLM)  
+**LLM Required:** ⚠️ Optional (templates available without LLM)
+
+</details>
+
+<details>
+<summary><b>🔧 Fix & Run Scripts</b> (5 commands)</summary>
+
+### Script Operations
+| Command | Description | Example |
+|---------|-------------|----------|
+| `run <script>` | Run script with smart finding | `run test_script.py` |
+| `fix <script>` | Fix script using FixNet consensus | `fix broken_script.py` |
+| `daemon watch <script>` | Watch script for errors | `daemon watch calculator.py` |
+| `daemon autofix` | Auto-apply trusted fixes (≥90%) | `daemon autofix` |
+| `autofix <target>` | Apply consensus fixes | `autofix myproject/` |
+
+**Works Offline:** ✅ Yes (FixNet consensus cached)  
+**LLM Required:** ❌ No (uses consensus dictionary)
+
+📘 **[Complete Daemon Workflow Documentation](docs/ADDITIONAL_FEATURES.md#-daemon-watch-workflow)**
+
+</details>
+
+<details>
+<summary><b>🤖 AI Model Management</b> (12 commands)</summary>
+
+### Model Management
+| Command | Description | Size | Time |
+|---------|-------------|------|------|
+| `llm list` | Show installed models | - | - |
+| `llm list all` | Show ALL 85+ supported models | - | - |
+| `llm enable <model>` | Enable a model | - | - |
+| `llm disable <model>` | Disable a model | - | - |
+| `llm enable all` | Enable all installed models | - | - |
+| `llm enable tier0-3` | Enable all models in a tier | - | - |
+| `install core models` | **Recommended!** Install 4 core models | 20-30 GB | 20-40 min |
+| `install tier 0` | Install Tier 0 (TinyLlama) | 3-4 GB | 5-10 min |
+| `install tier 2` | Install Tier 2 (Mistral) | 50-60 GB | 1-2 hours |
+| `install tier 3` | Install Tier 3 (DeepSeek) | 80-100 GB | 2-3 hours |
+| `models info` | Show model architecture | - | - |
+| `backup models` | Set backup models directory | - | - |
+
+**Works Offline:** ✅ Yes (management commands)  
+**LLM Required:** ❌ No
+
+**Core Models** (Recommended):
+- Tier 0: TinyLlama (1.1B) - Fast, 8-12s/test
+- Tier 1: Llama2 (7B) - Balanced, 10-15s/test
+- Tier 2: Mistral (7B) - Advanced, 12-18s/test
+- Tier 3: DeepSeek (6.7B) - Expert, 15-22s/test
+
+</details>
+
+<details>
+<summary><b>🔍 FixNet & Consensus</b> (4 commands)</summary>
+
+### FixNet Commands
+| Command | Description | Example |
+|---------|-------------|----------|
+| `fixnet sync` | Sync with community fixes | `fixnet sync` |
+| `fixnet stats` | View FixNet statistics | `fixnet stats` |
+| `fixnet search <error>` | Search for fixes | `fixnet search NameError` |
+| `dictionary stats` | Show dictionary metrics | `dictionary stats` |
+
+**Works Offline:** ✅ Yes (cached consensus)  
+**LLM Required:** ❌ No
+
+**Stats Shown:**
+- 📊 Local fixes stored
+- 🌐 Remote fixes available
+- 🎯 Smart filter rejection rate
+- 📤 GitHub commits uploaded
+- 👤 User profile & badges
+
+📘 **[FixNet Statistics Documentation](docs/ADDITIONAL_FEATURES.md#-stats-command)**
+
+</details>
+
+<details>
+<summary><b>📦 Package Management</b> (3 commands)</summary>
+
+### Package Operations
+| Command | Description | Example |
+|---------|-------------|----------|
+| `install <package>` | Install Python package | `install requests` |
+| `luci install <pkg>` | Install to LuciferAI global env | `luci install flask` |
+| `modules search <name>` | Search for module | `modules search numpy` |
+
+**Works Offline:** ❌ No (requires package index)  
+**LLM Required:** ❌ No
+
+</details>
+
+<details>
+<summary><b>🌐 Environment Management</b> (4 commands)</summary>
+
+### Virtual Environment Commands
+| Command | Description | Example |
+|---------|-------------|----------|
+| `environments` | List all virtual environments | `environments` |
+| `envs` | Alias for environments | `envs` |
+| `environment search <name>` | Find environment by name | `environment search myproject` |
+| `activate <name>` | Activate environment | `activate myproject` |
+
+**Works Offline:** ✅ Yes (scans local filesystem)  
+**LLM Required:** ❌ No
+
+**Supports:**
+- venv (Python standard)
+- virtualenv
+- conda environments
+- poetry environments
+
+</details>
+
+<details>
+<summary><b>🐙 GitHub Integration</b> (5 commands)</summary>
+
+### GitHub Commands
+| Command | Description | Example |
+|---------|-------------|----------|
+| `github link` | Link GitHub account | `github link` |
+| `github status` | Check GitHub connection | `github status` |
+| `github projects` | List your repositories | `github projects` |
+| `github sync` | Sync fixes to FixNet repo | `github sync` |
+| `admin push` | Admin: Push consensus to repo | `admin push` |
+
+**Works Offline:** ❌ No (requires internet)  
+**LLM Required:** ❌ No
+
+</details>
+
+<details>
+<summary><b>📝 Session Management</b> (4 commands)</summary>
+
+### Session Commands
+| Command | Description | Example |
+|---------|-------------|----------|
+| `session list` | List recent sessions (last 10) | `session list` |
+| `session open <id>` | View full session log | `session open 3` |
+| `session info` | Current session statistics | `session info` |
+| `session stats` | Overall session statistics | `session stats` |
+
+**Works Offline:** ✅ Yes (local storage)  
+**LLM Required:** ❌ No
+
+**Retention:** 6 months of history  
+**Storage:** `~/.luciferai/sessions/`
+
+</details>
+
+<details>
+<summary><b>🧪 Testing & Validation</b> (6 commands)</summary>
+
+### Test Commands
+| Command | Description | Tests |
+|---------|-------------|-------|
+| `test` | Interactive model selection | - |
+| `test tinyllama` | Test TinyLlama specifically | 76 tests |
+| `test mistral` | Test Mistral specifically | 76 tests |
+| `test all` | Test all installed models | 76 tests × N models |
+| `run test` | Run full test suite | 76 tests × N models |
+| `short test` | Quick validation (5 queries) | 5 tests × N models |
+
+**Works Offline:** ✅ Yes (all tests local)  
+**LLM Required:** ⚠️ Tests validate LLM functionality
+
+**Test Categories:**
+- Natural Language (9 tests)
+- Information Commands (8 tests)
+- Complex AI Tasks (14 tests)
+- File Operations (9 tests)
+- Daemon/Fix (6 tests)
+- Model Management (6 tests)
+- Build Tasks (6 tests)
+- Edge Cases (12 tests)
+- Command History (6 tests)
+
+📘 **[Testing System Documentation](docs/ADDITIONAL_FEATURES.md#-test-command-variants)**
+
+</details>
+
+<details>
+<summary><b>🌀 Fan & Thermal Management</b> (4 commands)</summary>
+
+### Fan Control Commands
+| Command | Description | Requires |
+|---------|-------------|----------|
+| `fan start` | Start adaptive fan control | sudo |
+| `fan stop` | Stop daemon & restore auto control | sudo |
+| `fan status` | Check if daemon is running | - |
+| `fan logs` | View last 50 log entries | - |
+
+**Works Offline:** ✅ Yes (local daemon)  
+**LLM Required:** ❌ No  
+**Platform:** macOS (Intel Macs)
+
+**Features:**
+- 6-sensor monitoring (CPU, GPU, MEM, HEAT, SSD, BAT)
+- Battery safety overrides (≥45°C = max cooling)
+- 36 hours thermal history logging
+- Real-time trend detection
+
+📘 **[Fan Management Documentation](docs/ADDITIONAL_FEATURES.md#-fan-management-system)**
+
+</details>
+
+<details>
+<summary><b>🎮 Fun & Social</b> (5 commands)</summary>
+
+### Fun Commands
+| Command | Description | Example |
+|---------|-------------|----------|
+| `badges` | Show your achievement badges | `badges` |
+| `soul` | View soul system status | `soul` |
+| `diabolical mode` | Toggle enhanced mode | `diabolical mode` |
+| `zodiac <sign>` | Get zodiac information | `zodiac scorpio` |
+| `memory` | Show conversation memory | `memory` |
+
+**Works Offline:** ✅ Yes (local data)  
+**LLM Required:** ❌ No
+
+**Badge System:**
+- 13 achievement badges
+- 7 secret sin badges
+- GitHub contribution tracking
+- FixNet reputation system
+
+</details>
+
+<details>
+<summary><b>🖼️ Image Operations</b> (Tier 2+ only)</summary>
+
+### Image Commands
+| Command | Description | Example |
+|---------|-------------|----------|
+| `image search <query>` | Search for images | `image search cute cats` |
+| `image download <query>` | Download images (5) | `image download mountains` |
+| `image generate <prompt>` | Generate AI images (Flux/SD) | `image generate sunset over ocean` |
+
+**Works Offline:** ❌ No (requires internet)  
+**LLM Required:** ✅ Yes (Tier 2+: Mistral or higher)
+
+**Supported Backends:**
+- Google Images (search/download)
+- Flux.1 (generation)
+- Stable Diffusion (generation)
+- Fooocus (advanced generation)
+
+</details>
+
+<details>
+<summary><b>📋 Compression Operations</b> (2 commands)</summary>
+
+### Zip/Unzip Commands
+| Command | Description | Example |
+|---------|-------------|----------|
+| `zip <target>` | Create zip archive | `zip my_folder` |
+| `unzip <file>` | Extract zip archive | `unzip archive.zip` |
+
+**Works Offline:** ✅ Yes (local operation)  
+**LLM Required:** ❌ No
+
+</details>
+
+<details>
+<summary><b>❓ Questions & General Queries</b> (LLM-powered)</summary>
+
+### Natural Language Queries
+| Example | What It Does |
+|---------|-------------|
+| `what is Python?` | Get explanations |
+| `how do I...?` | Get instructions |
+| `show me all Python files` | Natural language file operations |
+| `explain this code` | Code analysis |
+| `what's my IP address?` | System queries |
+
+**Works Offline:** ⚠️ Depends on query type  
+**LLM Required:** ✅ Yes (for AI responses)
+
+**Fallback Behavior:**
+- No LLM: Returns "LLM not available, try installing TinyLlama"
+- Pattern matching: Some queries work via rules (e.g., "list files")
+
+</details>
+
+<details>
+<summary><b>⚙️ System & Core</b> (6 commands)</summary>
+
+### System Commands
+| Command | Description |
+|---------|-------------|
+| `help` | Show command list |
+| `info` | System information |
+| `exit` / `quit` | Exit LuciferAI |
+| `clear` / `cls` | Clear screen |
+| `mainmenu` | Return to main menu |
+| `pwd` | Show current directory |
+
+**Works Offline:** ✅ Yes (all local)  
+**LLM Required:** ❌ No
+
+</details>
+
+---
+
+### 📊 Quick Stats
+
+**Total Commands:** 80+  
+**Work Offline:** 72% (58+ commands)  
+**No LLM Required:** 80% (64+ commands)  
+**Average Response Time:** 15-50ms (without LLM)  
+
+**Most Used Commands:**
+1. `help` - Show all commands
+2. `llm list` - Check installed models
+3. `fix <script>` - Auto-fix errors
+4. `run <script>` - Execute scripts
+5. `create file/folder` - Build structures
+
+---
+
 ## 📚 Complete Command Reference
 
 ### 📁 File Operations

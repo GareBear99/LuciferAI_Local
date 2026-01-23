@@ -261,56 +261,19 @@ def check_and_install_models() -> bool:
     if not missing:
         return True
     
-    print(f"\n{GOLD}LuciferAI needs these components for local AI capabilities.{RESET}")
-    print(f"{DIM}Without them, you can still use LuciferAI but without LLM features.{RESET}")
-    
-    # Prompt for installation
-    try:
-        response = input(f"\n{CYAN}Install missing components? [Y/n]: {RESET}").strip().lower()
-    except (EOFError, KeyboardInterrupt):
-        print(f"\n{DIM}Skipping installation.{RESET}")
-        return True
-    
-    if response in ['n', 'no']:
-        print(f"{DIM}Skipping installation. LLM features may be limited.{RESET}")
-        return True
-    
-    # Create directories
-    print(f"\n{BLUE}[1/3] Creating directories...{RESET}")
-    MODELS_DIR.mkdir(parents=True, exist_ok=True)
-    BIN_DIR.mkdir(parents=True, exist_ok=True)
-    (LUCIFER_HOME / "data").mkdir(parents=True, exist_ok=True)
-    (LUCIFER_HOME / "logs").mkdir(parents=True, exist_ok=True)
-    (LUCIFER_HOME / "envs").mkdir(parents=True, exist_ok=True)
-    (LUCIFER_HOME / "stubs").mkdir(parents=True, exist_ok=True)
-    print(f"{GREEN}   ✅ Directories created{RESET}")
-    
-    # Download llamafile binary
-    if not llamafile_exists:
-        print(f"\n{BLUE}[2/3] Installing llamafile binary...{RESET}")
-        if download_with_progress(LLAMAFILE_URL, llamafile_path, "llamafile"):
-            os.chmod(llamafile_path, 0o755)
-            print(f"{GREEN}   ✅ llamafile installed{RESET}")
-        else:
-            print(f"{RED}   ❌ Failed to install llamafile{RESET}")
-    else:
-        print(f"\n{BLUE}[2/3] llamafile already installed{RESET}")
-    
-    # Download TinyLlama
-    if not tinyllama_exists:
-        print(f"\n{BLUE}[3/3] Installing TinyLlama (670MB)...{RESET}")
-        print(f"{DIM}   This is a one-time download. Please wait...{RESET}")
-        if download_with_progress(TINYLLAMA_URL, tinyllama_path, "TinyLlama"):
-            os.chmod(tinyllama_path, 0o755)
-            print(f"{GREEN}   ✅ TinyLlama installed{RESET}")
-        else:
-            print(f"{RED}   ❌ Failed to install TinyLlama{RESET}")
-    else:
-        print(f"\n{BLUE}[3/3] TinyLlama already installed{RESET}")
-    
-    # Verify
-    print(f"\n{GREEN}💫 Installation complete!{RESET}")
-    print(f"{DIM}   Installed to: {LUCIFER_HOME}{RESET}\n")
+    print(f"\n{GOLD}💡 Recommendation: Install TinyLlama for AI-powered features{RESET}")
+    print(f"{DIM}Without it, LuciferAI works but with limited LLM capabilities.{RESET}")
+    print()
+    print(f"{CYAN}📦 To install TinyLlama (670MB):{RESET}")
+    print(f"{DIM}   Run the setup script:{RESET}")
+    print(f"   {GOLD}./setup_bundled_models.sh{RESET}")
+    print()
+    print(f"{DIM}   Or install manually:{RESET}")
+    print(f"   {GOLD}python3 -c \"from lucifer import download_with_progress; from pathlib import Path; download_with_progress('{TINYLLAMA_URL}', Path.home() / '.luciferai/models/tinyllama-1.1b-chat.llamafile', 'TinyLlama')\"{RESET}")
+    print()
+    print(f"{CYAN}🚀 Continuing without TinyLlama...{RESET}")
+    print(f"{DIM}   LuciferAI will use rule-based command parsing.{RESET}")
+    print()
     
     return True
 
