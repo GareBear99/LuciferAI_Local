@@ -170,6 +170,159 @@
 
 ---
 
+## 🔧 5-Tier OS Fallback System (Self-Healing)
+
+LuciferAI features a **5-tier self-healing fallback system** that ensures the assistant keeps working even when components fail. This is what makes LuciferAI resilient on any system.
+
+### Fallback Tiers
+
+| Tier | Name | Indicator | What It Does |
+|------|------|-----------|---------------|
+| **0** | Native Mode | ✅ Green | All dependencies satisfied, full functionality |
+| **1** | Virtual Environment | 🩹 Cyan | Missing Python packages? Auto-creates venv and installs them |
+| **2** | Mirror Binary | 🔄 Yellow | Missing system tools? Downloads from mirror repository |
+| **3** | Stub Layer | 🧩 Purple | Module crashes? Creates stub to prevent import failures |
+| **4** | Emergency CLI | ☠️ Red | Catastrophic failure? Minimal survival shell with core commands |
+| **💫** | Recovery | 💫 Green | Auto-repair: rebuilds environment and restores to Tier 0 |
+
+### How It Works
+
+```
+Startup
+  │
+  ├─► Check environment (OS, Python, dependencies)
+  │     │
+  │     ├─► All OK → Tier 0: Native Mode ✅
+  │     │
+  │     └─► Missing Python packages?
+  │           ├─► Create venv, install packages → Tier 1 🩹
+  │           │
+  │           └─► Still failing?
+  │                 ├─► Download from mirror → Tier 2 🔄
+  │                 │
+  │                 └─► Import crashes?
+  │                       ├─► Create stub module → Tier 3 🧩
+  │                       │
+  │                       └─► Total failure?
+  │                             └─► Emergency CLI → Tier 4 ☠️
+  │
+  └─► 3+ consecutive fallbacks? → Auto System Repair 💫
+```
+
+### Tier Details
+
+**Tier 1: Virtual Environment Fallback**
+- Detects missing Python packages
+- Creates `~/.luciferai/envs/lucifer_env`
+- Installs critical packages: `colorama`, `requests`, `psutil`
+- Falls back if requirements.txt installation fails
+
+**Tier 2: Mirror Binary Fallback**
+- Detects missing system tools (`git`, `curl`, etc.)
+- Tries package managers in priority order:
+  - macOS: `brew` → `port`
+  - Linux: `apt` → `yum` → `dnf` → `pacman`
+  - Windows: `choco` → `winget`
+- Downloads from mirror repository as last resort
+
+**Tier 3: Stub Layer**
+- Creates placeholder modules for imports that crash
+- Prevents `ImportError` from killing the entire system
+- Stubs log calls but return `None` (graceful degradation)
+
+**Tier 4: Emergency CLI**
+- Minimal survival shell when everything else fails
+- Core commands only: `fix`, `analyze`, `help`, `exit`
+- Saves emergency state to `~/.luciferai/logs/emergency/`
+
+**Recovery: System Repair**
+- Triggers after 3+ consecutive fallbacks
+- 4-step automated recovery:
+  1. Rebuild virtual environment
+  2. Reinstall missing system tools
+  3. Purge broken symbolic links
+  4. Verify system integrity
+- Returns to Tier 0 on success
+
+---
+
+## ⚡ Command Routing (LLM vs Local)
+
+LuciferAI intelligently routes commands - **most commands work WITHOUT the LLM**, ensuring speed and offline functionality.
+
+### Commands That Work WITHOUT LLM
+
+These commands are **instant** and work even if no model is installed:
+
+| Category | Commands |
+|----------|----------|
+| **Core** | `help`, `exit`, `quit`, `clear`, `cls`, `mainmenu` |
+| **Session** | `session list`, `session info`, `session stats`, `session open <id>` |
+| **Models** | `llm list`, `llm enable <model>`, `llm disable <model>`, `models info` |
+| **FixNet** | `fixnet sync`, `fixnet stats` |
+| **GitHub** | `github status`, `github link`, `github projects` |
+| **System** | `environments`, `envs`, `daemon`, `watcher` |
+| **Fun** | `badges`, `soul`, `diabolical mode` |
+| **Files** | `list <path>`, `read <file>`, `find <pattern>` |
+| **Execute** | `run <script>`, `fix <script>` |
+
+### Commands That Use LLM
+
+These require a model but have intelligent fallbacks:
+
+| Type | Example | Fallback Without LLM |
+|------|---------|---------------------|
+| **Questions** | `what is python?` | Returns "LLM not available" message |
+| **Code Generation** | `write a script that...` | Suggests templates or manual creation |
+| **Complex Tasks** | `refactor this function` | Provides manual guidance |
+| **Natural Language** | `show me all big files` | Falls back to pattern matching |
+
+### Routing Flow
+
+```
+User Input
+    │
+    ├─► Exact match? (help, exit, badges, etc.)
+    │     └─► Execute locally (instant) ✅
+    │
+    ├─► File operation? (list, read, copy, etc.)
+    │     └─► Execute with file_tools.py ✅
+    │
+    ├─► Script command? (run, fix)
+    │     └─► Execute with FixNet integration ✅
+    │
+    ├─► Question? (what, how, why, ?)
+    │     └─► Route to LLM (if available)
+    │           ├─► LLM available → Stream response
+    │           └─► No LLM → Helpful fallback message
+    │
+    └─► Creation task? (create, write, build)
+          └─► Route to LLM with step system
+                ├─► LLM available → Multi-step generation
+                └─► No LLM → Template suggestions
+```
+
+### Auto-Install on First Run
+
+If TinyLlama and llamafile aren't installed, LuciferAI prompts:
+
+```
+🔧 LLM Setup Check
+──────────────────────────────────────────────────
+   ● llamafile binary: Not installed
+   ● TinyLlama model:  Not installed (670MB)
+
+LuciferAI needs these components for local AI capabilities.
+Without them, you can still use LuciferAI but without LLM features.
+
+Install missing components? [Y/n]:
+```
+
+- Press **Y** or **Enter**: Downloads and installs (~670MB)
+- Press **n**: Continues with local-only commands
+
+---
+
 ## ✨ Key Features
 
 ### 🧠 Multi-Tier LLM System
