@@ -9384,10 +9384,38 @@ Show all 85+ supported models organized by tier.
                               bool(re.search(r'\bto\b', user_lower))
         
         # Also check if there's an action description (verbs after the connector)
+        # Comprehensive action verb list (FIXED - expanded from 23 to 80+ verbs)
         has_action_verbs = any(verb in user_lower for verb in [
-            'open', 'launch', 'run', 'execute', 'start', 'do', 'perform',
-            'download', 'upload', 'send', 'fetch', 'get', 'post', 'delete', 'browser',
-            'print', 'prints', 'display', 'show', 'output', 'return', 'calculate', 'compute'
+            # Communication
+            'tell', 'tells', 'say', 'says', 'inform', 'notify', 'alert', 'report',
+            # Information
+            'give', 'gives', 'provide', 'provides', 'supply', 'present',
+            # Query/Search
+            'find', 'finds', 'search', 'searches', 'locate', 'locates', 'discover', 'detect', 'identify',
+            # Monitoring
+            'check', 'checks', 'monitor', 'monitors', 'track', 'tracks', 'watch', 'watches', 'observe',
+            # Transformation
+            'convert', 'converts', 'transform', 'transforms', 'change', 'changes', 'modify', 'modifies',
+            'parse', 'parses', 'process', 'processes',
+            # Data Operations
+            'read', 'reads', 'write', 'writes', 'save', 'saves', 'load', 'loads', 'store', 'stores',
+            'retrieve', 'retrieves',
+            # Execution
+            'open', 'opens', 'launch', 'launches', 'run', 'runs', 'execute', 'executes', 'start', 'starts',
+            # Network
+            'download', 'downloads', 'upload', 'uploads', 'send', 'sends', 'fetch', 'fetches',
+            'get', 'gets', 'post', 'posts', 'delete', 'deletes',
+            # Display
+            'print', 'prints', 'display', 'displays', 'show', 'shows', 'output', 'outputs',
+            'return', 'returns', 'render', 'renders',
+            # Calculation
+            'calculate', 'calculates', 'compute', 'computes', 'count', 'counts', 'sum', 'sums',
+            # Manipulation
+            'sort', 'sorts', 'filter', 'filters', 'merge', 'merges', 'split', 'splits',
+            # Browser/Web
+            'browser', 'browse', 'navigate', 'navigates',
+            # System
+            'list', 'lists', 'scan', 'scans', 'analyze', 'analyzes', 'do', 'perform'
         ])
         
         # Script request if: creation + target + (connector + verbs OR just verbs after target)
