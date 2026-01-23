@@ -95,12 +95,12 @@ class IntegratedFixNet:
         
         if auto_upload:
             print(f"\n{BLUE}[2/5] Processing upload...{RESET}")
-            commit_url, was_uploaded = self.uploader.full_fix_upload_flow(
+            commit_url, was_uploaded, fix_hash = self.uploader.full_fix_upload_flow(
                 script_path=script_path,
                 error=error,
                 solution=solution,
                 context=context,
-                inspired_by=inspired_by
+                inspired_by=inspired_by.get('fix_hash') if inspired_by else None
             )
         else:
             print(f"{BLUE}[2/5] Skipping upload (auto_upload=False){RESET}")
@@ -108,14 +108,10 @@ class IntegratedFixNet:
             patch_info = self.uploader.create_fix_patch(script_path, error, solution, context)
             commit_url = None
             was_uploaded = False
+            fix_hash = patch_info['fix_hash']
         
         # Step 5: Add to dictionary
         print(f"\n{BLUE}[3/5] Adding to relevance dictionary...{RESET}")
-        
-        # Get fix hash from patch
-        patch_json = f"{error_type}:{error}:{solution}"
-        import hashlib
-        fix_hash = hashlib.sha256(patch_json.encode()).hexdigest()[:16]
         
         dict_key = self.dictionary.add_fix(
             error_type=error_type,

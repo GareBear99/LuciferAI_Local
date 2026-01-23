@@ -248,7 +248,10 @@ class RelevanceDictionary:
                 if not fix.get('version'):
                     fix['version'] = 1
                 if not fix.get('author_label'):
-                    from core.founder_config import get_author_label
+                    try:
+                        from core.founder_config import get_author_label
+                    except ImportError:
+                        from founder_config import get_author_label
                     fix['author_label'] = get_author_label(fix.get('user_id', self.user_id))
                 
                 # FIX: Missing or invalid hash
@@ -400,8 +403,12 @@ class RelevanceDictionary:
         self._increment_script_counter(script_name, error_type, fix_hash, solution, variation_reason)
         
         # Check if founder and add label
-        from core.founder_config import is_founder, get_author_label
-        from core.time_validator import get_consensus_timestamp
+        try:
+            from core.founder_config import is_founder, get_author_label
+            from core.time_validator import get_consensus_timestamp
+        except ImportError:
+            from founder_config import is_founder, get_author_label
+            from time_validator import get_consensus_timestamp
         
         # Get validated timestamp (only if online)
         ts_info = get_consensus_timestamp()
