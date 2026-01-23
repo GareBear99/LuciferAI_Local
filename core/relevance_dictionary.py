@@ -211,95 +211,83 @@ class RelevanceDictionary:
     
     def cleanup_orphaned_fixes(self):
         """
-        Remove fixes with no keywords/tags from local dictionary.
-        Also validates and regenerates missing/conflicting hash IDs.
-        Shows detailed report of what was removed and why.
+        Migrate and repair fixes - backfill missing keywords, fix hashes.
+        Only removes truly broken fixes (no error_signature AND no solution).
+        Sorts fixes by relevance after cleanup.
         """
-        orphaned_count = 0
-        orphaned_details = []
+        migrated_keywords = 0
         fixed_hashes = 0
+        removed_count = 0
         
         for key in list(self.dictionary.keys()):
             fixes = self.dictionary[key]
-            
-            # Process each fix
             valid_fixes = []
+            
             for fix in fixes:
-                # Check 1: Orphaned (no keywords)
-                if not fix.get('keywords') or len(fix['keywords']) == 0:
-                    orphaned_details.append({
-                        'error_type': fix.get('error_type', 'Unknown'),
-                        'hash': fix.get('fix_hash', 'Unknown')[:12],
-                        'script': fix.get('script_name', 'Unknown'),
-                        'created': fix.get('timestamp', 'Unknown'),
-                        'reason': 'No keywords/tags - unsearchable'
-                    })
-                    orphaned_count += 1
-                    continue  # Skip this fix
+                # Check if fix has enough data to be useful
+                error_sig = fix.get('error_signature', '')
+                solution = fix.get('solution', '')
+                error_type = fix.get('error_type', '')
                 
-                # Check 2: Missing or invalid hash
+                # If no error_signature AND no solution - truly broken, remove
+                if not error_sig and not solution:
+                    removed_count += 1
+                    continue
+                
+                # MIGRATE: Backfill missing keywords
+                if not fix.get('keywords') or len(fix['keywords']) == 0:
+                    keywords = self._extract_keywords_from_fix(error_sig, solution, error_type)
+                    if keywords:
+                        fix['keywords'] = keywords
+                        fix['version'] = fix.get('version', 1) + 1
+                        migrated_keywords += 1
+                
+                # MIGRATE: Backfill missing fields
+                if not fix.get('script_name') and fix.get('script_path'):
+                    fix['script_name'] = Path(fix['script_path']).name
+                if not fix.get('version'):
+                    fix['version'] = 1
+                if not fix.get('author_label'):
+                    from core.founder_config import get_author_label
+                    fix['author_label'] = get_author_label(fix.get('user_id', self.user_id))
+                
+                # FIX: Missing or invalid hash
                 fix_hash = fix.get('fix_hash')
                 if not fix_hash or fix_hash == 'unknown':
-                    # Regenerate hash
-                    new_hash = self._generate_fix_hash(
-                        fix.get('error_signature', ''),
-                        fix.get('solution', ''),
-                        fix.get('user_id', self.user_id)
-                    )
+                    new_hash = self._generate_fix_hash(error_sig, solution, fix.get('user_id', self.user_id))
                     fix['fix_hash'] = new_hash
                     fixed_hashes += 1
                 
-                # Check 3: Hash conflict
+                # FIX: Hash conflict
                 elif self._check_hash_conflicts(fix['fix_hash'], exclude_key=key):
-                    # Hash conflicts - regenerate with timestamp to make unique
                     import time
-                    new_hash = self._generate_fix_hash(
-                        fix.get('error_signature', ''),
-                        fix.get('solution', '') + str(time.time()),
-                        fix.get('user_id', self.user_id)
-                    )
+                    new_hash = self._generate_fix_hash(error_sig, solution + str(time.time()), fix.get('user_id', self.user_id))
                     fix['fix_hash'] = new_hash
                     fixed_hashes += 1
                 
                 valid_fixes.append(fix)
             
-            # Update dictionary with valid fixes
+            # Sort fixes by relevance (highest first)
+            valid_fixes.sort(key=lambda x: x.get('relevance_score', 0), reverse=True)
+            
             if valid_fixes:
                 self.dictionary[key] = valid_fixes
             else:
-                # No valid fixes left for this key - remove it
                 del self.dictionary[key]
         
-        if orphaned_count > 0 or fixed_hashes > 0:
+        # Report
+        if migrated_keywords > 0 or fixed_hashes > 0 or removed_count > 0:
             self._save_dictionary()
-            
-            # Print detailed cleanup report
-            print(f"{YELLOW}🧹 Fix Consensus Cleanup Report:{RESET}")
-            if orphaned_count > 0:
-                print(f"{YELLOW}   Found {orphaned_count} orphaned fix(es){RESET}")
+            print(f"{CYAN}🔧 Fix Dictionary Migration:{RESET}")
+            if migrated_keywords > 0:
+                print(f"{GREEN}   ✅ Backfilled keywords: {migrated_keywords} fixes{RESET}")
             if fixed_hashes > 0:
-                print(f"{CYAN}   Fixed {fixed_hashes} hash ID(s) (missing/conflicting){RESET}")
-            print()
-            
-            # Show orphaned fixes
-            if orphaned_details:
-                for i, detail in enumerate(orphaned_details, 1):
-                    print(f"{RED}   ❌ Fix {i}/{orphaned_count}:{RESET}")
-                    print(f"{CYAN}      Error Type: {detail['error_type']}{RESET}")
-                    print(f"{CYAN}      Hash: {detail['hash']}...{RESET}")
-                    print(f"{CYAN}      Script: {detail['script']}{RESET}")
-                    print(f"{CYAN}      Created: {detail['created'][:10] if len(detail['created']) > 10 else detail['created']}{RESET}")
-                    print(f"{RED}      Reason: {detail['reason']}{RESET}")
-                    print()
-            
-            # Summary
-            if orphaned_count > 0:
-                print(f"{GREEN}   ✅ Removed {orphaned_count} unsearchable fix(es){RESET}")
-            if fixed_hashes > 0:
-                print(f"{GREEN}   ✅ Regenerated {fixed_hashes} hash ID(s){RESET}")
+                print(f"{GREEN}   ✅ Regenerated hashes: {fixed_hashes} fixes{RESET}")
+            if removed_count > 0:
+                print(f"{YELLOW}   ⚠️  Removed broken: {removed_count} fixes{RESET}")
             print()
         
-        return orphaned_count
+        return removed_count
     
     def find_similar_fix(self, error_signature: str, solution: str) -> Optional[str]:
         """
