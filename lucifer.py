@@ -8,6 +8,8 @@ import os
 import readline
 import threading
 import time
+import subprocess
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 
@@ -144,8 +146,145 @@ def print_banner():
     print(f"{GOLD}💡 Type 'help' to see what I can do, 'exit' to quit{RESET}\n")
 
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# AUTO-INSTALL: Check and install TinyLlama + llamafile on startup
+# ═══════════════════════════════════════════════════════════════════════════════
+
+LUCIFER_HOME = Path.home() / ".luciferai"
+MODELS_DIR = LUCIFER_HOME / "models"
+BIN_DIR = LUCIFER_HOME / "bin"
+
+# Model URLs
+TINYLLAMA_URL = "https://huggingface.co/jartine/TinyLlama-1.1B-Chat-v1.0-GGUF/resolve/main/TinyLlama-1.1B-Chat-v1.0.Q4_K_M.llamafile"
+TINYLLAMA_FILE = "tinyllama-1.1b-chat.llamafile"
+LLAMAFILE_URL = "https://github.com/Mozilla-Ocho/llamafile/releases/download/0.8.13/llamafile-0.8.13"
+LLAMAFILE_FILE = "llamafile"
+
+
+def download_with_progress(url: str, dest: Path, description: str) -> bool:
+    """Download a file with progress indicator."""
+    try:
+        print(f"{BLUE}   Downloading {description}...{RESET}")
+        print(f"{DIM}   URL: {url[:60]}...{RESET}")
+        
+        # Use curl for better progress (if available)
+        if os.system("which curl > /dev/null 2>&1") == 0:
+            result = subprocess.run(
+                ["curl", "-L", "-o", str(dest), url, "--progress-bar"],
+                capture_output=False
+            )
+            if result.returncode == 0:
+                return True
+        
+        # Fallback to urllib
+        print(f"{DIM}   This may take a few minutes...{RESET}")
+        urllib.request.urlretrieve(url, dest)
+        return True
+        
+    except Exception as e:
+        print(f"{RED}   ❌ Download failed: {e}{RESET}")
+        return False
+
+
+def check_and_install_models() -> bool:
+    """
+    Check if TinyLlama and llamafile are installed.
+    If not, prompt user to install them.
+    Returns True if models are available (or user declined), False on error.
+    """
+    llamafile_path = BIN_DIR / LLAMAFILE_FILE
+    tinyllama_path = MODELS_DIR / TINYLLAMA_FILE
+    
+    # Also check project models directory
+    project_models = Path(__file__).parent / "models"
+    project_tinyllama = list(project_models.glob("*tinyllama*")) if project_models.exists() else []
+    
+    llamafile_exists = llamafile_path.exists()
+    tinyllama_exists = tinyllama_path.exists() or len(project_tinyllama) > 0
+    
+    # If both exist, we're good
+    if llamafile_exists and tinyllama_exists:
+        return True
+    
+    # Show what's missing
+    print(f"\n{GOLD}🔧 LLM Setup Check{RESET}")
+    print(f"{DIM}{'─'*50}{RESET}")
+    
+    missing = []
+    if not llamafile_exists:
+        print(f"   {RED}●{RESET} llamafile binary: {RED}Not installed{RESET}")
+        missing.append("llamafile")
+    else:
+        print(f"   {GREEN}●{RESET} llamafile binary: {GREEN}Installed{RESET}")
+    
+    if not tinyllama_exists:
+        print(f"   {RED}●{RESET} TinyLlama model:  {RED}Not installed{RESET} (670MB)")
+        missing.append("TinyLlama")
+    else:
+        print(f"   {GREEN}●{RESET} TinyLlama model:  {GREEN}Installed{RESET}")
+    
+    if not missing:
+        return True
+    
+    print(f"\n{GOLD}LuciferAI needs these components for local AI capabilities.{RESET}")
+    print(f"{DIM}Without them, you can still use LuciferAI but without LLM features.{RESET}")
+    
+    # Prompt for installation
+    try:
+        response = input(f"\n{CYAN}Install missing components? [Y/n]: {RESET}").strip().lower()
+    except (EOFError, KeyboardInterrupt):
+        print(f"\n{DIM}Skipping installation.{RESET}")
+        return True
+    
+    if response in ['n', 'no']:
+        print(f"{DIM}Skipping installation. LLM features may be limited.{RESET}")
+        return True
+    
+    # Create directories
+    print(f"\n{BLUE}[1/3] Creating directories...{RESET}")
+    MODELS_DIR.mkdir(parents=True, exist_ok=True)
+    BIN_DIR.mkdir(parents=True, exist_ok=True)
+    (LUCIFER_HOME / "data").mkdir(parents=True, exist_ok=True)
+    (LUCIFER_HOME / "logs").mkdir(parents=True, exist_ok=True)
+    (LUCIFER_HOME / "envs").mkdir(parents=True, exist_ok=True)
+    (LUCIFER_HOME / "stubs").mkdir(parents=True, exist_ok=True)
+    print(f"{GREEN}   ✅ Directories created{RESET}")
+    
+    # Download llamafile binary
+    if not llamafile_exists:
+        print(f"\n{BLUE}[2/3] Installing llamafile binary...{RESET}")
+        if download_with_progress(LLAMAFILE_URL, llamafile_path, "llamafile"):
+            os.chmod(llamafile_path, 0o755)
+            print(f"{GREEN}   ✅ llamafile installed{RESET}")
+        else:
+            print(f"{RED}   ❌ Failed to install llamafile{RESET}")
+    else:
+        print(f"\n{BLUE}[2/3] llamafile already installed{RESET}")
+    
+    # Download TinyLlama
+    if not tinyllama_exists:
+        print(f"\n{BLUE}[3/3] Installing TinyLlama (670MB)...{RESET}")
+        print(f"{DIM}   This is a one-time download. Please wait...{RESET}")
+        if download_with_progress(TINYLLAMA_URL, tinyllama_path, "TinyLlama"):
+            os.chmod(tinyllama_path, 0o755)
+            print(f"{GREEN}   ✅ TinyLlama installed{RESET}")
+        else:
+            print(f"{RED}   ❌ Failed to install TinyLlama{RESET}")
+    else:
+        print(f"\n{BLUE}[3/3] TinyLlama already installed{RESET}")
+    
+    # Verify
+    print(f"\n{GREEN}💫 Installation complete!{RESET}")
+    print(f"{DIM}   Installed to: {LUCIFER_HOME}{RESET}\n")
+    
+    return True
+
+
 def main():
     """Main interactive loop."""
+    # Check and install TinyLlama/llamafile if needed
+    check_and_install_models()
+    
     # Initialize agent
     agent = LuciferAgent()
     
