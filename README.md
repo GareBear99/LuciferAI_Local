@@ -214,14 +214,24 @@ LuciferAI represents a **validated market opportunity** developed by a single en
 
 ### Investment Use Cases
 
-**Seed Round ($500K - $2M)**:
+**Immediate Need (<$250K - Bootstrap to Validation)**:
+- **Current State:** Solo developer, zero overhead, continuously growing codebase
+- **No Legacy Costs:** No office, no payroll, no technical debt
+- Contract 1-2 specialized engineers (part-time, 6-month contracts)
+- DARPA-level documentation for robotics projects
+- Establish grant application pipeline through robotics ecosystem
+- Initial proof-of-concept integrations (Robotics Master Controller → LuciferAI)
+- **Timeline**: 6-9 months to grant funding and revenue streams
+- **Why This Works:** Lean operation, proven product-market fit, measurable milestones
+
+**Seed Round ($500K - $2M) - If Bootstrap Succeeds**:
 - Hire 2-3 core engineers (backend, frontend, DevOps)
 - Build enterprise features (team management, analytics dashboard)
 - Security certifications (SOC 2 Type II)
 - Initial marketing and community growth
 - **Timeline**: 12-18 months to Series A readiness
 
-**Series A ($3M - $8M)**:
+**Series A ($3M - $8M) - Scale After Validation**:
 - Expand to 10-15 person team
 - Launch hosted SaaS platform
 - Enterprise sales and support teams
@@ -246,11 +256,23 @@ LuciferAI represents a **validated market opportunity** developed by a single en
 
 ### Current Funding Needs
 
-**Immediate (Bootstrap → Seed)**:
-- Contract developers for priority features
-- AWS/infrastructure credits for hosted demo
-- Marketing/community management support
-- Legal (IP protection, corporate structure)
+**Immediate (<$250K - Lean Bootstrap Phase)**:
+- **Zero Overhead Advantage:** No office, payroll, or legacy costs to maintain
+- **Continuous Growth:** Codebase actively expanding with new features weekly
+- **Seeking:** 1-2 contract engineers (part-time, $80K-$120K total)
+  - Robotics integration specialist
+  - Grant documentation writer (DARPA/NSF standards)
+- AWS/infrastructure credits ($5K-$10K)
+- Legal/IP protection ($10K-$15K)
+- Grant application development ($15K-$25K)
+- **Total Ask:** $150K-$250K for 6-9 month validation phase
+
+**Why <$250K Works:**
+- Solo developer has proven execution with $0 spent
+- No burn rate from overhead (unlike $5M-$65M competitors)
+- Every dollar goes directly to product and validation
+- Robotics projects create multiple grant funding streams
+- Clear milestones: DARPA docs → Grant submissions → Revenue pilot
 
 **Near-Term (Seed Round)**:
 - Full-time engineering team (3-4 people)
