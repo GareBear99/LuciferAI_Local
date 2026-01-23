@@ -11,6 +11,7 @@ from typing import List, Dict, Optional, Callable
 from dataclasses import dataclass
 from enum import Enum
 import re
+from core.lucifer_colors import print_step
 
 
 class TaskComplexity(Enum):
@@ -739,7 +740,7 @@ class UniversalTaskSystem:
                 return None
             
             # Step 1: Find the file
-            print(f"📋 Step 1: Locating file matching '{file_hint}'...\n")
+            print_step(1, 3, f"Locating file matching '{file_hint}'")
             search_paths = [
                 Path.cwd(),
                 Path.home() / 'Desktop',
@@ -822,7 +823,7 @@ class UniversalTaskSystem:
             print(f"\n✅ Selected: {source_file.relative_to(Path.home()) if source_file.is_relative_to(Path.home()) else source_file}")
             
             # Step 2: Find destination
-            print(f"\n📋 Step 2: Finding destination '{destination}'...\n")
+            print_step(2, 3, f"Finding destination '{destination}'")
             
             if destination.lower() in ['desktop']:
                 dest_dir = Path.home() / 'Desktop'
@@ -851,7 +852,7 @@ class UniversalTaskSystem:
             print(f"✅ Destination: {dest_dir.relative_to(Path.home()) if dest_dir.is_relative_to(Path.home()) else dest_dir}")
             
             # Step 3: Move with overwrite check
-            print(f"\n📋 Step 3: Moving file...\n")
+            print_step(3, 3, "Moving file")
             dest_file = dest_dir / source_file.name
             
             # Check if file already exists at destination
@@ -1050,7 +1051,7 @@ class UniversalTaskSystem:
             steps = []
             
             # Step 1: Find the file
-            print(f"📋 Step 1: Locating file '{file_name}'...\n")
+            print_step(1, 3, f"Locating file '{file_name}'")
             search_paths = [
                 Path.cwd(),
                 Path.home() / 'Desktop',
@@ -1135,7 +1136,7 @@ class UniversalTaskSystem:
             steps.append(f"Located {file_name}")
             
             # Step 2: Determine destination
-            print(f"\n📋 Step 2: Finding destination '{destination}'...\n")
+            print_step(2, 3, f"Finding destination '{destination}'")
             
             if destination.lower() == 'desktop':
                 dest_dir = Path.home() / 'Desktop'
@@ -1167,7 +1168,7 @@ class UniversalTaskSystem:
             steps.append(f"Located {destination}")
             
             # Step 3: Move the file
-            print(f"\n📋 Step 3: Moving file...\n")
+            print_step(3, 3, "Moving file")
             dest_file = dest_dir / source_file.name
             
             try:

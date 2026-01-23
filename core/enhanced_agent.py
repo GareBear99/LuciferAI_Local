@@ -50,6 +50,7 @@ from task_orchestrator import TaskOrchestrator, TaskStatus
 from mistral_task_parser import MistralTaskParser
 from deepseek_search import DeepseekSearchSystem
 from universal_task_system import UniversalTaskSystem, ModelTier
+from master_controller import get_master_controller
 
 
 def format_code_blocks_with_background(text: str) -> str:
@@ -230,6 +231,9 @@ class EnhancedLuciferAgent:
         
         # Initialize universal task system with detected tier
         self.task_system = UniversalTaskSystem(self._get_model_tier())
+        
+        # Initialize master controller for intelligent command routing
+        self.master_controller = get_master_controller(self._get_model_tier())
         
         # Auto-sync consensus on startup (silent)
         self._auto_sync_consensus(silent=True)
@@ -1118,8 +1122,41 @@ class EnhancedLuciferAgent:
         return any(indicator in response for indicator in failure_indicators)
     
     def _route_request(self, user_input: str) -> str:
-        """Route request to appropriate handler."""
+        """Route request to appropriate handler with master controller intelligence."""
         user_lower = user_input.lower().strip()
+        
+        # Use master controller to classify the command
+        try:
+            route_info = self.master_controller.route_command(user_input)
+            route_type = route_info['route_type']
+            confidence = route_info['confidence']
+            
+            # Log routing decision
+            try:
+                self.session_logger.log_event(
+                    'command_routed',
+                    f'Route: {route_type.name}, Confidence: {confidence:.2f}',
+                    metadata={
+                        'command': user_input[:100],
+                        'route_type': route_type.name,
+                        'confidence': confidence,
+                        'tier': route_info['tier_required'].name
+                    }
+                )
+            except Exception:
+                pass
+        except Exception as e:
+            # If master controller fails, fall back to original routing
+            route_type = None
+            if not isinstance(e, KeyboardInterrupt):
+                try:
+                    self.session_logger.log_event(
+                        'routing_fallback',
+                        f'Master controller error: {str(e)[:100]}',
+                        metadata={'command': user_input[:100]}
+                    )
+                except Exception:
+                    pass
         
         # Check for simple greetings first - return quick response (don't send to LLM)
         greetings = ['hello', 'hi', 'hey', 'greetings', 'good morning', 'good afternoon', 'good evening', 'howdy',
