@@ -480,11 +480,18 @@ Install missing components? [Y/n]:
 
 ## ✨ Key Features
 
+### 🔄 Hybrid Cloud/Local Operation
+- **Tier 0-4**: 100% local operation (no data sent to cloud)
+- **Tier 5**: Optional ChatGPT/GPT-4 integration
+- **Automatic Fallback**: Cloud unavailable → seamless local model switch
+- **Best of Both Worlds**: Privacy + latest GPT-4 features when needed
+
 ### 🧠 Multi-Tier LLM System
-- **Tier 0-4 Architecture**: Automatically selects the best model for each task
+- **Tier 0-5 Architecture**: Automatically selects the best model for each task
 - **Native Llamafile**: Direct GGUF model execution - no external servers required
-- **85+ Supported Models**: From TinyLlama (1B) to Llama-3.1-70B
+- **85+ Supported Models**: From TinyLlama (1B) to Llama-3.1-70B + GPT-4
 - **Resource-Aware**: Works on everything from 8GB RAM to 64GB+ workstations
+- **Typo Auto-Correction**: All commands auto-correct typos (e.g., 'mistrl' → 'mistral')
 
 ### 🔧 Self-Healing FixNet
 - **Automatic Error Detection**: Catches and fixes common errors automatically
@@ -610,15 +617,21 @@ LuciferAI > fix my_broken_script.py
 | `backup models` | Set backup models directory |
 
 ### 📦 Model Installation
-| Command | Description | Size |
-|---------|-------------|------|
-| `install core models` | Install 4 essential models | ~20-30 GB |
-| `install all models` | Install ALL 85+ models | ~350-450 GB |
-| `install tier 0` | Install Tier 0 (Basic) | ~3-4 GB |
-| `install tier 1` | Install Tier 1 (General) | ~30-35 GB |
-| `install tier 2` | Install Tier 2 (Advanced) | ~50-60 GB |
-| `install tier 3` | Install Tier 3 (Expert) | ~80-100 GB |
-| `install tier 4` | Install Tier 4 (Ultra) | ~200-250 GB |
+| Command | Description | Size | Time |
+|---------|-------------|------|------|
+| `install core models` | **Recommended!** TinyLlama, Llama2, Mistral, DeepSeek | ~20-30 GB | 20-40 min |
+| `install all models` | Install ALL 85+ models | ~350-450 GB | 4-8 hours |
+| `install tier 0` | Install Tier 0 (Basic) | ~3-4 GB | 5-10 min |
+| `install tier 1` | Install Tier 1 (General) | ~30-35 GB | 30-60 min |
+| `install tier 2` | Install Tier 2 (Advanced) | ~50-60 GB | 1-2 hours |
+| `install tier 3` | Install Tier 3 (Expert) | ~80-100 GB | 2-3 hours |
+| `install tier 4` | Install Tier 4 (Ultra) | ~200-250 GB | 4-6 hours |
+
+**Core Models** includes one model from each tier:
+- **Tier 0:** TinyLlama (1.1B) - Fast responses
+- **Tier 1:** Llama2 (7B) - General chat
+- **Tier 2:** Mistral (7B) - Best quality
+- **Tier 3:** DeepSeek-Coder (6.7B) - Code expert
 
 ### 📝 Session Management
 | Command | Description |
@@ -641,11 +654,18 @@ LuciferAI > fix my_broken_script.py
 **Note:** Downloaded images are saved to `~/.luciferai/images/`
 
 ### 🐍 Virtual Environments
-| Command | Description |
-|---------|-------------|
-| `environments` / `envs` | List ALL virtual environments |
-| `env search <query>` | Search for specific environments |
-| `activate <env>` | Activate an environment |
+| Command | Description | Examples |
+|---------|-------------|----------|
+| `environments` / `envs` | List ALL virtual environments | Finds conda, venv, pyenv, poetry |
+| `env search <query>` | Search environments | `env search myproject`<br>`env search 3.11` (by version)<br>`find myproject environment` (natural) |
+| `activate <env>` | Activate environment | `activate myproject` |
+
+### 📦 Package Management
+| Command | Description | Package Managers |
+|---------|-------------|------------------|
+| `install <package>` | Install Python packages | pip, conda, brew |
+
+**Examples:** `install numpy`, `install requests`, `install pandas`
 
 ### 🔗 GitHub Sync
 | Command | Description |
@@ -656,12 +676,39 @@ LuciferAI > fix my_broken_script.py
 | `github status` | Show GitHub status |
 | `github projects` | List your repositories |
 
+### ☁️ ChatGPT Integration (Tier 5)
+
+**Hybrid Cloud/Local Operation** - Best of both worlds!
+
+| Command | Description | Requirements |
+|---------|-------------|---------------|
+| `chatgpt link` | Link OpenAI account | Free or Plus account |
+| `chatgpt status` | View connection status | - |
+| `chatgpt history` | Access archived chats | Linked account |
+| `chatgpt search <q>` | Search ChatGPT history | `chatgpt search python` |
+| `chatgpt export` | Export to local storage | Save conversations |
+| `chatgpt use gpt-4` | Switch to GPT-4 | ChatGPT Plus required |
+| `chatgpt use gpt-3.5` | Switch to GPT-3.5 | Free tier |
+
+**Tier 5 Features:**
+- ✅ **GPT-4 Access** - Latest OpenAI model (requires Plus)
+- ✅ **Web Browsing** - Real-time internet search
+- ✅ **Code Interpreter** - Execute Python in sandbox
+- ✅ **DALL-E Integration** - Generate images
+- ✅ **Full History** - Access all your ChatGPT conversations
+- ✅ **Hybrid Mode** - Local when offline, cloud when online
+
+**Privacy:** Tiers 0-4 = 100% local (no data sent). Tier 5 = Optional cloud.
+
 ### 🌐 FixNet Commands
-| Command | Description |
-|---------|-------------|
-| `fixnet sync` | Sync fixes with FixNet |
-| `fixnet stats` | Show FixNet statistics |
-| `fixnet search <error>` | Search for known fixes |
+| Command | Description | Details |
+|---------|-------------|----------|
+| `fixnet sync` | Sync with community | Downloads 500KB-2MB of validated fixes |
+| `fixnet stats` | Show statistics | Total fixes, success rates, quarantined (< 30%) |
+| `fixnet search <error>` | Search for fixes | Pattern matching, shows consensus data |
+
+**Consensus System:** Fixes require 51% success rate to be "trusted"  
+📘 **[See Complete FixNet Architecture](docs/NO_LLM_OPERATION.md#fixnet-integration)** - DARPA-level technical details
 
 ### 🎮 Soul Combat System
 - **5 Rarity Tiers**: Common, Uncommon, Angelic, Demonic, Celestial
