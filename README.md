@@ -10,7 +10,7 @@
 
 *"Forged in Silence, Born of Neon."*
 
-> 🎮 **[Try the Interactive Playground](https://garebear99.github.io/LuciferAI_Playground)** — Experience LuciferAI directly in your browser! No installation required.
+> 🎮 **[Try the Interactive Playground](https://luciferai-playground.pages.dev)** — Experience LuciferAI directly in your browser! No installation required.
 
 ---
 
