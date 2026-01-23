@@ -8672,8 +8672,14 @@ Show all 85+ supported models organized by tier.
                 
                 messages.append({"role": "user", "content": user_input})
                 
-                # Request token stats with response
-                result_with_stats = llm.chat(messages, temperature=0.7, max_tokens=150, return_stats=True)
+                # Stop processing animation before streaming starts
+                self._stop_processing_animation()
+                
+                # Show streaming indicator
+                print(c(f"💬 {best_model.upper()}: ", "purple"), end='', flush=True)
+                
+                # Request token stats with streaming response
+                result_with_stats = llm.chat(messages, temperature=0.7, max_tokens=150, stream=True, return_stats=True)
                 
                 # Parse result (handle both tuple and string returns)
                 if isinstance(result_with_stats, tuple):
@@ -8694,29 +8700,25 @@ Show all 85+ supported models organized by tier.
             
             sys.stdout.flush()  # Ensure query output is displayed
             
-            # Print response with multiple buffer lines to protect from heartbeat
+            # Streaming already output the response, just add newlines for formatting
+            print()  # Newline after streamed content
             print()  # Buffer 1
-            print()  # Buffer 2
             
-            # Format code blocks with white background like daemon
+            # Format code blocks with white background if any
             import re
-            formatted_result = result
-            # Find code blocks (```...```)
-            code_blocks = re.findall(r'```[\s\S]*?```', result)
-            for block in code_blocks:
-                # Extract code without backticks
-                code_content = block.strip('`').strip()
-                # Remove language identifier if present (first line)
-                lines = code_content.split('\n')
-                if lines and lines[0] in ['python', 'bash', 'javascript', 'js', 'java', 'c', 'cpp', 'go', 'rust', 'ruby', 'php']:
-                    code_content = '\n'.join(lines[1:])
-                
-                # Format with white background
-                formatted_code = f"\n\033[47m\033[30m{code_content}\033[0m\n"
-                formatted_result = formatted_result.replace(block, formatted_code)
-            
-            response_text = c(f"💬 {best_model.upper()}:", "purple") + f"\n\n{formatted_result}"
-            print(response_text)
+            if '```' in result:
+                formatted_result = result
+                code_blocks = re.findall(r'```[\s\S]*?```', result)
+                for block in code_blocks:
+                    code_content = block.strip('`').strip()
+                    lines = code_content.split('\n')
+                    if lines and lines[0] in ['python', 'bash', 'javascript', 'js', 'java', 'c', 'cpp', 'go', 'rust', 'ruby', 'php']:
+                        code_content = '\n'.join(lines[1:])
+                    formatted_code = f"\n\033[47m\033[30m{code_content}\033[0m\n"
+                    formatted_result = formatted_result.replace(block, formatted_code)
+                # Print formatted code blocks (response was already streamed)
+                print(c("Code:", "cyan"))
+                print(formatted_result)
             
             # Display token stats if available
             if token_stats and token_stats.get('total_tokens', 0) > 0:
