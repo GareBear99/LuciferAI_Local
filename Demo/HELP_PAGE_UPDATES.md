@@ -51,7 +51,7 @@ Three important notes at the bottom:
 📦 MODEL INSTALLATION
   Quick Install Commands:
     install core models     - Install 4 essential models (~20-30 GB)
-    install all models      - Install ALL 85+ models (~150-200 GB)
+    install all models      - Install ALL 74 models (~150-200 GB)
   
   Individual Model Installation (All Local):
   
@@ -101,7 +101,7 @@ Three important notes at the bottom:
 
 ## macOS Catalina Compatibility
 
-All 85+ supported models work on macOS Catalina (10.15) and newer because:
+All 74 supported models work on macOS Catalina (10.15) and newer because:
 1. LuciferAI sets Catalina as minimum supported version
 2. Models use llamafile/Ollama which support Catalina
 3. No special CPU instructions required beyond what Catalina supports

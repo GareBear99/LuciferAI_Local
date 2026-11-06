@@ -170,7 +170,7 @@ LuciferAI is a **dual-mode AI assistant** that functions as both:
 | Command | Function | Example |
 |---------|----------|---------|
 | `llm list` | Show installed models | `llm list` |
-| `llm list all` | Show all 85+ models | `llm list all` |
+| `llm list all` | Show all 74 models | `llm list all` |
 | `llm enable <model>` | Enable model | `llm enable mistral` |
 | `llm disable <model>` | Disable model | `llm disable tinyllama` |
 | `llm enable all` | Enable all models | `llm enable all` |

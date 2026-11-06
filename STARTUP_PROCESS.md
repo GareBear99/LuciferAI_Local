@@ -37,10 +37,9 @@ START: python3 lucifer.py
   │     │     │           MISSING → Return False
   │     │     └─► Result: llamafile binary assembled or already present
   │     │
-  │     ├─► [lucifer.py:228-238] Check binary/model existence
-  │     │     ├─► llamafile: ~/.luciferai/bin/llamafile OR bin/llamafile
-  │     │     └─► TinyLlama: ~/.luciferai/models/tinyllama-1.1b-chat.llamafile
-  │     │         OR any *tinyllama* file in models/
+  │     ├─► [lucifer.py:228-238] Check binary/model existence (canonical layout)
+  │     │     ├─► llamafile: <project>/.luciferai/bin/llamafile
+  │     │     └─► TinyLlama: <project>/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf
   │     │
   │     ├─► Both exist?
   │     │     YES → Return True (proceed to Phase 2)
@@ -49,14 +48,14 @@ START: python3 lucifer.py
   │     ├─► Display what's missing
   │     │     └─► Show status: llamafile (✅/❌), TinyLlama (✅/❌)
   │     │     └─► Print: "Run the setup script: ./setup_bundled_models.sh"
-  │     │     └─► Print: a manual one-liner using download_with_progress()
-  │     │         (jartine .llamafile URL → ~/.luciferai/models/)
+  │     │         (no manual one-liner — the .llamafile download was a dead
+  │     │         end; the setup script is the only install path)
   │     │
   │     ├─► NO prompt, NO download. The function prints
-  │     │     "Continuing without TinyLlama... rule-based command parsing"
-  │     │     and returns True. The model is installed by running
-  │     │     ./setup_bundled_models.sh (or the printed one-liner),
-  │     │     not by the app itself.
+  │     │     "Continuing without a model... rule-based command parsing"
+  │     │     and returns False. The model is installed by running
+  │     │     ./setup_bundled_models.sh, not by the app itself.
+  │     │     (main() ignores the return value and continues anyway.)
   │     │
   │     └─► Note: the setup script installs to <project>/.luciferai/,
   │         which the llamafile agent reads — but this startup check
@@ -114,11 +113,7 @@ START: python3 lucifer.py
 
 ### Installation Directories
 ```
-~/.luciferai/                          # User-specific installation
-├── bin/
-│   └── llamafile                      # Llamafile binary (auto-assembled)
-├── models/
-│   └── tinyllama-1.1b-chat.llamafile  # TinyLlama model (auto-downloaded)
+~/.luciferai/                          # User state only (NOT models)
 ├── data/
 │   ├── llm_state.json                 # Model enable/disable state
 │   ├── requirements.txt               # Python dependencies
@@ -131,12 +126,19 @@ START: python3 lucifer.py
 │   └── lucifer_env/                   # Virtual environment fallback
 └── stubs/
     └── *.py                           # Module stubs (Tier 3 fallback)
+
+# The binary and models live in the PROJECT directory, not here:
+#   <project>/.luciferai/bin/llamafile                        (binary)
+#   <project>/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf     (model)
 ```
 
 ### Project Directory
 ```
 LuciferAI_Local/                       # Project root
 ├── lucifer.py                         # Main entry point (✅ Run this)
+├── .luciferai/
+│   └── bin/
+│       └── llamafile                  # Auto-assembled binary (canonical)
 ├── bin/
 │   ├── llamafile.part.aa              # Split binary parts (GitHub-friendly)
 │   ├── llamafile.part.ab              # Auto-assembled on startup
@@ -163,19 +165,18 @@ LuciferAI_Local/                       # Project root
 # From lucifer.py:check_and_install_models()
 
 1. llamafile Binary Check
-   - Check: ~/.luciferai/bin/llamafile exists
-   - Check: bin/llamafile exists (project directory)
-   - If both missing → Print what's missing + the setup command, continue without the model (no prompt, no download)
+   - Check: <project>/.luciferai/bin/llamafile exists (canonical layout)
+   - If missing → Print what's missing + the setup command, continue without the model (no prompt, no download)
 
 2. TinyLlama Model Check
-   - Check: ~/.luciferai/models/*.llamafile exists
-   - Check: models/*tinyllama* exists (project directory)
-   - If both missing → Print what's missing + the setup command, continue without the model (no prompt, no download)
+   - Check: <project>/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf exists (canonical layout)
+   - If missing → Print what's missing + the setup command, continue without the model (no prompt, no download)
 
 3. Ollama Availability Check
-   - Test: `ollama list` command
-   - If available → Use for higher tier models
-   - If unavailable → Use llamafile only
+   - Ollama is only consulted when NO local model is installed at all
+     (fallback, never preferred — local llamafile models come first).
+   - Test: HTTP GET http://localhost:11434/api/tags
+   - If a local model exists, Ollama is not consulted at all.
 
 4. Model State Check
    - Load: ~/.luciferai/data/llm_state.json
@@ -189,7 +190,7 @@ LuciferAI_Local/                       # Project root
    - Determine: Current fallback tier (0-4)
 ```
 
-**Performance:** the checks are lightweight file-existence tests plus one `ollama list` subprocess call. No timing has been measured — the "< 500ms" figure this doc previously stated was an estimate, not a benchmark.
+**Performance:** the checks are lightweight file-existence tests plus, only when no local model is installed, one HTTP request to the Ollama server. No timing has been measured — the "< 500ms" figure this doc previously stated was an estimate, not a benchmark.
 
 ---
 
@@ -214,29 +215,30 @@ llamafile.part.ac  (32MB)
 
 def assemble_llamafile_from_parts() -> bool:
     project_bin = Path(__file__).parent / "bin"
-    llamafile_path = project_bin / "llamafile"
+    llamafile_path = _canonical_llamafile_path()  # <project>/.luciferai/bin/llamafile
     part_aa = project_bin / "llamafile.part.aa"
-    
+
     # If llamafile exists, we're good
     if llamafile_path.exists():
         return True
-    
+
     # Check if parts exist
     if not part_aa.exists():
         return False
-    
-    # Assemble parts
+
+    # Assemble parts into the canonical location
+    llamafile_path.parent.mkdir(parents=True, exist_ok=True)
     parts = sorted(glob.glob(str(project_bin / "llamafile.part.*")))
     with open(llamafile_path, 'wb') as outfile:
         for part in parts:
             with open(part, 'rb') as infile:
                 outfile.write(infile.read())
-    
+
     os.chmod(llamafile_path, 0o755)
     return True
 ```
 
-**Result:** Single `bin/llamafile` binary (~132MB) ready to use. (A manual assembly script also exists: `bin/assemble_llamafile.sh` — `cat llamafile.part.* > llamafile`.)
+**Result:** Single `.luciferai/bin/llamafile` binary (~132MB) ready to use. (A manual assembly script also exists: `bin/assemble_llamafile.sh` — it assembles into the same canonical location.)
 
 ---
 
@@ -246,17 +248,17 @@ def assemble_llamafile_from_parts() -> bool:
 ```python
 # From lucifer.py:download_with_progress()
 
-URL: https://huggingface.co/jartine/TinyLlama-1.1B-Chat-v1.0-GGUF/resolve/main/TinyLlama-1.1B-Chat-v1.0.Q4_K_M.llamafile
-Size: 670MB
-Destination: ~/.luciferai/models/tinyllama-1.1b-chat.llamafile
+URL: https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF/resolve/main/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf
+Size: ~600MB
+Destination: <project>/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf
 Method: curl (with progress bar) OR urllib (fallback)
 Time: 1-5 minutes (depends on internet speed)
 ```
 
 ### Download Behavior:
 1. **First time user:**
-   - No prompt, no auto-download. The check prints what's missing, prints "Run the setup script: ./setup_bundled_models.sh" and a manual one-liner, then prints "Continuing without TinyLlama..." and starts with rule-based command parsing only.
-   - To get the model: run `./setup_bundled_models.sh` (downloads llamafile 0.8.6 + TinyLlama ~600MB into `<project>/.luciferai/`) or the printed one-liner (jartine `.llamafile` URL → `~/.luciferai/models/`).
+   - No prompt, no auto-download. The check prints what's missing, prints "Run the setup script: ./setup_bundled_models.sh", then prints "Continuing without a model..." and starts with rule-based command parsing only.
+   - To get the model: run `./setup_bundled_models.sh` (downloads llamafile 0.8.13 + TinyLlama ~600MB — binary into `<project>/.luciferai/bin/`, model into `<project>/models/`).
 
 2. **Subsequent runs:**
    - Check if files exist
@@ -457,8 +459,8 @@ Action:
   1. The script (curl/wget) shows the error and exits
   2. Suggest: "Try again later or check internet connection"
   3. Option: install manually — see docs/BUNDLED_MODELS.md
-     (curl the llamafile 0.8.6 binary and the TinyLlama GGUF
-     into bin/ + models/)
+     (curl the llamafile 0.8.13 binary into .luciferai/bin/ and the
+     TinyLlama GGUF into models/)
   4. Continue: LuciferAI starts with limited features
 ```
 
@@ -544,10 +546,8 @@ python3 tests/test_master_controller.py
 
 ### Force Re-Download:
 ```bash
-rm -rf ~/.luciferai/bin
-rm -rf ~/.luciferai/models
-rm -rf .luciferai
-./setup_bundled_models.sh   # Re-downloads llamafile 0.8.6 + TinyLlama
+rm -rf .luciferai/bin/llamafile models
+./setup_bundled_models.sh   # Re-downloads llamafile 0.8.13 + TinyLlama
 # (Running python3 lucifer.py alone does NOT re-download anything —
 #  it only prints the setup command and continues without the model.)
 ```

@@ -1,5 +1,7 @@
 # Model Management System Implementation Plan
 
+> **Archived implementation plan.** Written when the model registry was described as "85+"; the registry in `core/model_tiers.py` has 74 entries. Treat the "85+" figure here as the count claimed at the time, not a current measurement.
+
 ## Summary
 This document outlines the comprehensive model management system to be implemented.
 

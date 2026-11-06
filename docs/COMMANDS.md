@@ -133,7 +133,7 @@ Manage models without needing LLM running.
 | Command | Description | Size | Time |
 |---------|-------------|------|------|
 | `install core models` | **Recommended!** 4 core models | 20-30 GB | 20-40 min |
-| `install all models` | Install ALL 85+ models | 350-450 GB | 4-8 hours |
+| `install all models` | Install ALL 74 models | 350-450 GB | 4-8 hours |
 | `install tier 0` | Basic (TinyLlama) | 3-4 GB | 5-10 min |
 | `install tier 1` | General (Llama2) | 30-35 GB | 30-60 min |
 | `install tier 2` | Advanced (Mistral) | 50-60 GB | 1-2 hours |

@@ -126,5 +126,5 @@ Tests verify:
 
 - `backup models` - Set backup directory for model storage
 - `install core models` - Install 4 essential models
-- `install all models` - Install all 85+ supported models
+- `install all models` - Install all 74 supported models
 - `llm list` - Show all installed models with status

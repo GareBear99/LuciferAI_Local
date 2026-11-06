@@ -3,7 +3,7 @@
 ## Test Status Overview
 
 ### ✅ Completed
-1. Model tier mapping system (85+ models in `model_tiers.py`)
+1. Model tier mapping system (74 models in `model_tiers.py`)
 2. Model detection in `.luciferai/models/` directory
 3. Test suite runs all installed models simultaneously
 4. Response validation system with tier-aware checks
@@ -199,7 +199,7 @@ python3 tests/test_all_commands.py
 
 ### Test Cases:
 1. Run: `llm list all`
-   - Expected: Shows all 85+ models organized by tier
+   - Expected: Shows all 74 models organized by tier
    - Verify: Each tier shows correct models
    - Verify: Installation instructions included
 
@@ -320,7 +320,7 @@ run tests
 ✅ "run tests" tests ALL installed models per test
 ✅ Tests don't proceed until all models complete current test
 ✅ All models work with Tier 0 keyword system
-✅ "llm list all" shows 85+ models
+✅ "llm list all" shows 74 models
 ✅ Help page shows all commands
 
 ## Failure Scenarios to Watch For

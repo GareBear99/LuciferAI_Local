@@ -1,7 +1,7 @@
-# Llamafile Support for All 85+ Models - Implementation Plan
+# Llamafile Support for All 74 Models - Implementation Plan
 
 ## Objective
-Enable llamafile-based installation and testing for all 85+ supported models, ensuring every model passes Tier 0 tests (basic functionality).
+Enable llamafile-based installation and testing for all 74 supported models, ensuring every model passes Tier 0 tests (basic functionality).
 
 ## Current State
 ✅ **Working:** tinyllama, mistral (llamafile-based, Tier 0 tests pass)
@@ -22,7 +22,7 @@ Enable llamafile-based installation and testing for all 85+ supported models, en
 - `core/model_tiers.py` - Tier definitions
 
 **Changes:**
-1. Create model file mapping for all 85+ models:
+1. Create model file mapping for all 74 models:
 ```python
 MODEL_FILES = {
     # Tier 0
@@ -35,7 +35,7 @@ MODEL_FILES = {
     'llama3.2': 'llama-3.2-3b-instruct-Q4_K_M.gguf',
     'llama2': 'llama-2-7b-chat-Q4_K_M.gguf',
     'phi-3': 'phi-3-3.8b-instruct-Q4_K_M.gguf',
-    # ... all 85+ models
+    # ... all 74 models
 }
 ```
 
@@ -195,7 +195,7 @@ Testing LLAMA3.2 (Native Tier 1)
    - Universal Tier 0 requirement
 
 4. `core/model_tiers.py`
-   - Ensure all 85+ models have tier assignments
+   - Ensure all 74 models have tier assignments
 
 ## Benefits
 
@@ -245,7 +245,7 @@ Testing LLAMA3.2 (Native Tier 1)
 - Performance testing
 
 ## Success Criteria
-- ✅ All 85+ models have GGUF mappings
+- ✅ All 74 models have GGUF mappings
 - ✅ `install <model>` downloads GGUF for any model
 - ✅ Progressive tests detect all installed models
 - ✅ Every model passes Tier 0 tests
@@ -255,7 +255,7 @@ Testing LLAMA3.2 (Native Tier 1)
 - ✅ No Ollama dependency
 
 ## Next Actions
-1. Create `core/model_files_map.py` with all 85+ models
+1. Create `core/model_files_map.py` with all 74 models
 2. Implement GGUF download handler
 3. Update install routing to use GGUF
 4. Test with llama3.2 as proof of concept

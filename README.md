@@ -44,7 +44,6 @@ npm install
 npm run dev
 ```
 
-> 🎮 **[Try the Interactive Playground](https://luciferai-playground.pages.dev)** — Experience LuciferAI directly in your browser! No installation required.
 
 ---
 
@@ -61,7 +60,7 @@ python3 lucifer.py
 ```
 
 **Setup:** LuciferAI auto-bootstraps on first run:
-- ✅ **Auto-assembles** llamafile binary from split parts (or download it with `./setup_bundled_models.sh`, which fetches llamafile 0.8.6)
+- ✅ **Auto-assembles** llamafile binary from split parts (or download it with `./setup_bundled_models.sh`, which fetches llamafile 0.8.13)
 - ✅ **Setup script downloads** the TinyLlama model (670MB, one-time): `./setup_bundled_models.sh`
 - ✅ **Works offline** after initial setup (model + binary in the project layout — see `setup_bundled_models.sh`)
 

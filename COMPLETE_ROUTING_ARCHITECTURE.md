@@ -74,7 +74,7 @@ Manage LLM models and settings
 | Command | Handler | Location | Description |
 |---------|---------|----------|-------------|
 | `llm list` | `_handle_llm_list()` | Line 5154 | List all models |
-| `llm list all` | `_handle_llm_list_all()` | Line 5366 | List all 85+ models |
+| `llm list all` | `_handle_llm_list_all()` | Line 5366 | List all 74 models |
 | `llm enable <model>` | `_handle_llm_enable()` | Line 5474 | Enable a model |
 | `llm disable <model>` | `_handle_llm_disable()` | Line 5548 | Disable a model |
 | `llm enable all` | `_handle_llm_enable_all()` | Line 5740 | Enable all installed |
@@ -92,7 +92,7 @@ Install/uninstall AI models
 |----------------|---------|----------|-------------|
 | `install mistral` | `_handle_ollama_install_request()` | Line 1721 | Install LLM model |
 | `install core models` | `_handle_install_core_models()` | Line 7038 | Install 4 core models |
-| `install all models` | `_handle_install_all_models()` | Line 7053 | Install all 85+ models |
+| `install all models` | `_handle_install_all_models()` | Line 7053 | Install all 74 models |
 | `install tier X` | `_handle_install_tier()` | Line 7106 | Install models in tier |
 | `install <package>` | `_handle_luci_install_package()` | Line 1730 | Install non-LLM packages |
 
