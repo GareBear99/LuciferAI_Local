@@ -22,6 +22,31 @@
 
 *"Forged in Silence, Born of Neon."*
 
+## 🔥 LuciferAI now lives on Lucid
+
+LuciferAI has advanced into what it was envisioned to be: it now **works and
+runs as a plugin inside [Lucid Terminal](https://github.com/GareBear99/lucid-terminal)** —
+the 3rd anchored plugin (`lucifer`), embodied as Lucifer the Sentinel. The
+standalone Python system in this repo is where it started; Lucid is where it
+lives now.
+
+On Lucid, LuciferAI is one plugin with two surfaces — the **Synth view**
+(its shell) and the **AI chat panel** — plus the `lucifer` terminal commands
+(`help`, `plan`, `fix`, `fixnet`, `llm`, `build`, `create`, `workflow`,
+`tokens`, `history`, `agent`) and the `🩸 Idle • Awaiting Commands...`
+heartbeat. Your message in the AI chat renders as a bubble against the
+backwall; the assistant's reply stays flat.
+
+📘 **[LuciferAI on Lucid — the living embodiment](docs/LUCID_EMBODIMENT.md)**
+— what the plugin is, how it mounts, and how to run it.
+
+```bash
+git clone https://github.com/GareBear99/lucid-terminal.git
+cd lucid-terminal
+npm install
+npm run dev
+```
+
 > 🎮 **[Try the Interactive Playground](https://luciferai-playground.pages.dev)** — Experience LuciferAI directly in your browser! No installation required.
 
 ---
