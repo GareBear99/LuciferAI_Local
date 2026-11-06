@@ -3,6 +3,8 @@
 Direct test of TinyLlama agent without full LuciferAI stack
 """
 import sys
+
+import pytest
 from pathlib import Path
 
 # Add parent directory to path
@@ -10,7 +12,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from core.llamafile_agent import LlamafileAgent
 
-def test_query(query: str, description: str):
+# NOTE: the case runner below must NOT be named test_* — pytest treats
+# every parameter of a test_* function as a fixture name, so it injected
+# its builtin `query` fixture (a string) instead of the test case.
+def check_query(query: str, description: str):
     """Test a single query directly."""
     print(f"\n{'='*60}")
     print(f"🧪 TEST: {description}")
@@ -69,7 +74,7 @@ def main():
     
     results = []
     for query, description in tests:
-        success = test_query(query, description)
+        success = check_query(query, description)
         results.append((description, success))
         
         if not success:
@@ -90,6 +95,19 @@ def main():
     for desc, success in results:
         status = "✅" if success else "❌"
         print(f"{status} {desc}")
+
+def test_query():
+    """Pytest entry point: no parameters (see the note above).
+
+    LIVE-MODEL test: up to 11 TinyLlama queries, early-stop on the
+    first failure, nondeterministic by nature. Smoke run only: skips
+    when no model is available, otherwise exercises the live path.
+    Run the file directly for the real manual check.
+    """
+    if not LlamafileAgent().available:
+        pytest.skip("no TinyLlama model available (run as a script once one is installed)")
+    main()
+
 
 if __name__ == "__main__":
     main()

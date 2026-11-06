@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Test new bundled models features:
-1. "Bundled Models?" shows .luciferai/models directory
+1. "Bundled Models?" shows the canonical models/ directory
 2. Progress bar displays when running tests
 """
 import sys
@@ -32,8 +32,10 @@ def test_bundled_models_directory():
         print(f"\nTesting: '{test_input}'")
         response = agent.process_request(test_input)
         
-        # Check if response contains models directory path
-        if '.luciferai/models' in response or '.luciferai' in response:
+        # Check if response contains the canonical models directory
+        # (core/lucifer_paths.py: <project>/models, not .luciferai/models)
+        canonical = str(Path(__file__).parent.parent / 'models')
+        if canonical in response or response.rstrip().endswith('/models'):
             print(f"  ✅ Correctly shows models directory")
         else:
             print(f"  ❌ Does not show models directory")

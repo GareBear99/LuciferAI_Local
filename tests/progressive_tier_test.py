@@ -24,13 +24,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 sys.path.insert(0, str(Path(__file__).parent.parent / 'core'))
 
 from core.llamafile_agent import LlamafileAgent
-from core.model_tiers import get_model_tier, TIER_MODELS
+from core.model_tiers import get_model_tier  # (TIER_MODELS never existed; the registry is MODEL_TIERS, unused here)
 from core.lucifer_colors import c
 
 class ProgressiveTierTester:
     def __init__(self):
         self.project_root = Path(__file__).parent.parent
-        self.models_dir = self.project_root / '.luciferai' / 'models'
+        self.models_dir = self.project_root / 'models'  # canonical layout (core/lucifer_paths.py)
         self.results = {}
         self.diagnostic_logs = []
         

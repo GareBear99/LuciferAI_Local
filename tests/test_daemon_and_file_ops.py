@@ -24,6 +24,29 @@ BLUE = "\033[34m"
 CYAN = "\033[36m"
 RESET = "\033[0m"
 
+import pytest
+
+
+@pytest.fixture
+def runner():
+    """Pytest fixture for the test_*(runner) functions below.
+
+    Pytest treats every parameter of a test function as a fixture name, so
+    without this it errors with "fixture 'runner' not found" — these
+    functions were written for the main() driver, which builds its own
+    runner. A fresh runner per test gives each section its own agent and
+    test directory (better isolation than the shared main() runner), and
+    the teardown asserts the section had no failures, so pytest gets a
+    real signal instead of a vacuous pass.
+    """
+    r = TestRunner()
+    r.setup()
+    yield r
+    failed = r.tests_failed
+    r.cleanup()
+    assert failed == 0, f"{failed} command(s) failed in this section"
+
+
 class TestRunner:
     def __init__(self):
         self.tests_run = 0

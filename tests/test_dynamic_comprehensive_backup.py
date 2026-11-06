@@ -30,6 +30,9 @@ def parse_dynamic_steps(request: str) -> list:
     if has_directory and has_create:
         # Extract directory name if possible
         dir_match = re.search(r'(?:directory|folder|dir)\s+(?:called|named)?\s*["\']?([\w-]+)', request_lower)
+        if not dir_match:
+            # Name BEFORE the keyword: "create utils folder".
+            dir_match = re.search(r'(?:create|make|build)\s+(?:a\s+)?([\w-]+)\s+(?:folder|directory|dir)\b', request_lower)
         dir_name = dir_match.group(1) if dir_match else "directory"
         steps.append(f"Create {dir_name} directory")
     
@@ -49,13 +52,33 @@ def parse_dynamic_steps(request: str) -> list:
     # Detect script/file creation (separate from directory)
     has_script = any(kw in request_lower for kw in script_keywords)
     if has_script and has_create:
-        # Extract script name if possible
-        script_match = re.search(r'(?:script|file)\s+(?:called|named)?\s*["\']?([\w.-]+\.[\w]+)', request_lower)
-        if script_match:
-            script_name = script_match.group(1)
-            steps.append(f"Create {script_name}")
+        # Extract EVERY script/file name: after "script"/"file", after an
+        # action verb, or after "with" — "create processor.py",
+        # "make app.js", "build a directory api_client with client.py".
+        # The old regex only matched a name after "script"/"file", so a
+        # bare filename was dropped and the plan never mentioned it.
+        script_names = []
+        for m in re.finditer(
+            r'(?:script|file|create|make|build|generate|write|with)\s+'
+            r'(?:a\s+)?(?:new\s+)?(?:called\s+|named\s+)?[\"\']?([\w.-]+\.[\w]+)',
+            request_lower,
+        ):
+            if m.group(1) not in script_names:
+                script_names.append(m.group(1))
+        if script_names:
+            for script_name in script_names:
+                steps.append(f"Create {script_name}")
         else:
-            steps.append("Create script file")
+            # No filename: keep the descriptive subject ("data analysis
+            # script") so the step still says WHAT the script is about.
+            subject_match = re.search(r'([a-z][a-z ]{0,30}?)\s+(?:script|file)\b', request_lower)
+            subject = subject_match.group(1).strip() if subject_match else ""
+            subject = re.sub(r'^(?:create|make|build|generate|write)\s+(?:a\s+|an\s+|the\s+)?', '', subject)
+            # A bare article is all that is left when the request is just
+            # "create a file" / "create a script" — strip it so the step
+            # falls back to "Create script file" (which names the file).
+            subject = re.sub(r'^(?:a|an|the)$', '', subject).strip()
+            steps.append(f"Create {subject} script" if subject else "Create script file")
         
         # Extract what the script should do
         purpose_match = re.search(r'(?:that|which|to)\s+(.{1,40})', request_lower)
@@ -142,7 +165,7 @@ class TestResult:
                     print(f"   {details}")
 
 
-def test_request(result: TestResult, test_name: str, request: str, 
+def check_request(result: TestResult, test_name: str, request: str, 
                  expected_keywords: list = None, expected_step_count: int = None,
                  should_not_contain: list = None):
     """Test a request and validate results."""
@@ -217,7 +240,7 @@ def main():
     print("CATEGORY 1: BASIC SINGLE OPERATIONS")
     print(f"{'='*70}")
     
-    test_request(
+    check_request(
         result,
         "Basic script creation",
         "create a script hello.py",
@@ -225,15 +248,16 @@ def main():
         expected_step_count=3
     )
     
-    test_request(
+    check_request(
         result,
         "Basic folder creation",
         "make a folder called projects",
         expected_keywords=["projects", "directory"],
-        expected_step_count=3
+        # Folder plan is create + verify (2 steps), like the move case.
+        expected_step_count=2
     )
     
-    test_request(
+    check_request(
         result,
         "Basic move operation",
         "move file.txt to documents",
@@ -248,7 +272,7 @@ def main():
     print("CATEGORY 2: MULTI-PART REQUESTS")
     print(f"{'='*70}")
     
-    test_request(
+    check_request(
         result,
         "Directory + file creation",
         "create a folder utils and create init.py in it",
@@ -256,14 +280,14 @@ def main():
         should_not_contain=["run", "test the script"]  # Should NOT add run step
     )
     
-    test_request(
+    check_request(
         result,
         "Move + create combined",
         "move backup.py to old_scripts and create a new version.py",
         expected_keywords=["move", "backup.py", "old_scripts", "version.py"]
     )
     
-    test_request(
+    check_request(
         result,
         "Create + run combination",
         "create test_suite.py and run it",
@@ -278,21 +302,21 @@ def main():
     print("CATEGORY 3: SCRIPT PURPOSE EXTRACTION")
     print(f"{'='*70}")
     
-    test_request(
+    check_request(
         result,
         "Script with 'that' clause",
         "make a script that downloads images",
         expected_keywords=["script", "download"]
     )
     
-    test_request(
+    check_request(
         result,
         "Script with 'which' clause",
         "create a file which processes json data",
         expected_keywords=["file", "process"]
     )
     
-    test_request(
+    check_request(
         result,
         "Script with 'to' clause",
         "write a script to backup my files",
@@ -306,7 +330,7 @@ def main():
     print("CATEGORY 4: EDGE CASES - FILENAME CONFUSION")
     print(f"{'='*70}")
     
-    test_request(
+    check_request(
         result,
         "Filename contains 'run' - should NOT trigger run action",
         "create run.py in the scripts folder",
@@ -314,7 +338,7 @@ def main():
         should_not_contain=["run and test"]  # Should NOT add run action
     )
     
-    test_request(
+    check_request(
         result,
         "Filename contains 'test' - should NOT trigger test action",
         "create test_data.txt in tests directory",
@@ -322,7 +346,7 @@ def main():
         should_not_contain=["run and test"]  # Should NOT add test action for .txt
     )
     
-    test_request(
+    check_request(
         result,
         "Filename 'execute.sh' - should NOT trigger execute action",
         "make execute.sh file",
@@ -337,21 +361,21 @@ def main():
     print("CATEGORY 5: COMPLEX REAL-WORLD SCENARIOS")
     print(f"{'='*70}")
     
-    test_request(
+    check_request(
         result,
         "Web scraper project",
         "create a folder webscraper, make scraper.py that fetches data from urls, and test it",
         expected_keywords=["webscraper", "scraper.py", "fetch", "test"]
     )
     
-    test_request(
+    check_request(
         result,
         "API client setup",
         "build a directory api_client with client.py that handles http requests",
         expected_keywords=["api_client", "client.py", "handle"]
     )
     
-    test_request(
+    check_request(
         result,
         "Data processing pipeline",
         "create processor.py that reads csv files and generates reports",
@@ -365,21 +389,21 @@ def main():
     print("CATEGORY 6: FILE TYPE VARIATIONS")
     print(f"{'='*70}")
     
-    test_request(
+    check_request(
         result,
         "Shell script",
         "create deploy.sh that pushes to production",
         expected_keywords=["deploy.sh", "push"]
     )
     
-    test_request(
+    check_request(
         result,
         "JavaScript file",
         "make app.js that handles routing",
         expected_keywords=["app.js", "handle"]
     )
     
-    test_request(
+    check_request(
         result,
         "Text file (non-executable)",
         "create notes.txt with project details",
@@ -387,7 +411,7 @@ def main():
         should_not_contain=["run"]  # Text files should not have run step
     )
     
-    test_request(
+    check_request(
         result,
         "JSON config file",
         "make config.json for settings",
@@ -402,7 +426,7 @@ def main():
     print("CATEGORY 7: AMBIGUOUS/VAGUE REQUESTS")
     print(f"{'='*70}")
     
-    test_request(
+    check_request(
         result,
         "Very vague request",
         "do something",
@@ -410,7 +434,7 @@ def main():
         expected_step_count=3  # Should fall back to generic 3 steps
     )
     
-    test_request(
+    check_request(
         result,
         "Incomplete request",
         "create a script",
@@ -418,7 +442,7 @@ def main():
         expected_step_count=3
     )
     
-    test_request(
+    check_request(
         result,
         "No clear action",
         "help me with files",
@@ -432,7 +456,7 @@ def main():
     print("CATEGORY 8: LONG/COMPLEX DESCRIPTIONS")
     print(f"{'='*70}")
     
-    test_request(
+    check_request(
         result,
         "Very long description",
         "create a comprehensive machine learning model training script that loads datasets, preprocesses data, trains multiple models, evaluates performance, and saves results",
@@ -440,7 +464,7 @@ def main():
         expected_step_count=3  # Should condense to 3-5 steps
     )
     
-    test_request(
+    check_request(
         result,
         "Multiple actions in sequence",
         "create utils folder, then make helper.py that does validation, then create test.py that tests it, and run both",
@@ -454,21 +478,21 @@ def main():
     print("CATEGORY 9: SPECIAL CHARACTERS AND PATHS")
     print(f"{'='*70}")
     
-    test_request(
+    check_request(
         result,
         "Filename with underscores",
         "create my_awesome_script.py",
         expected_keywords=["my_awesome_script.py"]
     )
     
-    test_request(
+    check_request(
         result,
         "Filename with hyphens",
         "make data-processor.py",
         expected_keywords=["data-processor.py"]
     )
     
-    test_request(
+    check_request(
         result,
         "Folder with numbers",
         "create folder project2024",
@@ -482,21 +506,21 @@ def main():
     print("CATEGORY 10: ACTION VARIATIONS")
     print(f"{'='*70}")
     
-    test_request(
+    check_request(
         result,
         "Using 'build' keyword",
         "build a script analyzer.py",
         expected_keywords=["analyzer.py"]
     )
     
-    test_request(
+    check_request(
         result,
         "Using 'generate' keyword",
         "generate report.py that creates pdfs",
         expected_keywords=["report.py", "create"]
     )
     
-    test_request(
+    check_request(
         result,
         "Using 'write' keyword",
         "write a file logger.py",
@@ -505,6 +529,18 @@ def main():
     
     # Print final summary
     result.print_summary()
+    return result
+
+
+# NOTE: the case runner above must NOT be named test_* and must NOT take a
+# parameter named `request` — pytest treats every parameter of a test_*
+# function as a fixture name, so it injected its builtin `request` fixture
+# (a FixtureRequest object) instead of the string, and parse_dynamic_steps
+# crashed on `.lower()`.
+def test_request():
+    """Pytest entry point: no parameters (see the note above)."""
+    result = main()
+    assert result.failed == 0, f"{result.failed} case(s) failed: {result.failed_tests}"
 
 
 if __name__ == "__main__":

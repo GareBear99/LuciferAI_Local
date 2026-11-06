@@ -23,6 +23,29 @@ CYAN = "\033[36m"
 DIM = "\033[2m"
 RESET = "\033[0m"
 
+import pytest
+
+
+@pytest.fixture
+def runner():
+    """Pytest fixture for the test_*(runner) functions below.
+
+    Pytest treats every parameter of a test function as a fixture name, so
+    without this it errors with "fixture 'runner' not found" — these
+    functions were written for the main() driver, which builds its own
+    runner. A fresh runner per test gives each section its own agent and
+    test directory (better isolation than the shared main() runner), and
+    the teardown asserts the section had no failures, so pytest gets a
+    real signal instead of a vacuous pass.
+    """
+    r = ComprehensiveTestRunner()
+    r.setup()
+    yield r
+    failed = r.tests_failed
+    r.cleanup()
+    assert failed == 0, f"{failed} command(s) failed in this section"
+
+
 class ComprehensiveTestRunner:
     def __init__(self):
         self.agent = EnhancedLuciferAgent()
@@ -59,7 +82,11 @@ class ComprehensiveTestRunner:
             
             # Check if validator provided
             if validator:
-                success, msg = validator(response)
+                # Validators may return a (bool, msg) tuple or a bare bool
+                # ("just check it runs"). The bare-bool form used to crash
+                # here with "cannot unpack non-iterable bool object".
+                _v = validator(response)
+                success, msg = _v if isinstance(_v, tuple) else (_v, name)
                 status = f"{GREEN}✓ PASS{RESET}" if success else f"{RED}✗ FAIL{RESET}"
                 print(f"{status}: {msg}\n")
                 if success:
@@ -67,8 +94,17 @@ class ComprehensiveTestRunner:
                 else:
                     self.tests_failed += 1
             else:
-                # Just check response exists
-                if response and not "error" in response.lower():
+                # Just check we got a real response, not a failure. NOTE: do
+                # NOT test for the substring "error" — help text and other
+                # legit output mentions errors ("error handling", event logs
+                # showing tracebacks). Use the same failure indicators the
+                # agent itself uses (see _is_failed_response).
+                failure_indicators = [
+                    "Not sure how to handle that",
+                    "Unknown command",
+                    "not found in any source",
+                ]
+                if not any(i in (response or "") for i in failure_indicators):
                     print(f"{GREEN}✓ PASS{RESET}: Got response\n")
                     self.tests_passed += 1
                 else:

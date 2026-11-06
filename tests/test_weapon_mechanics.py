@@ -6,7 +6,7 @@ Tests all weapon types: Melee, Ranged, Boomerang, Hybrid
 import sys
 import os
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from core.physics_combat_engine import (
     PhysicsCombatEngine, 
     WEAPON_MECHANICS, 
@@ -29,7 +29,10 @@ def create_test_soul(entity_key: str, rarity: str, level: int) -> Soul:
     return soul
 
 
-def test_weapon_type(weapon_type: WeaponType, weapon_name: str):
+# NOTE: the case runner below must NOT be named test_* — pytest treats
+# every parameter of a test_* function as a fixture name, so it injected
+# its builtin `weapon_type`/`weapon_name` fixtures instead of the enums.
+def check_weapon_type(weapon_type: WeaponType, weapon_name: str):
     """Test a specific weapon type."""
     print(f"\n{'═' * 80}")
     print(f"Testing {weapon_type.name}: {weapon_name}")
@@ -63,10 +66,10 @@ def run_weapon_tests():
     print("WEAPON TYPE CLASSIFICATION TEST")
     print("═" * 80)
     
-    melee_count = test_weapon_type(WeaponType.MELEE, "Melee")
-    ranged_count = test_weapon_type(WeaponType.RANGED, "Ranged")
-    boomerang_count = test_weapon_type(WeaponType.BOOMERANG, "Boomerang")
-    hybrid_count = test_weapon_type(WeaponType.HYBRID, "Hybrid")
+    melee_count = check_weapon_type(WeaponType.MELEE, "Melee")
+    ranged_count = check_weapon_type(WeaponType.RANGED, "Ranged")
+    boomerang_count = check_weapon_type(WeaponType.BOOMERANG, "Boomerang")
+    hybrid_count = check_weapon_type(WeaponType.HYBRID, "Hybrid")
     
     total = melee_count + ranged_count + boomerang_count + hybrid_count
     print(f"\n{'═' * 80}")
@@ -107,6 +110,13 @@ def run_weapon_tests():
     print("  - Return mechanics")
     print("  - Attack cooldowns")
     
+    # The live battle is interactive (waits for ENTER, then runs a
+    # simulated fight) — it cannot run under pytest or any non-TTY
+    # stdin, so skip it there; the classification part above is the
+    # part pytest checks.
+    if not sys.stdin.isatty():
+        print("\n(non-interactive stdin: skipping live battle)")
+        return
     input("\nPress ENTER to start test battle...")
     
     thor = create_test_soul('thor', 'celestial', 50)
@@ -133,6 +143,19 @@ def run_weapon_tests():
     print("\n✅ Check the logs/ directory for detailed battle log")
     print("✅ Verify weapon mechanics worked correctly")
     print("✅ Confirm projectiles, boomerangs, and damage calculations")
+
+
+def test_weapon_type():
+    """Pytest entry point: weapon classification only (see the note
+    above). The live battle stays manual — run the file directly."""
+    for weapon_type, name in (
+        (WeaponType.MELEE, "Melee"),
+        (WeaponType.RANGED, "Ranged"),
+        (WeaponType.BOOMERANG, "Boomerang"),
+        (WeaponType.HYBRID, "Hybrid"),
+    ):
+        count = check_weapon_type(weapon_type, name)
+        assert count is not None and count > 0, f"no {name} weapons classified"
 
 
 if __name__ == "__main__":

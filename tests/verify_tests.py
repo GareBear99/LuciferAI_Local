@@ -170,7 +170,7 @@ def main():
         print("✅ ALL VERIFICATION TESTS PASSED!")
         print("="*60)
         print("\nValidation system is working correctly for all model types.")
-        print("Ready to test all 85+ supported models.\n")
+        print("Ready to test all 74 supported models.\n")
         return 0
         
     except AssertionError as e:

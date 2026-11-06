@@ -885,7 +885,7 @@ def main():
         ("llm disable tinyllama", "Model: Disable specific model"),
         # Advanced variant - bulk operations
         ("show backup models", "Model: Show backup directory"),
-        ("llm list all", "Model: Show all 85+ supported models"),
+        ("llm list all", "Model: Show all 74 supported models"),
     ]
     
     # Run in batches of 3

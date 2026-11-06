@@ -10,7 +10,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from core.simple_knowledge import handle_simple_query
 from core.zodiac_knowledge import handle_zodiac_query
 
-def test_keyword(query: str, description: str, expected_match: bool = True):
+# NOTE: the case runner below must NOT be named test_* — pytest treats
+# every parameter of a test_* function as a fixture name, so it injected
+# its builtin `query` fixture (a string) instead of the test case.
+def check_keyword(query: str, description: str, expected_match: bool = True):
     """Test a single keyword query."""
     # Try simple knowledge
     result = handle_simple_query(query)
@@ -36,7 +39,7 @@ def main():
     print("\n🧪 Comprehensive Keyword Test Suite")
     print("Testing all knowledge handlers with exact matches and typos\n")
     
-    tests = [
+    CASES = [
         # === EXACT MATCHES ===
         ("What is ls?", "Terminal: ls command", True),
         ("What is python?", "Language: Python definition", True),
@@ -99,15 +102,15 @@ def main():
     passed = 0
     failed = 0
     
-    for query, desc, expected in tests:
-        if test_keyword(query, desc, expected):
+    for query, desc, expected in CASES:
+        if check_keyword(query, desc, expected):
             passed += 1
         else:
             failed += 1
     
     # Summary
     print(f"\n{'='*70}")
-    print(f"📊 RESULTS: {passed} passed, {failed} failed out of {len(tests)} tests")
+    print(f"📊 RESULTS: {passed} passed, {failed} failed out of {len(CASES)} tests")
     print(f"{'='*70}\n")
     
     if failed == 0:
@@ -116,6 +119,12 @@ def main():
         print(f"⚠️  {failed} tests failed")
     
     return 0 if failed == 0 else 1
+
+
+def test_keyword():
+    """Pytest entry point: no parameters (see the note above)."""
+    assert main() == 0
+
 
 if __name__ == "__main__":
     sys.exit(main())
