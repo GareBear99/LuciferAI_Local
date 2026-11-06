@@ -117,8 +117,6 @@ LuciferAI is a **dual-mode AI assistant** that functions as both:
 - Smart app selection for `open`
 - Cross-platform compatibility (macOS, Linux, Windows)
 
-**Performance:** 99.8% success rate across 10,000+ operations
-
 ---
 
 ### Category 3: Script Execution (100% Available)
@@ -131,6 +129,8 @@ LuciferAI is a **dual-mode AI assistant** that functions as both:
 | `fix <script>` | Fix broken script | `fix broken.py` | ✅ Apply consensus fixes |
 
 **Workflow Without LLM:**
+
+> The numbers in this walkthrough (127 prior instances, 119/127, 94%) are illustrative example data, not measured results.
 
 ```
 1. User: run broken_script.py
@@ -511,7 +511,7 @@ FixNet search: 0 prior fixes
 → After 10 users: Calculate initial consensus
 ```
 
-**Scenario 2: Established Fix**
+**Scenario 2: Established Fix** (illustrative example)
 ```
 Error: "ImportError: No module named 'requests'"
 FixNet search: 127 prior instances
@@ -559,7 +559,7 @@ Keyword matching:
 - "data" → Data processing
 
 Selected: weather_api_client.py
-Success rate: 89% (from FixNet data)
+Success rate: 89% (illustrative example)
 ```
 
 ### With LLM: Enhanced Generation
@@ -595,7 +595,7 @@ Tier 3: DeepSeek (33B)
 **Example:**
 ```
 LLM generates: requests.get(url)
-FixNet check: 94% of users add timeout parameter
+FixNet check: 94% of users add timeout parameter (illustrative example)
 → Suggestion: requests.get(url, timeout=10)
 ```
 
@@ -671,10 +671,7 @@ FixNet check: 94% of users add timeout parameter
 
 **Evidence:**
 - ✅ 76 master controller routing cases (print-based checks)
-- ✅ 10,000+ file operations tested
 - ✅ Auto-repair (no measured success rate)
-- ✅ 6-month production usage
-- ✅ Multi-user validation
 
 ### Scalability: 8.5/10
 

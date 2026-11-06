@@ -1,5 +1,7 @@
 # Final Implementation Summary - LuciferAI Test Suite Enhancements
 
+> **Archived run summary.** This document records one test run from the time it was written. Its figures (e.g. "~94% (49/52 tests pass)") are that run's results, not current measurements — do not quote them as the system's performance.
+
 ## Overview
 Comprehensive test suite with keyword-based knowledge handlers, fuzzy matching, tier-aware validation, and intelligent upgrade prompts.
 

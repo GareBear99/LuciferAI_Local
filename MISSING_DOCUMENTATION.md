@@ -258,8 +258,8 @@ Needs: Complete test command documentation
 ## ✨ Key Features
 
 ### 🔄 Hybrid Cloud/Local Operation
-- **Tier 0-4**: 100% local (no data sent to cloud)
-- **Tier 5**: Optional ChatGPT integration
+- **Tier 0-4**: Local inference (no model data sent to cloud; startup syncs FixNet state from GitHub and runs a WiFi check)
+- **Tier 5**: Optional ChatGPT integration (coming soon, not shipped)
 - **Automatic fallback**: Cloud unavailable → local models
 - **Best of both worlds**: Privacy + latest GPT-4 features
 ```

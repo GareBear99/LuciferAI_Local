@@ -60,7 +60,6 @@ All file operations work without any LLM using native OS-level commands.
 - Trash integration (reversible delete)
 - Smart app selection for `open`
 - Cross-platform (macOS, Linux, Windows)
-- 99.8% success rate across 10,000+ operations
 
 ---
 
@@ -105,10 +104,10 @@ Basic templates work without LLM. AI generation requires model.
 | `generate <type>` | Template generation | `generate flask app` | ⚠️ Templates work without LLM |
 
 **Template System (No LLM):**
-- 85 built-in templates
+- 10 built-in templates (`core/script_templates.py`: python_flask_api, python_web_scraper, python_cli_tool, python_data_processor, python_file_monitor, js_express_server, js_react_component, bash_backup_script, bash_system_monitor, go_http_server)
 - Web scraping, API clients, file ops, data processing
 - Keyword matching for selection
-- 89% average success rate
+- No measured success rate
 
 ---
 
@@ -121,7 +120,7 @@ Manage models without needing LLM running.
 | Command | Description | Example |
 |---------|-------------|---------|
 | `llm list` | Show installed models | `llm list` |
-| `llm list all` | Show all 85+ supported models | `llm list all` |
+| `llm list all` | Show all supported models | `llm list all` |
 | `llm enable <model>` | Enable a model | `llm enable mistral` |
 | `llm disable <model>` | Disable a model | `llm disable tinyllama` |
 | `llm enable all` | Enable all installed models | `llm enable all` |

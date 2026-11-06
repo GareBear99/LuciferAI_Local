@@ -9,7 +9,7 @@ Your fixes are **automatically uploaded** to the main consensus branches when:
    - Command: `run script.py`
    - LuciferAI detects the error
    - Generates or applies a fix
-   - **Immediately uploads to FixNet** (line 367 in enhanced_agent.py)
+   - **Immediately uploads to FixNet** (called from `enhanced_agent.py:2027` and `fixnet_integration.py:110`)
    - Adds to your local dictionary
 
 2. **You manually fix a script**
@@ -60,7 +60,7 @@ If you hit the **rate limit (5 uploads/hour)**:
 ┌─────────────────────────────────────────────────────────┐
 │ 4. Upload to FixNet (AUTOMATIC)                        │
 │    • Calls: uploader.full_fix_upload_flow()            │
-│    • Encrypts fix data (AES-256)                       │
+│    • Encrypts fix data (Fernet)                            │
 │    • Creates SHA256 signature                          │
 │    • Checks rate limit                                 │
 └─────────────────────┬───────────────────────────────────┘
@@ -112,7 +112,7 @@ If you hit the **rate limit (5 uploads/hour)**:
 ```
 
 ### Privacy & Security:
-- ✅ Fix code is **encrypted** (AES-256)
+- ✅ Fix code is **encrypted** (Fernet)
 - ✅ User ID is **hashed**
 - ✅ Only **validated users** can upload
 - ✅ **Digital signature** prevents tampering
@@ -161,7 +161,7 @@ github uploads  # See your uploaded fixes
 
 ### GitHub Repository Structure:
 ```
-luciferai/fix-consensus/
+GareBear99/LuciferAI_FixNet/
 ├── fixes/
 │   ├── python/
 │   │   ├── nameerror/

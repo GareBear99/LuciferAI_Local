@@ -233,15 +233,15 @@ High-reputation users' votes count more:
 
 ```python
 # Standard consensus (everyone equal)
-consensus = cd.calculate_consensus(fix_hash)  # 70%
+consensus = cd.calculate_consensus(fix_hash)  # 70% (illustrative example value)
 
 # Weighted by user reputation
-weighted = cd.get_reputation_weighted_consensus(fix_hash)  # 72%
+weighted = cd.get_reputation_weighted_consensus(fix_hash)  # 72% (illustrative example value)
 ```
 
 **Example:**
 ```
-Weighted consensus: 72.1%
+Weighted consensus: 72.1% (illustrative example)
 vs
 Standard consensus: 70.0%
 ```
@@ -468,12 +468,12 @@ Recommendation:
 ============================================================
 
 💡 Best Fix Found:
-   ✅ Highly recommended (89% success, 45 users)
+   ✅ Highly recommended (89% success, 45 users — illustrative example)
    Score: 0.87
    Solution: import json
    
    Context match: +15% boost (same Python version)
-   Reputation-weighted: 91% (vs 89% raw)
+   Reputation-weighted: 91% (vs 89% raw — illustrative example)
 
 Reputation: User 'abc123' is EXPERT tier (0.92 score)
 ```

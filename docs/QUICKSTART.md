@@ -1,8 +1,9 @@
 # 🚀 LuciferAI Local - Quick Start Guide
 
-## ✅ System Status: FULLY INTEGRATED & TESTED
+> **What this guide is:** a walkthrough of the FixNet integration, with a worked example from one recorded test run on the author's machine. The counts and rates shown below (9 fixes, 4 branch connections, 5 community fixes, the 71.4% rejection rate) are that run's results — not a measurement of the system. The system has no measured success rate; do not quote these numbers as its performance.
 
-All components are working together seamlessly:
+## ✅ What This Covers
+
 - ✅ SmartUploadFilter (prevents duplicate pollution)
 - ✅ FixNetUploader (encrypted GitHub uploads)
 - ✅ RelevanceDictionary (collaborative learning)
@@ -16,11 +17,11 @@ All components are working together seamlessly:
 1. **Smart Upload Filter** (`core/smart_upload_filter.py`)
    - Decides what gets uploaded to GitHub
    - Prevents duplicate fix pollution
-   - 71.4% rejection rate (working perfectly!)
+   - In the recorded example run it rejected 5 of 7 fixes (71.4%) — that run's rate, not a system guarantee
    - Only uploads novel fixes and branch relationships
 
 2. **FixNet Uploader** (`core/fixnet_uploader.py`)
-   - Encrypts fixes with AES-256
+   - Encrypts fixes with Fernet (AES-128-CBC + HMAC-SHA256)
    - Signs with SHA-256
    - Commits to local Git repo
    - Pushes to GitHub (when configured)
@@ -38,18 +39,18 @@ All components are working together seamlessly:
 
 ---
 
-## 🎯 Quick Test (Already Ran Successfully!)
+## 🎯 Quick Test (Example Run)
 
 ```bash
-cd /Users/TheRustySpoon/Desktop/Projects/LuciferAI_Local/core
+cd core
 python3 fixnet_integration.py
 ```
 
-**Results:**
+**Results from the recorded example run:**
 - ✅ 9 total fixes tracked
 - ✅ 4 branch connections created
 - ✅ 5 community fixes available
-- ✅ 71.4% duplicate rejection rate
+- ✅ 5 of 7 fixes rejected as duplicates (71.4% — that run's rate)
 - ✅ Local Git commits working
 - ✅ Encrypted patch files created
 - ✅ Dictionary syncing working
@@ -179,11 +180,11 @@ Test 4: Search fixes
   Result: Found 3 matches ✅
 ```
 
-### Statistics
+### Statistics (recorded example run)
 ```
 📚 Local Dictionary: 9 fixes, 4 error types
 🌐 Remote FixNet: 5 community fixes
-🎯 Smart Filter: 71.4% rejection rate
+🎯 Smart Filter: 5 of 7 rejected in that run (71.4%)
 ✨ Preventing duplicate pollution!
 ```
 
@@ -192,7 +193,7 @@ Test 4: Search fixes
 ## 🎨 What Makes This Special
 
 ### Privacy-First Design
-- ✅ Your fixes encrypted with AES-256
+- ✅ Your fixes encrypted with Fernet (AES-128-CBC + HMAC-SHA256)
 - ✅ Only metadata visible publicly
 - ✅ Can't decrypt others' fixes (but benefit from patterns)
 - ✅ User IDs anonymized (hash-based)
@@ -211,15 +212,14 @@ Test 4: Search fixes
 
 ---
 
-## 📊 Current System Stats
+## 📊 Example Run Stats
 
-**Your Installation:**
-- User ID: `B35EE32A34CE37C2`
+**The recorded example run:**
 - Local Fixes: 9
 - Error Types: 4
 - Branch Connections: 4
 - Upload History: 2 novel, 5 rejected
-- Rejection Rate: 71.4%
+- Rejection Rate: 5 of 7 in that run (71.4%)
 - Community Fixes: 5 available
 
 **Files Created:**
@@ -330,9 +330,9 @@ fixnet.print_statistics()
 
 ---
 
-## ✅ System Verified Working
+## ✅ What the Example Run Exercised
 
-All tests passed successfully:
+The recorded run exercised:
 - ✅ Smart filter logic
 - ✅ Encryption/signing
 - ✅ Git commits
@@ -342,7 +342,7 @@ All tests passed successfully:
 - ✅ Statistics tracking
 - ✅ Duplicate prevention
 
-**Status: Production Ready** 🎉
+> **Note:** this is one recorded run, not a production-readiness claim. The system has no measured success rate.
 
 ---
 
@@ -350,12 +350,12 @@ All tests passed successfully:
 
 You now have a **fully integrated, privacy-first, collaborative fix learning system** that:
 
-1. **Intelligently filters** duplicates (71.4% rejection rate)
-2. **Encrypts everything** (AES-256 + SHA-256)
+1. **Intelligently filters** duplicates (the example run rejected 5 of 7)
+2. **Encrypts everything** (Fernet + SHA-256)
 3. **Tracks relationships** (branch connections)
 4. **Learns collectively** (relevance scoring)
 5. **Scales efficiently** (GitHub-based, decentralized)
 
-**No duplicate pollution. Maximum collaboration. Complete privacy.**
+**No duplicate pollution. Shared learning. Privacy by design (fixes encrypted; only metadata public).**
 
 Ready to use! 🚀
