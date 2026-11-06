@@ -1,8 +1,10 @@
 # 🎯 Master Controller Implementation Summary
 
+> **Implementation notes from January 23, 2026.** The "100%" figures below are the routing test script's reported pass counts on its 76 cases — those cases are print-based checks, not asserts, and the pass criterion is lenient (assigned tier meets or exceeds the expected tier). "Perfect" and "production-ready" in this document are the author's wording from the time, not a measured accuracy claim.
+
 **Date:** January 23, 2026  
-**Status:** ✅ **COMPLETE - 100% TEST SUCCESS RATE**  
-**Test Results:** 76/76 tests passed (100%)
+**Status:** ✅ **COMPLETE**  
+**Test Results:** 76/76 routing cases reported passing (print-based checks)
 
 ---
 

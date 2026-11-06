@@ -234,7 +234,7 @@ mkdir -p ~/.luciferai/{models,image_models,images,generated_images}
 - DeepSeek (3.8GB) - Tier 3
 
 **Full Setup** (~450GB):
-- All 85+ supported models
+- All 74 registered models
 - Use external drive if needed
 
 ---

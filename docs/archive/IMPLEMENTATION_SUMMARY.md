@@ -1,5 +1,7 @@
 # Llamafile Support for All 85+ Models - Implementation Summary
 
+> **Archived implementation summary.** Written when the model registry was described as "85+"; the registry in `core/model_tiers.py` has 74 entries. Treat the "85+" figure here as the count claimed at the time, not a current measurement.
+
 ## ✅ Completed Implementation
 
 We have successfully implemented llamafile-based installation and testing support for all 85+ supported models. This enables offline, macOS Catalina-compatible installation of any LLM model, with automatic tier testing.

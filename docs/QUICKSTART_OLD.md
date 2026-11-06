@@ -1,5 +1,7 @@
 # 🚀 LuciferAI - Quick Start Guide
 
+> **Superseded — do not use.** This is the old quick-start; see [QUICKSTART.md](QUICKSTART.md) instead. Its figures are stale (it still says AES-256 — the system uses Fernet — and quotes the author's single test run's rates as system performance).
+
 ## \ud83d\udce6 Installation
 
 ```bash
