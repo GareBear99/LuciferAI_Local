@@ -83,7 +83,7 @@ Execute and fix Python scripts with FixNet consensus integration.
 1. Execute script → Detect error
 2. Search FixNet database (local + remote)
 3. Calculate consensus (success rate, users)
-4. Present fix: "✅ 94% success rate (119 users)"
+4. Present fix: "✅ fix with its consensus score"
 5. Apply fix → Report result
 ```
 
@@ -165,7 +165,7 @@ Community fix database with consensus validation.
 **Stats Shown:**
 - 📊 Local fixes stored
 - 🌐 Remote fixes available
-- 🎯 Smart filter rejection rate (71.4%)
+- 🎯 Smart filter rejections (counted, no fixed rate)
 - 📤 GitHub commits uploaded
 - 👤 User profile & badges
 
@@ -406,9 +406,7 @@ Requires Mistral or DeepSeek model enabled.
 ## Quick Stats
 
 **Total Commands:** 80+  
-**Work Offline:** 72% (58+ commands)  
-**No LLM Required:** 80% (64+ commands)  
-**Average Response Time:** 15-50ms (without LLM)
+**Work Offline:** deterministic commands work offline without any LLM
 
 **Most Used Commands:**
 1. `help` - Show all commands

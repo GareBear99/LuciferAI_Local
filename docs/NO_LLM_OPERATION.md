@@ -14,7 +14,7 @@ LuciferAI is a **dual-mode AI assistant** that functions as both:
 1. **Full AI Mode** - Complete LLM-powered natural language processing
 2. **Zero-LLM Mode** - Comprehensive command-line tool with 50+ built-in operations
 
-**Key Innovation:** Unlike competitors (Copilot, Cursor, Codeium) that fail without cloud/API access, LuciferAI maintains **72% of core functionality** without any LLM, making it operational in:
+**Key Innovation:** Unlike competitors (Copilot, Cursor, Codeium) that fail without cloud/API access, LuciferAI's deterministic command layer keeps working without any LLM, making it operational in:
 - Air-gapped environments
 - Offline deployments
 - Low-resource systems (2GB RAM)
@@ -71,10 +71,10 @@ LuciferAI is a **dual-mode AI assistant** that functions as both:
 
 | Mode | LLM Required | Functionality | Use Case |
 |------|--------------|---------------|----------|
-| **Full AI** | ✅ Yes | 100% features | Development, code generation |
-| **Hybrid** | ⚠️ Optional | 85% features | Intermittent connectivity |
-| **Zero-LLM** | ❌ No | 72% features | Air-gapped, offline, emergency |
-| **Emergency** | ❌ No | 45% features | System recovery, diagnostics |
+| **Full AI** | ✅ Yes | all features | Development, code generation |
+| **Hybrid** | ⚠️ Optional | most features | Intermittent connectivity |
+| **Zero-LLM** | ❌ No | deterministic commands | Air-gapped, offline, emergency |
+| **Emergency** | ❌ No | recovery + diagnostics | System recovery, diagnostics |
 
 ---
 
@@ -146,7 +146,7 @@ LuciferAI is a **dual-mode AI assistant** that functions as both:
    │
 4. Present Fix:
    ├─► "pip install requests"
-   ├─► Show: "✅ 94% success rate (119 users)"
+   ├─► Show: "✅ fix with its consensus score"
    │
 5. Apply Fix (if user confirms)
    ├─► Execute: pip install requests
@@ -356,7 +356,7 @@ Phase 4: Verification
 └─► Run system diagnostics
 ```
 
-**Success Rate:** 87% of automatic recoveries succeed without user intervention
+**Success Rate:** not measured — no success rate is recorded for automatic recoveries
 
 ---
 
@@ -406,8 +406,8 @@ Phase 4: Verification
                     ▼
         ┌────────────────────────┐
         │  Present to user:      │
-        │  "✅ 94% success rate  │
-        │   (119 users)"         │
+        │  "✅ fix with          │
+        │   consensus score"     │
         └────────────────────────┘
                     │
                     ▼
@@ -432,9 +432,9 @@ Phase 4: Verification
 
 | Level | Success Rate | Action | Example |
 |-------|--------------|--------|---------|
-| **Highly Trusted** | ≥75% | ✅ Auto-recommend | `pip install requests` (94% success) |
-| **Trusted** | 51-74% | ✅ Recommend | `conda install package` (68% success) |
-| **Experimental** | 30-50% | ⚠️ Warn user | `experimental_fix.sh` (42% success) |
+| **Highly Trusted** | ≥75% | ✅ Auto-recommend | `pip install requests` |
+| **Trusted** | 51-74% | ✅ Recommend | `conda install package` |
+| **Experimental** | 30-50% | ⚠️ Warn user | `experimental_fix.sh` |
 | **Quarantined** | <30% | ❌ Block | `rm -rf /` (0% success - malicious) |
 
 ### Fraud Detection
@@ -647,9 +647,9 @@ FixNet check: 94% of users add timeout parameter
 
 | Feature | LuciferAI | GitHub Copilot | Cursor | Codeium |
 |---------|-----------|----------------|--------|---------|
-| **Works Offline** | ✅ 72% features | ❌ No | ❌ No | ❌ No |
+| **Works Offline** | ✅ Yes (deterministic commands) | ❌ No | ❌ No | ❌ No |
 | **Zero-LLM Mode** | ✅ Yes | ❌ No | ❌ No | ❌ No |
-| **Fix Database** | ✅ 10K+ fixes | ❌ No | ❌ No | ❌ No |
+| **Fix Database** | ✅ Local fix dictionary | ❌ No | ❌ No | ❌ No |
 | **Consensus Validation** | ✅ 51% threshold | ❌ No | ❌ No | ❌ No |
 | **5-Tier Fallback** | ✅ Yes | ❌ No | ❌ No | ❌ No |
 | **Air-Gap Capable** | ✅ Yes | ❌ No | ❌ No | ❌ No |
@@ -670,16 +670,16 @@ FixNet check: 94% of users add timeout parameter
 ### Technical Maturity: TRL 7
 
 **Evidence:**
-- ✅ 76/76 master controller tests passing (100%)
+- ✅ 76 master controller routing cases (print-based checks)
 - ✅ 10,000+ file operations tested
-- ✅ 87% auto-repair success rate
+- ✅ Auto-repair (no measured success rate)
 - ✅ 6-month production usage
 - ✅ Multi-user validation
 
 ### Scalability: 8.5/10
 
 **Proven:**
-- ✅ Handles 10K+ fixes in database
+- ✅ Local fix dictionary (no measured fix count)
 - ✅ Sub-second search performance
 - ✅ Concurrent multi-user support
 - ✅ Distributed consensus calculation
@@ -687,7 +687,7 @@ FixNet check: 94% of users add timeout parameter
 ### Security: 9.0/10
 
 **Features:**
-- ✅ AES-256 encryption for fixes
+- ✅ Fernet encryption for fixes (AES-128-CBC + HMAC-SHA256)
 - ✅ SHA256 verification for downloads
 - ✅ Malicious pattern detection
 - ✅ Community spam reporting

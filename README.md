@@ -1,6 +1,6 @@
 # 👾 LuciferAI — Local AI Terminal Assistant (Offline, Privacy-First, Self-Healing)
 
-> **The only AI coding assistant that runs 100% locally, works offline, self-heals errors, and needs zero API keys.**
+> **A local-first AI terminal assistant with self-healing capabilities and collaborative fix learning.**
 
 [![GitHub Stars](https://img.shields.io/github/stars/GareBear99/LuciferAI_Local?style=social)](https://github.com/GareBear99/LuciferAI_Local/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/GareBear99/LuciferAI_Local?style=social)](https://github.com/GareBear99/LuciferAI_Local/network/members)
@@ -8,17 +8,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Open Source](https://img.shields.io/badge/Open%20Source-❤️-red.svg)](https://github.com)
-[![Offline Capable](https://img.shields.io/badge/Offline-100%25%20Capable-brightgreen)](https://github.com/GareBear99/LuciferAI_Local)
-[![No Cloud Required](https://img.shields.io/badge/Cloud-Not%20Required-blue)](https://github.com/GareBear99/LuciferAI_Local)
-[![Local LLM](https://img.shields.io/badge/LLM-100%25%20Local-orange)](https://github.com/GareBear99/LuciferAI_Local)
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support-yellow?style=flat&logo=buy-me-a-coffee)](https://buymeacoffee.com/garebear99)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-ff5e5b?style=flat&logo=ko-fi)](https://ko-fi.com/luciferai)
 [![Sponsor](https://img.shields.io/badge/Sponsor-❤️-red?style=flat&logo=github-sponsors)](https://github.com/sponsors/GareBear99)
 
-**LuciferAI** is a fully **local AI terminal assistant** with **self-healing capabilities** and **collaborative fix learning**. Unlike cloud-dependent tools like GitHub Copilot, Cursor, or Codeium, LuciferAI runs entirely on your machine — **no API keys, no cloud, no data leaving your device** — while still benefiting from community wisdom through its unique **FixNet consensus system**.
+**LuciferAI** is a **local-first AI terminal assistant** with **self-healing capabilities** and **collaborative fix learning**. Unlike cloud-dependent tools like GitHub Copilot, Cursor, or Codeium, its deterministic command layer runs entirely on your machine — **no API keys** — while still benefiting from community wisdom through its unique **FixNet consensus system**. Note: startup syncs FixNet state from GitHub and runs a WiFi check, so the app is not fully offline on boot.
 
-**Key differentiators:** 🔒 100% local & offline · 🧠 Multi-tier LLM (llamafile/GGUF) · 🔧 Self-healing FixNet · 🛡️ AES-256 encrypted · ⚡ 80+ commands · 🖥️ macOS/Linux/Windows
+**Key differentiators:** 🔒 Local-first · 🧠 Multi-tier LLM (llamafile/GGUF) · 🔧 Self-healing FixNet · 🛡️ Fernet-encrypted fixes · ⚡ 80+ commands · 🖥️ macOS/Linux/Windows
 
 *"Forged in Silence, Born of Neon."*
 
@@ -63,11 +60,10 @@ cd LuciferAI_Local
 python3 lucifer.py
 ```
 
-**Zero installation required!** LuciferAI auto-bootstraps on first run:
-- ✅ **Auto-assembles** llamafile binary from split parts (1-2 sec)
-- ✅ **Prompts to download** TinyLlama model (670MB, one-time)
-- ✅ **Works offline** after initial setup
-- ✅ **Starts instantly** on subsequent runs (< 1 sec)
+**Setup:** LuciferAI auto-bootstraps on first run:
+- ✅ **Auto-assembles** llamafile binary from split parts (or downloads llamafile 0.10.6)
+- ✅ **Setup script downloads** the TinyLlama model (670MB, one-time): `./setup_bundled_models.sh`
+- ✅ **Works offline** after initial setup (model + binary in the project layout — see `setup_bundled_models.sh`)
 
 ### **Usage Examples**
 
@@ -97,7 +93,7 @@ python3 lucifer.py
 
 ### **What You Get Out of the Box**
 
-✅ **TinyLlama (1.1B)** - Bundled, works offline immediately  
+✅ **TinyLlama (1.1B)** - Downloaded by the setup script, works offline once installed  
 ✅ **File Operations** - create, delete, move, copy, read, list, find  
 ✅ **Script Generation** - Natural language → Python/Bash scripts  
 ✅ **Auto-Fix** - Fix broken scripts automatically  
@@ -136,15 +132,15 @@ python3 lucifer.py --verbose
 
 ### **🎯 Zero-LLM Operation (DARPA-Level Documentation)**
 
-**CRITICAL DIFFERENTIATOR:** LuciferAI maintains **72% functionality WITHOUT any LLM**
+**CRITICAL DIFFERENTIATOR:** LuciferAI's deterministic command layer works WITHOUT any LLM — no cloud, no API, no model needed for the built-in commands. (An earlier "72%" figure for this was an unmeasured docs assertion; it has been removed. Verified 2026-11-03: the CLI boots and the deterministic commands run with no model installed.)
 
 📘 **[Read Complete Technical Documentation](docs/NO_LLM_OPERATION.md)** ← DARPA/NSF/DOD Format
 
 **Why This Matters:**
 - ✅ **50+ commands work offline** - No cloud/API required
 - ✅ **Air-gapped capable** - Secure environments (military, research)
-- ✅ **FixNet consensus system** - 10K+ community-validated fixes
-- ✅ **5-tier fallback** - 87% auto-recovery success rate
+- ✅ **FixNet consensus system** - local fix dictionary (no measured fix count)
+- ✅ **5-tier fallback** - layered recovery (no measured success rate)
 - ✅ **Emergency mode** - Works even when everything fails
 
 **Commands That Work WITHOUT LLM:**
@@ -156,7 +152,7 @@ python3 lucifer.py --verbose
 
 # Script execution with FixNet (100% available)
 > run script.py         # Detects errors automatically
-> fix broken.py         # Applies consensus fixes (94% success)
+> fix broken.py         # Applies consensus fixes (no measured success rate)
 
 # System management (100% available)  
 > llm list              # Manage models without LLM
@@ -170,19 +166,19 @@ python3 lucifer.py --verbose
 - GitHub Copilot: 0% without cloud ❌
 - Cursor: 0% without API ❌
 - Codeium: 0% offline ❌
-- **LuciferAI: 72% without LLM** ✅
+- **LuciferAI: works offline (deterministic commands)** ✅
 
 ---
 
-### **New: Master Controller System (100% Test Success!)**
+### **New: Master Controller System**
 
-🎉 **Just implemented** - Perfect routing and fallback system:
+🎉 **Just implemented** - Routing and fallback system:
 
 ```bash
 # Run comprehensive validation tests
 python3 tests/test_master_controller.py
 
-# Expected: 76/76 tests passing (100% success rate)
+# 76 routing cases in tests/test_master_controller.py (print-based checks)
 ```
 
 **What's New:**
@@ -206,40 +202,38 @@ See `MASTER_CONTROLLER_STATUS.md` for full details.
 
 ## 🏆 Project Status
 
-**Built by 1 developer with $0 funding** — currently ranked **top 1.1% globally** (#56 out of 5,265 AI coding tools).
+**Built by 1 developer with $0 funding.**
 
 | Metric | LuciferAI | Funded Competitors |
 |--------|-----------|--------------------|
 | **Funding** | $0 | $5M - $65M+ |
 | **Team Size** | 1 developer | 20-200 engineers |
 | **Self-Healing** | ✅ FixNet (unique) | ❌ None |
-| **100% Local** | ✅ Yes | ❌ Cloud-dependent |
-| **Privacy** | ✅ AES-256 encrypted | ❌ Data leaves machine |
-
-**Outperforms funded competitors:** Tabnine ($32M), Codeium ($65M), Amazon Q Developer, Replit AI ($100M+), and 5,200+ other tools.
+| **Local-first** | ✅ Command core local | ❌ Cloud-dependent |
+| **Privacy** | ✅ Fernet-encrypted | ❌ Data leaves machine |
 
 ---
 
 ## ✨ Key Features
 
 ### 🔄 Hybrid Cloud/Local Operation
-- **Tier 0-4**: 100% local operation (no data sent to cloud)
-- **Tier 5**: Optional ChatGPT/GPT-4 integration
+- **Tier 0-4**: Local operation (no data sent to cloud for local inference)
+- **Tier 5**: ChatGPT/GPT-4 integration — coming soon (help text only; no handler in code)
 - **Automatic Fallback**: Cloud unavailable → seamless local model switch
 - **Best of Both Worlds**: Privacy + latest GPT-4 features when needed
 
 ### 🧠 Multi-Tier LLM System
-- **Tier 0-5 Architecture**: Automatically selects the best model for each task
+- **Tier 0-4 Architecture**: Automatically selects the best model for each task
 - **Native Llamafile**: Direct GGUF model execution - no external servers required
-- **85+ Supported Models**: From TinyLlama (1B) to Llama-3.1-70B + GPT-4
+- **85+ Supported Models**: From TinyLlama (1B) to Llama-3.1-70B
 - **Resource-Aware**: Works on everything from 8GB RAM to 64GB+ workstations
 - **Typo Auto-Correction**: All commands auto-correct typos (e.g., 'mistrl' → 'mistral')
 
 ### 🔧 Self-Healing FixNet
 - **Automatic Error Detection**: Catches and fixes common errors automatically
 - **51% Consensus Validation**: Community-validated fixes with quality thresholds
-- **Privacy-First**: AES-256 encrypted fixes, only metadata shared publicly
-- **71.4% Duplicate Rejection**: Smart filter prevents fix pollution
+- **Privacy-First**: Fernet-encrypted fixes (AES-128-CBC + HMAC-SHA256), only metadata shared publicly
+- **Duplicate Rejection**: Smart filter prevents fix pollution (no measured rate)
 
 ### 🌐 Collaborative Learning
 - **Relevance Dictionary**: Tracks fixes across local + remote sources
@@ -250,7 +244,7 @@ See `MASTER_CONTROLLER_STATUS.md` for full details.
 ### 🛡️ Security
 - **Fraud Detection**: Blocks dangerous patterns (rm -rf, fork bombs, etc.)
 - **Spam Protection**: Community reporting with auto-quarantine
-- **Local-First**: Your code never leaves your machine
+- **Local-First**: Local commands never send your code anywhere; FixNet fix uploads go to GitHub (encrypted) when a fix is shared
 
 ---
 
@@ -276,7 +270,7 @@ LuciferAI features a **5-tier self-healing fallback system** that ensures the as
 | Feature | LuciferAI | GitHub Copilot | Cursor | Tabnine | Codeium | Amazon Q |
 |---------|-----------|----------------|--------|---------|---------|----------|
 | **Funding** | $0 | Microsoft/OpenAI | $60M | $32M | $65M | AWS |
-| **Works Offline** | ✅ 100% | ❌ No | ❌ No | ⚠️ Limited | ❌ No | ❌ No |
+| **Works Offline** | ✅ Deterministic commands | ❌ No | ❌ No | ⚠️ Limited | ❌ No | ❌ No |
 | **Self-Healing** | ✅ FixNet | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No |
 | **Multi-Tier LLM** | ✅ 5 Tiers | ❌ Single | ❌ Single | ❌ Single | ❌ Single | ❌ Single |
 | **Privacy** | ✅ Local | ❌ Cloud | ❌ Cloud | ❌ Cloud | ❌ Cloud | ❌ Cloud |
@@ -292,7 +286,7 @@ LuciferAI features a **5-tier self-healing fallback system** that ensures the as
 <details>
 <summary><b>🗂️ File Operations</b> | <b>🏗️ Build & Create</b> | <b>🔧 Fix & Run</b> | <b>🤖 Model Management</b> | <b>🔍 FixNet</b> | <b>📝 Sessions</b> | <b>🌐 GitHub</b> | <b>🌀 Thermal</b> | <b>🎮 Fun</b></summary>
 
-**Total Commands:** 80+ · **Work Offline:** 72% · **No LLM Required:** 80% · **Avg Response:** 15-50ms
+**Total Commands:** 80+ · **Deterministic commands work offline without any LLM**
 
 See [docs/COMMANDS.md](docs/COMMANDS.md) for the full reference.
 
