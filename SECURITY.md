@@ -31,7 +31,7 @@ If you discover a security vulnerability in LuciferAI, please report it responsi
 
 LuciferAI is designed with privacy and security as core principles:
 
-- 🔒 **100% Local**: No data leaves your machine (Tiers 0-4)
-- 🛡️ **AES-256 Encryption**: FixNet fixes are encrypted before sharing
+- 🔒 **Local-first**: Local inference (Tiers 0-4) sends no model data to the cloud. Note: startup syncs FixNet state from GitHub and runs a WiFi check, so the app is not fully offline on boot; Tier 5 (cloud) is coming soon, not shipped.
+- 🛡️ **Fernet Encryption**: FixNet fixes are encrypted (AES-128-CBC + HMAC-SHA256) before sharing
 - 🚫 **Fraud Detection**: Blocks dangerous commands (rm -rf, fork bombs, etc.)
 - 🔐 **No API Keys Required**: Zero external authentication needed

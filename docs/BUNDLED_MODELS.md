@@ -1,6 +1,6 @@
 # 🎁 LuciferAI Bundled Models
 
-LuciferAI comes with pre-configured support for **llamafile** and **TinyLlama**, providing instant AI capabilities that work on all systems, including legacy macOS versions.
+LuciferAI's bundled setup downloads **llamafile** (0.8.6) and **TinyLlama** (~600MB) via `./setup_bundled_models.sh`, providing instant AI capabilities that work on all systems, including legacy macOS versions. The llamafile runner also ships in the repo as split parts (`bin/llamafile.part.*`) that `lucifer.py` assembles on first run; the TinyLlama model itself is **not** in the repo and must be downloaded.
 
 ---
 
@@ -13,24 +13,28 @@ Run the bundled setup script to download and configure models:
 ```
 
 This will:
-1. Create `bin/` and `models/` directories
-2. Download llamafile (~34MB)
-3. Download TinyLlama 1.1B model (~600MB)
+1. Create `.luciferai/bin/` and `.luciferai/models/` inside the project directory
+2. Download llamafile 0.8.6 (~34MB) into `.luciferai/bin/`
+3. Download TinyLlama 1.1B model (~600MB, TheBloke GGUF) into `.luciferai/models/`
 
 **Total download:** ~634MB
+
+> **Where the files go — read this before trusting the paths below.** The setup script installs to `<project>/.luciferai/`, which is where the llamafile agent looks (`core/llamafile_agent.py`). But `lucifer.py`'s startup check looks in `~/.luciferai/`, `bin/`, and `models/` — it does **not** look in `.luciferai/` — so after the setup script the banner may still report "Not installed" even though the agent can use the model (a code inconsistency, flagged for a follow-up fix). If the banner says "Not installed", copy the files to `~/.luciferai/bin/` + `~/.luciferai/models/` (or to the repo's `bin/` + `models/`, which the "Manual Installation" section below does and which the startup check does read).
 
 ---
 
 ## 📦 What's Included
 
 ### llamafile (Tier 0 Platform)
-- **Location:** `bin/llamafile`
+- **Location (setup script):** `.luciferai/bin/llamafile`
+- **Location (manual install / assembled from repo parts):** `bin/llamafile`
 - **Size:** 34MB
 - **Compatibility:** All macOS versions (Catalina+), Linux
 - **Purpose:** Standalone AI model runner (no dependencies)
 
 ### TinyLlama 1.1B (Tier 0 Model)
-- **Location:** `models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf`
+- **Location (setup script):** `.luciferai/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf`
+- **Location (manual install):** `models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf`
 - **Size:** 600MB
 - **Tier:** 0 (Ultra-Lightweight)
 - **Use Cases:**
@@ -45,11 +49,14 @@ This will:
 
 ### Direct Usage
 ```bash
-# Interactive chat
-./bin/llamafile -m ./models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf --interactive
+# Interactive chat — after the setup script (paths in .luciferai/)
+./.luciferai/bin/llamafile -m ./.luciferai/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf --interactive
 
 # Single prompt
-./bin/llamafile -m ./models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf -p "Explain Python decorators"
+./.luciferai/bin/llamafile -m ./.luciferai/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf -p "Explain Python decorators"
+
+# After a manual install (paths in bin/ + models/)
+./bin/llamafile -m ./models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf --interactive
 ```
 
 ### In LuciferAI
@@ -68,7 +75,7 @@ The main banner will automatically detect bundled models:
 
 ## 🔄 Tier System Integration
 
-LuciferAI uses a **4-tier model system**:
+LuciferAI uses a **5-tier model system (Tier 0-4)**:
 
 | Tier | Models | Use Case | RAM |
 |------|--------|----------|-----|
@@ -76,6 +83,9 @@ LuciferAI uses a **4-tier model system**:
 | **🔵 Tier 1** | Llama 3.2, Gemma 2B | Quick responses, chat | 8-16GB |
 | **🟡 Tier 2** | Mistral, Llama 3.1 | Balanced coding | 16-32GB |
 | **🔴 Tier 3** | DeepSeek, Mixtral | Expert coding | 32GB+ |
+| **🟣 Tier 4** | Llama3.1-70B | Frontier / Ultra-Expert | 32GB+ (64GB+ recommended) |
+
+> **Tier 5 (Cloud AI / GPT-4) is coming soon, not shipped.** Model tiers are Tier 0-4.
 
 **Bundled models (Tier 0)** work as:
 - ✅ Emergency fallback when system resources are low
@@ -87,28 +97,34 @@ LuciferAI uses a **4-tier model system**:
 
 ## 📁 Directory Structure
 
-After setup:
+After the setup script:
+```
+LuciferAI_Local/
+├── .luciferai/
+│   ├── bin/
+│   │   └── llamafile                              # 34MB, executable
+│   └── models/
+│       └── tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf  # 600MB, model file
+├── setup_bundled_models.sh                    # Setup script
+└── lucifer.py                                 # Main CLI
+```
+
+After a manual install (or after `lucifer.py` assembles llamafile from the repo's split parts):
 ```
 LuciferAI_Local/
 ├── bin/
 │   └── llamafile                              # 34MB, executable
 ├── models/
 │   └── tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf  # 600MB, model file
-├── setup_bundled_models.sh                    # Setup script
-└── lucifer.py                                 # Main CLI
 ```
 
-All bundled components stay in the project directory for:
-- ✅ Version control
-- ✅ Portability across machines
-- ✅ No global installations
-- ✅ Easy cleanup
+The setup-script location (`.luciferai/`) is where the llamafile agent looks; the manual/assembly location (`bin/` + `models/`) is what `lucifer.py`'s startup check reads, along with `~/.luciferai/`. See the note in Quick Setup — the two locations do not fully overlap, which is a known code inconsistency.
 
 ---
 
 ## 🔧 Manual Installation
 
-If the setup script doesn't work or you want to install manually:
+If the setup script doesn't work or you want to install manually — this installs into the repo's `bin/` + `models/`, which `lucifer.py`'s startup check reads (along with `~/.luciferai/`):
 
 ### 1. Create Directories
 ```bash
@@ -146,7 +162,7 @@ curl -L -o models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf \
 
 ### Ollama Models
 **Pros:**
-- ✅ Full tier support (Tier 0-3)
+- ✅ Full tier support (Tier 0-4)
 - ✅ Faster inference
 - ✅ Large model library
 - ✅ Easy model management
@@ -167,6 +183,7 @@ curl -L -o models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf \
 
 **Upgrade:** Install Ollama for more models
 ```bash
+./setup_luci.sh              # First: defines the luci shell function (reload your shell)
 luci install ollama          # macOS Sonoma+ only
 luci install llama3.2        # Tier 1
 luci install mistral         # Tier 2
@@ -184,16 +201,20 @@ luci install deepseek-coder  # Tier 3
 Verify bundled models are working:
 
 ```bash
-# Test llamafile
-./bin/llamafile --version
+# Test llamafile (setup-script location)
+./.luciferai/bin/llamafile --version
 
 # Test TinyLlama
-./bin/llamafile -m ./models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf -p "Hello"
+./.luciferai/bin/llamafile -m ./.luciferai/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf -p "Hello"
+
+# After a manual install, the same commands with ./bin/llamafile and ./models/...
 
 # Test in LuciferAI
 python3 lucifer.py
 # Banner should show: ✅ llamafile (bundled)
 #                     ✅ TinyLlama 1.1B (bundled, Tier 0)
+# (See the Quick Setup note: the banner checks ~/.luciferai/, bin/, and models/ —
+#  it may report "Not installed" after the setup script even though the agent can use the model.)
 ```
 
 ---
@@ -221,8 +242,8 @@ ls models/
 
 ### Download interrupted
 ```bash
-# Remove partial file and retry
-rm models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf
+# Remove partial file and retry (setup script downloads to .luciferai/models/)
+rm .luciferai/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf
 ./setup_bundled_models.sh
 ```
 
@@ -230,9 +251,9 @@ rm models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf
 
 ## 📚 Related Documentation
 
-- [MODEL_TIERS.md](docs/MODEL_TIERS.md) - Complete tier system guide
-- [FALLBACK_SYSTEM.md](docs/FALLBACK_SYSTEM.md) - 5-tier OS fallback
-- [Package Manager](luci/README.md) - Installing additional models
+- [MODEL_TIERS.md](MODEL_TIERS.md) - Complete tier system guide
+- [FALLBACK_SYSTEM.md](FALLBACK_SYSTEM.md) - 5-tier OS fallback
+- [Package Manager](../luci/README.md) - Installing additional models
 
 ---
 

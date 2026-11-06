@@ -4,7 +4,7 @@
 
 ## Overview
 
-LuciferAI uses a **4-tier AI model system** that automatically categorizes and integrates common AI models based on their size, performance, and use cases. This system works seamlessly with your existing fallback infrastructure.
+LuciferAI uses a **5-tier AI model system (Tier 0-4)** that automatically categorizes and integrates common AI models based on their size, performance, and use cases. This system works seamlessly with your existing fallback infrastructure.
 
 ---
 
@@ -20,7 +20,7 @@ Perfect for:
 - Offline/portable installations
 
 **Models:**
-- **TinyLlama-1.1B** (600MB) 🎁 Bundled
+- **TinyLlama-1.1B** (600MB) — downloaded by `./setup_bundled_models.sh`, not shipped in the repo (the repo's `models/` is empty in a fresh clone)
   - Basic chat, simple questions
   - Works on macOS Catalina and older
   - Uses llamafile (no dependencies)
@@ -126,6 +126,24 @@ Perfect for:
 
 ---
 
+### 🟣 Tier 4: Ultra-Expert / Frontier (70B+)
+**Size:** 39GB | **RAM:** 32GB+ (64GB+ recommended) | **OS:** High-performance systems
+
+Perfect for:
+- Frontier research and architecture
+- The hardest reasoning and coding tasks
+- Enterprise-grade expert work
+
+**Models:**
+- **Llama3.1-70B** (39GB)
+  - Meta's flagship open model
+  - Ultra-expert reasoning and coding
+  - The top of the shipped tier range — selected first when installed (`core/enhanced_agent.py`: tier priority "Tier 4 > Tier 3 > Tier 2 > Tier 1 > Tier 0")
+
+> **Tier 5 (Cloud AI / GPT-4) is coming soon, not shipped.** The code reserves Tier 5 for cloud models, but no cloud tier is available in this repo — model tiers are Tier 0-4.
+
+---
+
 ## 📥 Installation
 
 ### Install by Name
@@ -139,12 +157,12 @@ python3 lucifer.py
 > install deepseek-coder
 ```
 
-**Command Line Mode:**
+**Command Line Mode** (one-shot — arguments are joined into the command; there is no `-c` flag):
 ```bash
-python3 lucifer.py -c "install tinyllama"
-python3 lucifer.py -c "install llama3.2"
-python3 lucifer.py -c "install mistral"
-python3 lucifer.py -c "install deepseek-coder"
+python3 lucifer.py "install tinyllama"
+python3 lucifer.py "install llama3.2"
+python3 lucifer.py "install mistral"
+python3 lucifer.py "install deepseek-coder"
 ```
 
 ### List All Models
@@ -157,7 +175,7 @@ python3 lucifer.py
 
 **Command Line Mode:**
 ```bash
-python3 lucifer.py -c "llm list"
+python3 lucifer.py "llm list"
 ```
 
 This shows all models organized by tier with their sizes and use cases.
@@ -171,9 +189,9 @@ All models install to the **project directory** for portability:
 ```
 LuciferAI_Local/
 ├── bin/
-│   └── llamafile          # Bundled AI runner
+│   └── llamafile          # Assembled from split parts on first run
 └── models/
-    ├── tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf  # 🎁 Bundled
+    ├── tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf  # After setup/manual download
     ├── llama3.2/
     │   └── .installed
     ├── mistral/
@@ -181,6 +199,8 @@ LuciferAI_Local/
     └── deepseek-coder/
         └── .installed
 ```
+
+> **Note:** `models/` is empty in a fresh clone. The TinyLlama file arrives via `./setup_bundled_models.sh` (which installs it to `.luciferai/models/` — read by the llamafile agent) or a manual download into `models/`. `lucifer.py`'s startup check looks in `~/.luciferai/models/`, `models/`, and `bin/` — it does not look in `.luciferai/`, so the banner may report "Not installed" after the setup script ran even though the agent can use the model (a code inconsistency, flagged for a follow-up fix).
 
 This means:
 - ✅ Models stay with your project
@@ -192,7 +212,7 @@ This means:
 
 ## 🔄 Integration with Fallback System
 
-The tier system integrates with LuciferAI's **5-tier fallback system**:
+The tier system integrates with LuciferAI's **5-tier fallback system** — a *separate* system from the model tiers: the fallback tiers describe the runtime environment (Native, Venv, Mirror, Stub, Emergency CLI), not the models.
 
 | **Fallback Tier** | **Model Tier** | **Behavior** |
 |-------------------|----------------|--------------|
@@ -231,6 +251,7 @@ ELIF RAM < 32GB:
     → Tier 2 (Mistral, Llama 3.1)
 ELSE:
     → Tier 3 (DeepSeek, Mixtral)
+    → Tier 4 (Llama3.1-70B) when a 70B-class model is installed and RAM allows
 ```
 
 ---
@@ -245,7 +266,7 @@ ELSE:
 - ✅ macOS Sonoma (14.0+)
 - ✅ Linux (all distributions)
 
-### Ollama (Tiers 1-3)
+### Ollama (Tiers 1-4)
 - ⚠️ macOS Sonoma (14.0+) required
 - ✅ Linux (all distributions)
 - 🐳 Docker fallback for older macOS
@@ -262,36 +283,43 @@ docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
 ## 🚀 Quick Start Guide
 
 ### 1. Install Platform (First Time)
+
+> **Note:** older guides use a global `LuciferAI` command. That alias only exists after running `./install_global.sh` (requires sudo — and that script hardcodes the original author's path, so it is broken for anyone else; a fix is owed). The commands below use the interactive prompt, which works without it.
+
 ```bash
 # Automatic - installs llamafile with TinyLlama
-LuciferAI install llamafile
+python3 lucifer.py
+> install llamafile
 
 # Or install Ollama (Sonoma+ only)
-LuciferAI install ollama
+> install ollama
 ```
 
 ### 2. Install Models by Use Case
 
 **For Chat & Basic Tasks:**
 ```bash
-LuciferAI install llama3.2
+python3 lucifer.py
+> install llama3.2
 ```
 
 **For Coding:**
 ```bash
-LuciferAI install mistral       # Balanced
-LuciferAI install deepseek-coder # Expert
+python3 lucifer.py
+> install mistral       # Balanced
+> install deepseek-coder # Expert
 ```
 
 **For Legacy Systems:**
 ```bash
-# TinyLlama comes bundled with llamafile
-LuciferAI install llamafile
+# TinyLlama comes with llamafile via the setup script
+python3 lucifer.py
+> install llamafile
 ```
 
 ### 3. Use in Your Code
 ```python
-from enhanced_agent import EnhancedLuciferAgent
+from core.enhanced_agent import EnhancedLuciferAgent
 
 agent = EnhancedLuciferAgent()
 # Automatically uses best available model based on tier
@@ -314,6 +342,7 @@ response = agent.process_request("Explain Python decorators")
 | DeepSeek | 3 | 3.8GB | ⚡⚡ | ⭐⭐⭐⭐⭐ | Expert coding |
 | Code Llama | 3 | 3.8GB | ⚡⚡ | ⭐⭐⭐⭐⭐ | Code completion |
 | Mixtral | 3 | 26GB | ⚡ | ⭐⭐⭐⭐⭐ | Complex tasks |
+| Llama3.1-70B | 4 | 39GB | ⚡ | ⭐⭐⭐⭐⭐ | Frontier/Ultra-Expert |
 
 ---
 
@@ -321,25 +350,25 @@ response = agent.process_request("Explain Python decorators")
 
 ### "Model not found"
 ```bash
-# List available models
-LuciferAI list
+# List available models (inside python3 lucifer.py)
+> llm list
 
 # Install specific model
-LuciferAI install <model-name>
+> install <model-name>
 ```
 
 ### "Out of memory"
 Try a lower tier:
 ```bash
 # Current tier too high? Use lighter model
-LuciferAI install llama3.2:1b  # Tier 1
-LuciferAI install tinyllama    # Tier 0
+> install llama3.2:1b  # Tier 1
+> install tinyllama    # Tier 0
 ```
 
 ### "Ollama not available" (Catalina/Big Sur)
 ```bash
 # Use llamafile instead
-LuciferAI install llamafile
+> install llamafile
 ```
 
 ---
@@ -348,7 +377,7 @@ LuciferAI install llamafile
 
 - [Fallback System](FALLBACK_SYSTEM.md) - 5-tier OS fallback
 - [Package Manager](../luci/README.md) - Installation system
-- [Enhanced Agent](../core/README.md) - AI agent integration
+- [Enhanced Agent](../core/enhanced_agent.py) - AI agent integration
 
 ---
 

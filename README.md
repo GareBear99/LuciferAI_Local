@@ -61,7 +61,7 @@ python3 lucifer.py
 ```
 
 **Setup:** LuciferAI auto-bootstraps on first run:
-- ✅ **Auto-assembles** llamafile binary from split parts (or downloads llamafile 0.10.6)
+- ✅ **Auto-assembles** llamafile binary from split parts (or download it with `./setup_bundled_models.sh`, which fetches llamafile 0.8.6)
 - ✅ **Setup script downloads** the TinyLlama model (670MB, one-time): `./setup_bundled_models.sh`
 - ✅ **Works offline** after initial setup (model + binary in the project layout — see `setup_bundled_models.sh`)
 
@@ -110,6 +110,7 @@ python3 lucifer.py
 > install core models       # Install Llama3.2, Mistral, DeepSeek (recommended)
 > install tier 2            # Install Tier 2 models (Mistral 7B)
 > install tier 3            # Install Tier 3 models (DeepSeek 33B)
+> install tier 4            # Install Tier 4 models (Llama-3.1-70B)
 > llm list all              # See all available models
 ```
 
@@ -124,8 +125,8 @@ python3 --version
 # Install dependencies manually if needed
 pip3 install colorama requests psutil
 
-# Run with verbose output
-python3 lucifer.py --verbose
+# Run with verbose output (LUCIFER_VERBOSE is read by the llamafile agent; there is no --verbose flag)
+LUCIFER_VERBOSE=1 python3 lucifer.py
 ```
 
 **Still having issues?** See [Troubleshooting Guide](#troubleshooting) below.
@@ -182,8 +183,8 @@ python3 tests/test_master_controller.py
 ```
 
 **What's New:**
-- ✅ Action verb detection: 40-50% → **100%** (expanded from 23 to 80+ verbs)
-- ✅ 5-layer routing architecture (perfect command detection)
+- ✅ Action verb detection: 40-50% → **100% of the 25 previously-failing commands now route** (expanded from 23 to 80+ verbs; print-based checks in `tests/test_master_controller.py`)
+- ✅ 5-layer routing architecture (Master Controller routes commands through 5 layers)
 - ✅ Tier-based model selection (smart LLM routing)
 - ✅ Multi-layer fallback system (never crashes)
 - ✅ Emergency recovery mode
@@ -225,7 +226,7 @@ See `MASTER_CONTROLLER_STATUS.md` for full details.
 ### 🧠 Multi-Tier LLM System
 - **Tier 0-4 Architecture**: Automatically selects the best model for each task
 - **Native Llamafile**: Direct GGUF model execution - no external servers required
-- **85+ Supported Models**: From TinyLlama (1B) to Llama-3.1-70B
+- **74 registered models**: From TinyLlama (1B) to Llama-3.1-70B (registry in `core/model_tiers.py`)
 - **Resource-Aware**: Works on everything from 8GB RAM to 64GB+ workstations
 - **Typo Auto-Correction**: All commands auto-correct typos (e.g., 'mistrl' → 'mistral')
 
@@ -333,8 +334,9 @@ LuciferAI_Local/
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ```bash
-git clone --recursive https://github.com/GareBear99/LuciferAI_Local.git
+git clone https://github.com/GareBear99/LuciferAI_Local.git
 pip install -r requirements.txt
+pip install pytest
 python -m pytest tests/
 ```
 

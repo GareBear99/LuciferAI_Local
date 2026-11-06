@@ -36,7 +36,7 @@ Different tasks need different capabilities:
 **Speed**: Very Fast (50-100 tokens/sec)  
 **Use Cases**: Simple commands, file operations, basic queries
 
-**Bundled Models**:
+**Models in this tier**:
 - `phi-2` (2.7B) - Microsoft's efficient model
 - `tinyllama` (1.1B) - Ultra-lightweight
 
@@ -58,7 +58,7 @@ Different tasks need different capabilities:
 **Speed**: Fast (30-60 tokens/sec)  
 **Use Cases**: General scripting, moderate coding, explanations
 
-**Bundled Models**:
+**Models in this tier**:
 - `gemma2` (7B) - Google's efficient model
 
 **Characteristics**:
@@ -79,7 +79,7 @@ Different tasks need different capabilities:
 **Speed**: Medium (15-40 tokens/sec)  
 **Use Cases**: Complex code, refactoring, debugging
 
-**Bundled Models**:
+**Models in this tier**:
 - `mistral` (7B) - High-quality instruct model
 
 **Characteristics**:
@@ -103,7 +103,7 @@ Different tasks need different capabilities:
 **Speed**: Slower (10-25 tokens/sec)  
 **Use Cases**: Expert programming, complex systems
 
-**Bundled Models**:
+**Models in this tier**:
 - `deepseek-coder` (33B) - Specialized coding model
 
 **Characteristics**:
@@ -124,7 +124,7 @@ Different tasks need different capabilities:
 **Speed**: Slow (5-15 tokens/sec)  
 **Use Cases**: Cutting-edge reasoning, research tasks
 
-**Bundled Models**:
+**Models in this tier**:
 - `llama3.1-70b` - Meta's flagship model
 
 **Characteristics**:
@@ -243,6 +243,8 @@ TIER_4_MODELS = [
     'your-70b-model',  # Add your 70B+ model here
 ]
 ```
+
+> **Tier 5 (Cloud AI / GPT-4) is coming soon, not shipped.** The code reserves Tier 5 for cloud models (`core/enhanced_agent.py`), but no cloud tier is available in this repo — model tiers are Tier 0-4.
 
 ### Method 2: Dynamic (No Code Changes)
 
