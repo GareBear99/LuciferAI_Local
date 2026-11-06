@@ -1,205 +1,90 @@
 # 🩸 LuciferAI Installation Guide
 
-Install LuciferAI globally and use the `LuciferAI` command from anywhere.
+> **Read this first:** LuciferAI is **not a pip package** — there is no `setup.py`, `pyproject.toml`, or `setup.cfg` in this repo, so `pip install .`, `pip install --user .`, `pip install -e .`, and `pip install git+https://...` all fail. There is no Homebrew formula and no conda package. Do not use `./install.sh` — every option in it runs `pip install`, which fails for the same reason. The working install is: clone the repo and run `python3 lucifer.py`. (The packaging gap is a known code fix owed to a follow-up pass.)
 
-## 🚀 Quick Install
-
-### Universal Installer (Recommended)
+## 🚀 Quick Install (The Working Path)
 
 ```bash
-./install.sh
+git clone https://github.com/GareBear99/LuciferAI_Local.git
+cd LuciferAI_Local
+python3 lucifer.py
 ```
 
-Choose your preferred installation method:
-1. pip (standard)
-2. pip --user (no sudo required)
-3. pip -e (development mode)
-4. Homebrew
-5. conda
-6. Luci Environment
+That's it — no build step, no package install. `python3 lucifer.py` auto-assembles the llamafile binary from the split parts in `bin/`, checks for the TinyLlama model, prints the setup command if the model is missing, and continues without it (rule-based command parsing only).
 
-## 📦 Installation Methods
+## 📦 Install the Model (Optional, Recommended)
 
-### Method 1: pip (Global)
+The TinyLlama model is **not** shipped in the repo (`models/` is empty in a fresh clone). Download it with the setup script:
 
 ```bash
-pip install .
+./setup_bundled_models.sh
 ```
 
-Or from GitHub:
-```bash
-pip install git+https://github.com/TheRustySpoon/LuciferAI_Local.git
-```
+This downloads llamafile 0.8.6 (~34MB) and TinyLlama 1.1B (~600MB, TheBloke GGUF) into `<project>/.luciferai/bin/` and `<project>/.luciferai/models/` — the location the llamafile agent reads (`core/llamafile_agent.py`).
 
-### Method 2: pip --user (No sudo)
+> **Note:** `lucifer.py`'s startup check looks in `~/.luciferai/`, `bin/`, and `models/` — it does **not** look in `.luciferai/` — so after the setup script the banner may still report "Not installed" even though the agent can use the model (a code inconsistency, flagged for a follow-up fix). If the banner says "Not installed", copy the files to `~/.luciferai/bin/` + `~/.luciferai/models/` (or to the repo's `bin/` + `models/`, which the "Manual Installation" section in `docs/BUNDLED_MODELS.md` does and which the startup check does read).
 
-```bash
-pip install --user .
-```
+## 📋 Requirements
 
-Add to PATH if needed:
-```bash
-export PATH="$PATH:$(python3 -m site --user-base)/bin"
-```
+- Python 3.9 or higher
+- macOS or Linux (Windows via WSL)
+- `curl` or `wget` (for the model download)
 
-### Method 3: Development Mode
+### Python Dependencies
 
 ```bash
-pip install -e .
+pip3 install colorama requests psutil
 ```
 
-Changes to source code will be reflected immediately.
+> **Note:** `requirements.txt` does not list `requests` even though the code imports it, and it does not list `pytest` even though the README tells contributors to run `python -m pytest tests/`. Install both explicitly (`pip3 install requests pytest`) until that is fixed. The fallback Tier 1 auto-creates a venv and installs `requirements.txt`, so the same gap applies there.
 
-### Method 4: Homebrew (Future)
+## 🧰 The `luci` Command
 
-Once published to Homebrew:
-```bash
-brew install luciferai
-```
-
-### Method 5: conda
+`luci` is a shell function defined by `./setup_luci.sh` — it does not exist until you run that script:
 
 ```bash
-conda install luciferai
+./setup_luci.sh
+# Reload your shell (or source the profile it updated), then:
+luci install <package>    # Install a package/model
+luci list                 # List installed packages
+luci uninstall <package>  # Remove a package
+luci update <package>     # Update a package
 ```
 
-Or with pip in conda environment:
-```bash
-pip install .
-```
+There is no `luci create` or `luci activate` — the package manager supports install/list/uninstall/update only.
 
-### Method 6: Luci Environment
+## 🌐 Global `LuciferAI` Command
 
-```bash
-# Create a Luci environment
-luci create myenv
-
-# Activate it
-source <(luci activate myenv)
-
-# Install LuciferAI
-pip install .
-```
+`./install_global.sh` creates `/usr/local/bin/LuciferAI` via sudo — but it hardcodes the original author's path (`/Users/TheRustySpoon/...`), so it is broken for anyone else. Until that is fixed, run the app as `python3 lucifer.py` from the repo directory instead of using a global command.
 
 ## ✅ Verify Installation
 
 ```bash
-LuciferAI --version
+python3 lucifer.py
 ```
 
-Or just run:
+At the `>` prompt:
+
 ```bash
-LuciferAI
+> help        # See all commands
+> llm list    # See what models you have
 ```
 
-## 🎯 Available Commands
+There is no `--version` flag (`python3 lucifer.py --verbose` is not a flag either — verbose output is `LUCIFER_VERBOSE=1 python3 lucifer.py`).
 
-After installation, you can use any of these commands:
-
-```bash
-LuciferAI          # Main command (capitalized)
-luciferai          # Lowercase version
-lucifer            # Short version
-```
-
-All three commands do the same thing!
-
-## 🛠️ Troubleshooting
-
-### Command not found
-
-If `LuciferAI` command is not found after installation:
-
-1. **Check pip bin directory is in PATH:**
+To run the routing checks:
 
 ```bash
-echo $PATH | grep "$(python3 -m site --user-base)/bin"
-```
-
-2. **Add to PATH manually:**
-
-Add to `~/.bashrc` or `~/.zshrc`:
-```bash
-export PATH="$PATH:$(python3 -m site --user-base)/bin"
-```
-
-Then reload:
-```bash
-source ~/.bashrc  # or source ~/.zshrc
-```
-
-3. **Find where pip installed it:**
-
-```bash
-which LuciferAI
-# or
-python3 -m site --user-base
-```
-
-### Permission denied
-
-Use `--user` flag:
-```bash
-pip install --user .
-```
-
-Or use `sudo` (not recommended):
-```bash
-sudo pip install .
-```
-
-### Already installed
-
-Reinstall or upgrade:
-```bash
-pip install --upgrade --force-reinstall .
+python3 tests/test_master_controller.py
+# 76 routing cases, reported as print-based checks
 ```
 
 ## 🔄 Uninstall
 
-```bash
-pip uninstall luciferai
-```
-
-## 📝 Requirements
-
-- Python 3.8 or higher
-- pip
-- Unix-like system (macOS, Linux)
-
-## 🌐 From GitHub
-
-Install directly from GitHub:
+Nothing was pip-installed, so there is nothing to `pip uninstall`. Delete the clone and the data directory:
 
 ```bash
-pip install git+https://github.com/TheRustySpoon/LuciferAI_Local.git
-```
-
-Or clone and install:
-
-```bash
-git clone https://github.com/TheRustySpoon/LuciferAI_Local.git
-cd LuciferAI_Local
-pip install .
-```
-
-## 💡 Usage After Installation
-
-```bash
-# Start interactive mode
-LuciferAI
-
-# Install packages
-LuciferAI install requests
-
-# Run tests
-LuciferAI test
-
-# Show version
-LuciferAI version
-
-# Get help
-LuciferAI help
+rm -rf LuciferAI_Local ~/.luciferai
 ```
 
 ---

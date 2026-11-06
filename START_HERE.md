@@ -17,23 +17,19 @@ python3 lucifer.py
 **That's literally it!** No installation, no setup, no build steps.
 
 ### What Happens on First Run:
-1. ✅ **Auto-assembles** llamafile binary from parts (1-2 seconds)
-2. ✅ **Prompts to download** TinyLlama model (670MB, one-time)
-3. ✅ **Creates** `~/.luciferai/` directory structure
-4. ✅ **Starts** immediately after download completes
+1. ✅ **Auto-assembles** llamafile binary from parts (if present in `bin/`)
+2. ✅ **Shows what's missing** and prints the setup command (`./setup_bundled_models.sh`) — it does **not** download anything itself and does **not** prompt; it continues without the model (rule-based command parsing only)
+3. ✅ **Creates** `~/.luciferai/` directory structure as needed
+4. ✅ **Starts** immediately
 
 ### What Happens on Subsequent Runs:
-1. ✅ **Starts instantly** (< 1 second)
+1. ✅ **Starts quickly** (startup time was not benchmarked)
 2. ✅ Everything cached in `~/.luciferai/`
-3. ✅ **Works offline** (no internet needed)
+3. ✅ **Works offline** once the model is present (startup syncs FixNet state from GitHub and runs a WiFi check, so the app is not fully offline on boot)
 
 ---
 
 ## Step 2: Try Commands
-
----
-
-## Step 3: Try Commands
 
 Once you see the `>` prompt, try these:
 
@@ -79,16 +75,16 @@ pip3 install colorama requests psutil
 # Check Python version (need 3.9+)
 python3 --version
 
-# Run with debug info
-python3 lucifer.py --verbose
+# Run with debug info (there is no --verbose flag; verbose output is the LUCIFER_VERBOSE env var)
+LUCIFER_VERBOSE=1 python3 lucifer.py
 ```
 
 ---
 
 ## What You Get Immediately
 
-✅ **Works offline** - No API keys needed  
-✅ **TinyLlama bundled** - 1.1B model included  
+✅ **Works offline** once the model is present - No API keys needed  
+✅ **TinyLlama available** - 1.1B model, downloaded by `./setup_bundled_models.sh` (not shipped in the repo)  
 ✅ **File operations** - Create, delete, move, copy files  
 ✅ **Script generation** - Natural language → code  
 ✅ **Auto-fix** - Fix broken scripts automatically  
@@ -98,18 +94,18 @@ python3 lucifer.py --verbose
 
 ## Want to Test the New Features?
 
-We just implemented a **perfect routing system** with 100% test success:
+We implemented a routing system — 76 routing cases, reported as print-based checks in `tests/test_master_controller.py`:
 
 ```bash
 # Run the tests
 python3 tests/test_master_controller.py
 
 # You should see:
-# ✅ 76/76 tests passing (100% success rate)
+# ✅ 76/76 routing cases reported passing
 ```
 
 **What's New:**
-- ✅ 100% command detection (was 40-50%)
+- ✅ 100% of the 25 previously-failing commands now route (was 40-50%)
 - ✅ Commands like "make me a script that **tells** me..." now work!
 - ✅ 5-layer fallback system
 - ✅ Emergency recovery mode
@@ -138,8 +134,7 @@ python3 tests/test_master_controller.py
 ## Status
 
 **Current Version:** Master Controller v1.0  
-**Test Success Rate:** 100% (76/76 tests)  
-**Production Ready:** ✅ YES  
+**Routing cases:** 76/76 reported passing (print-based checks)  
 **Last Updated:** January 23, 2026
 
 ---

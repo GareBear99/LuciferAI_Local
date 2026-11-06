@@ -9,15 +9,15 @@
 
 ## Executive Summary
 
-LuciferAI is a **zero-installation terminal AI assistant** that automatically bootstraps itself on first run. No manual installation steps are required. The system performs runtime environment validation, auto-assembles binary components, and downloads models as needed.
+LuciferAI is a **zero-installation terminal AI assistant** that automatically bootstraps itself on first run. No manual installation steps are required. The system performs runtime environment validation, auto-assembles binary components, and tells you how to install the model if it is missing — it does not download anything on its own.
 
 **Key Characteristics:**
 - ✅ No manual installation (single command: `python3 lucifer.py`)
 - ✅ Auto-assembles llamafile binary from split parts (if present in repo)
-- ✅ Auto-downloads TinyLlama model on first run (with user consent)
+- ✅ Shows what's missing on first run and prints the setup command (`./setup_bundled_models.sh`); it does not download anything itself and does not prompt
 - ✅ Runtime environment validation every startup
 - ✅ 5-tier fallback system for degraded environments
-- ✅ Works offline after initial setup
+- ✅ Works offline once the model is present (startup syncs FixNet state from GitHub and runs a WiFi check, so the app is not fully offline on boot)
 
 ---
 
@@ -27,9 +27,9 @@ LuciferAI is a **zero-installation terminal AI assistant** that automatically bo
 ```
 START: python3 lucifer.py
   │
-  ├─► [lucifer.py:321] Call check_and_install_models()
+  ├─► [lucifer.py:284] Call check_and_install_models() (def at lucifer.py:219)
   │     │
-  │     ├─► [lucifer.py:226] Call assemble_llamafile_from_parts()
+  │     ├─► [lucifer.py:226] Call assemble_llamafile_from_parts() (def at lucifer.py:189)
   │     │     ├─► Check: bin/llamafile exists?
   │     │     │     YES → Return True
   │     │     │     NO  → Check for split parts (bin/llamafile.part.*)
@@ -39,41 +39,38 @@ START: python3 lucifer.py
   │     │
   │     ├─► [lucifer.py:228-238] Check binary/model existence
   │     │     ├─► llamafile: ~/.luciferai/bin/llamafile OR bin/llamafile
-  │     │     └─► TinyLlama: ~/.luciferai/models/*.llamafile OR models/*tinyllama*
+  │     │     └─► TinyLlama: ~/.luciferai/models/tinyllama-1.1b-chat.llamafile
+  │     │         OR any *tinyllama* file in models/
   │     │
   │     ├─► Both exist?
   │     │     YES → Return True (proceed to Phase 2)
-  │     │     NO  → Continue to installation prompt
+  │     │     NO  → Display what's missing and how to install it
   │     │
-  │     ├─► [lucifer.py:244-262] Display what's missing
+  │     ├─► Display what's missing
   │     │     └─► Show status: llamafile (✅/❌), TinyLlama (✅/❌)
+  │     │     └─► Print: "Run the setup script: ./setup_bundled_models.sh"
+  │     │     └─► Print: a manual one-liner using download_with_progress()
+  │     │         (jartine .llamafile URL → ~/.luciferai/models/)
   │     │
-  │     ├─► [lucifer.py:269] Prompt: "Install missing components? [Y/n]"
-  │     │     NO  → Skip installation, continue with limited features
-  │     │     YES → Proceed to download
+  │     ├─► NO prompt, NO download. The function prints
+  │     │     "Continuing without TinyLlama... rule-based command parsing"
+  │     │     and returns True. The model is installed by running
+  │     │     ./setup_bundled_models.sh (or the printed one-liner),
+  │     │     not by the app itself.
   │     │
-  │     ├─► [lucifer.py:279-286] Create directory structure
-  │     │     └─► ~/.luciferai/{bin, models, data, logs, envs, stubs}
-  │     │
-  │     ├─► [lucifer.py:289-297] Download llamafile binary
-  │     │     ├─► URL: https://github.com/Mozilla-Ocho/llamafile/releases/.../llamafile-0.8.13
-  │     │     ├─► Destination: ~/.luciferai/bin/llamafile
-  │     │     └─► Make executable: chmod +x
-  │     │
-  │     └─► [lucifer.py:300-309] Download TinyLlama model
-  │           ├─► URL: https://huggingface.co/.../TinyLlama-1.1B-Chat-v1.0.Q4_K_M.llamafile
-  │           ├─► Size: 670MB
-  │           ├─► Destination: ~/.luciferai/models/tinyllama-1.1b-chat.llamafile
-  │           └─► Make executable: chmod +x
+  │     └─► Note: the setup script installs to <project>/.luciferai/,
+  │         which the llamafile agent reads — but this startup check
+  │         does not look there, so the banner may still report
+  │         "Not installed" after the setup script ran.
   │
-  └─► Return to main()
+ └─► Return to main()
 ```
 
 ### Phase 2: Agent Initialization
 ```
-[lucifer.py:324] Initialize EnhancedLuciferAgent
+[lucifer.py:287] Initialize EnhancedLuciferAgent (agent = LuciferAgent())
   │
-  ├─► [enhanced_agent.py:154-217] Agent __init__()
+  ├─► [enhanced_agent.py:155] Agent __init__()
   │     ├─► Get user_id (based on machine hardware)
   │     ├─► Initialize authentication system (if available)
   │     ├─► Initialize FixNet uploader
@@ -83,13 +80,13 @@ START: python3 lucifer.py
   │     ├─► Load LLM enable/disable state
   │     └─► Select best enabled model
   │
-  ├─► [enhanced_agent.py:186] _check_ollama()
+  ├─► [enhanced_agent.py:557] _check_ollama()
   │     ├─► Test: ollama list (subprocess)
   │     │     SUCCESS → Set ollama_available = True, parse models
   │     │     FAIL    → Set ollama_available = False
   │     └─► Return availability status
   │
-  ├─► [enhanced_agent.py:194] _load_llm_state()
+  ├─► [enhanced_agent.py:628] _load_llm_state()
   │     ├─► Load from: ~/.luciferai/data/llm_state.json
   │     │     EXISTS → Load enabled/disabled state per model
   │     │     MISSING → All models enabled by default
@@ -100,7 +97,7 @@ START: python3 lucifer.py
 
 ### Phase 3: Main Loop
 ```
-[lucifer.py:330+] Main interactive loop
+[lucifer.py:281] Main interactive loop (main())
   │
   ├─► Print banner
   ├─► Start heartbeat animation
@@ -168,12 +165,12 @@ LuciferAI_Local/                       # Project root
 1. llamafile Binary Check
    - Check: ~/.luciferai/bin/llamafile exists
    - Check: bin/llamafile exists (project directory)
-   - If both missing → Prompt to download
+   - If both missing → Print what's missing + the setup command, continue without the model (no prompt, no download)
 
 2. TinyLlama Model Check
    - Check: ~/.luciferai/models/*.llamafile exists
    - Check: models/*tinyllama* exists (project directory)
-   - If both missing → Prompt to download
+   - If both missing → Print what's missing + the setup command, continue without the model (no prompt, no download)
 
 3. Ollama Availability Check
    - Test: `ollama list` command
@@ -192,22 +189,23 @@ LuciferAI_Local/                       # Project root
    - Determine: Current fallback tier (0-4)
 ```
 
-**Performance:** All checks complete in < 500ms
+**Performance:** the checks are lightweight file-existence tests plus one `ollama list` subprocess call. No timing has been measured — the "< 500ms" figure this doc previously stated was an estimate, not a benchmark.
 
 ---
 
 ## 4. Binary Assembly Process
 
 ### Why Split Parts?
-GitHub has a 100MB file size limit. Llamafile binary (~150MB) must be split:
+GitHub has a 100MB file size limit. Llamafile binary (~132MB) must be split:
 
 ```bash
 # Original binary splitting (done once during repo preparation)
-split -b 95M llamafile llamafile.part.
+split -b 50M llamafile llamafile.part.
 
 # Result:
-llamafile.part.aa  (95MB)
-llamafile.part.ab  (55MB)
+llamafile.part.aa  (50MB)
+llamafile.part.ab  (50MB)
+llamafile.part.ac  (32MB)
 ```
 
 ### Auto-Assembly on Startup
@@ -238,7 +236,7 @@ def assemble_llamafile_from_parts() -> bool:
     return True
 ```
 
-**Result:** Single `bin/llamafile` binary (150MB) ready to use.
+**Result:** Single `bin/llamafile` binary (~132MB) ready to use. (A manual assembly script also exists: `bin/assemble_llamafile.sh` — `cat llamafile.part.* > llamafile`.)
 
 ---
 
@@ -257,18 +255,17 @@ Time: 1-5 minutes (depends on internet speed)
 
 ### Download Behavior:
 1. **First time user:**
-   - Prompt: "Install missing components? [Y/n]"
-   - If Y: Download both llamafile + TinyLlama
-   - If n: Skip (can work without LLM features)
+   - No prompt, no auto-download. The check prints what's missing, prints "Run the setup script: ./setup_bundled_models.sh" and a manual one-liner, then prints "Continuing without TinyLlama..." and starts with rule-based command parsing only.
+   - To get the model: run `./setup_bundled_models.sh` (downloads llamafile 0.8.6 + TinyLlama ~600MB into `<project>/.luciferai/`) or the printed one-liner (jartine `.llamafile` URL → `~/.luciferai/models/`).
 
 2. **Subsequent runs:**
    - Check if files exist
-   - If exist: Start immediately (< 1 second)
-   - If missing: Prompt again
+   - If exist: Start (startup time was not benchmarked)
+   - If missing: Print the setup instructions again and continue without the model
 
 3. **Offline mode:**
    - Works if llamafile + TinyLlama already present
-   - No internet needed after initial download
+   - Local inference and file operations need no internet after the model is installed (startup still syncs FixNet state from GitHub and runs a WiFi check)
 
 ---
 
@@ -381,10 +378,7 @@ python3 tests/test_master_controller.py
 
 ### Startup Validation
 ```bash
-# Test startup without installation
-python3 lucifer.py --dry-run
-
-# Test with verbose output
+# Test with verbose output (there is no --dry-run flag)
 LUCIFER_VERBOSE=1 python3 lucifer.py
 
 # Test emergency recovery
@@ -395,23 +389,25 @@ python3 -c "from core.fallback_system import FallbackSystem; FallbackSystem().sy
 
 ## 9. Performance Metrics
 
+> **These times are unmeasured estimates, not benchmarks.** Startup time has not been benchmarked; do not quote these figures as measured.
+
 ### Startup Times:
 | Scenario | Time | Notes |
 |----------|------|-------|
-| **Cold start (first run)** | 2-10 min | Includes 670MB TinyLlama download |
-| **Cold start (assembly only)** | 1-2 sec | Assembles llamafile from parts |
-| **Warm start** | < 1 sec | All components present |
-| **Hot start** | 300-500ms | Agent already initialized |
+| **First run, model missing** | Fast | Check + assembly only; the model is *not* downloaded by the app (run `./setup_bundled_models.sh` — ~600MB, a few minutes on a typical connection) |
+| **Cold start (assembly only)** | ~1-2 sec (estimate) | Assembles llamafile from parts |
+| **Warm start** | Fast (estimate) | All components present |
+| **Hot start** | Fast (estimate) | Agent already initialized |
 
 ### Runtime Checks:
 | Check | Time | Frequency |
 |-------|------|-----------|
-| Binary existence | 1-5ms | Every startup |
-| Model existence | 1-5ms | Every startup |
-| Ollama availability | 50-200ms | Every startup |
-| LLM state load | 1-10ms | Every startup |
-| Fallback tier check | 10-50ms | Every startup |
-| **Total overhead** | **< 500ms** | Every startup |
+| Binary existence | Fast (estimate) | Every startup |
+| Model existence | Fast (estimate) | Every startup |
+| Ollama availability | Depends on subprocess (estimate) | Every startup |
+| LLM state load | Fast (estimate) | Every startup |
+| Fallback tier check | Fast (estimate) | Every startup |
+| **Total overhead** | **Not benchmarked** | Every startup |
 
 ---
 
@@ -424,10 +420,9 @@ System detects: llamafile binary missing
 Action: 
   1. Check for split parts in bin/
   2. If present: Assemble automatically
-  3. If missing: Prompt to download
-  4. Download from: https://github.com/Mozilla-Ocho/llamafile/releases/...
-  5. Verify: File downloaded and executable
-  6. Continue startup
+  3. If missing: Print what's missing + the setup command
+     (./setup_bundled_models.sh) — no prompt, no download
+  4. Continue startup without the model (rule-based parsing only)
 ```
 
 ### Scenario: TinyLlama Model Missing
@@ -436,10 +431,10 @@ User runs: python3 lucifer.py
 System detects: TinyLlama model missing
 Action:
   1. Show status: "TinyLlama model: Not installed (670MB)"
-  2. Prompt: "Install missing components? [Y/n]"
-  3. If Y: Download from HuggingFace
-  4. If n: Continue with limited features
-  5. Note: User can still use file operations, GitHub sync, etc.
+  2. Print: "Run the setup script: ./setup_bundled_models.sh"
+     and a manual one-liner — no prompt, no download
+  3. Continue with limited features
+  4. Note: User can still use file operations, GitHub sync, etc.
 ```
 
 ### Scenario: Ollama Not Available
@@ -456,14 +451,14 @@ Action:
 
 ### Scenario: Network Error During Download
 ```
-User runs: python3 lucifer.py
-System prompts: Install components
-User accepts: Y
-Download fails: Network timeout
+The app itself does not download on startup, so there is no
+startup download to fail. If the setup script's download fails:
 Action:
-  1. Show error message
+  1. The script (curl/wget) shows the error and exits
   2. Suggest: "Try again later or check internet connection"
-  3. Option: "You can install manually: ./install.sh"
+  3. Option: install manually — see docs/BUNDLED_MODELS.md
+     (curl the llamafile 0.8.6 binary and the TinyLlama GGUF
+     into bin/ + models/)
   4. Continue: LuciferAI starts with limited features
 ```
 
@@ -485,13 +480,13 @@ Action:
 ### Binary Verification:
 - Llamafile downloaded from official Mozilla repository
 - TinyLlama downloaded from official HuggingFace
-- SHA256 checksums verified (where available)
+- No checksum verification is performed by the setup/install scripts
 - All executables: chmod 0755 (not world-writable)
 
 ### Network Access:
-- Only required for initial model download
-- All subsequent operations: offline
-- FixNet sync: encrypted AES-256 (optional)
+- Required for the model download (via the setup script) and for the FixNet sync + WiFi check on startup
+- Local inference and file operations work offline once the model is present
+- FixNet sync: Fernet-encrypted (optional)
 - No telemetry or analytics sent
 
 ### File Permissions:
@@ -510,9 +505,8 @@ Action:
 ### Current System (TRL 7):
 ✅ **System prototype demonstrated in operational environment**
 - Works on macOS, Linux, Windows (WSL)
-- Tested with 76 automated tests (100% pass rate)
-- Used by multiple users in real-world scenarios
-- Self-healing capabilities proven
+- Tested with 76 routing cases reported passing by tests/test_master_controller.py (print-based checks)
+- Self-healing fallback tiers implemented (see §6)
 
 ### Path to TRL 8:
 - Complete tier-by-tier validation
@@ -552,7 +546,10 @@ python3 tests/test_master_controller.py
 ```bash
 rm -rf ~/.luciferai/bin
 rm -rf ~/.luciferai/models
-python3 lucifer.py
+rm -rf .luciferai
+./setup_bundled_models.sh   # Re-downloads llamafile 0.8.6 + TinyLlama
+# (Running python3 lucifer.py alone does NOT re-download anything —
+#  it only prints the setup command and continues without the model.)
 ```
 
 ### Debug Mode:
@@ -564,11 +561,11 @@ LUCIFER_VERBOSE=1 python3 lucifer.py
 
 ## 14. Conclusion
 
-LuciferAI implements a **fully automated bootstrap process** that requires zero manual installation. The system:
+LuciferAI implements a **bootstrap process** that requires zero manual installation. The system:
 
 ✅ **Self-assembles** binary components from split parts  
-✅ **Auto-downloads** models on first run (with consent)  
-✅ **Validates** environment every startup (< 500ms overhead)  
+✅ **Points you at the model install** on first run (it does not download anything itself)  
+✅ **Validates** environment every startup (startup time not benchmarked)  
 ✅ **Degrades gracefully** through 5 fallback tiers  
 ✅ **Recovers automatically** from failures  
 
@@ -577,6 +574,6 @@ LuciferAI implements a **fully automated bootstrap process** that requires zero 
 ---
 
 **Document Status:** COMPLETE  
-**Validation:** 76/76 tests passing (100%)  
+**Validation:** 76/76 routing cases reported passing (print-based checks)  
 **TRL Level:** 7 (Operational prototype)  
 **Next Review:** After production deployment
