@@ -331,7 +331,13 @@ class OSCompat:
                     if not self.supports_color:
                         print(f"{YELLOW}💡 Install colorama for color support: pip install colorama{RESET}")
                     print()
-        
+            except Exception:
+                # Best-effort warning only; a missing/broken Windows
+                # version query must never break system-info display.
+                # (This except was missing entirely, so the whole file
+                # failed to parse — SyntaxError, try without except.)
+                pass
+
         # OS Information
         if self.is_macos:
             print(f"{BLUE}OS:{RESET}               {self.macos_name} ({'.'.join(map(str, self.macos_version))})")

@@ -27,10 +27,10 @@ if [ ! -f "$BIN_DIR/llamafile" ]; then
     OS="$(uname -s)"
     case "$OS" in
         Darwin*)
-            URL="https://github.com/Mozilla-Ocho/llamafile/releases/download/0.8.6/llamafile-0.8.6"
+            URL="https://github.com/Mozilla-Ocho/llamafile/releases/download/0.8.13/llamafile-0.8.13"
             ;;
         Linux*)
-            URL="https://github.com/Mozilla-Ocho/llamafile/releases/download/0.8.6/llamafile-0.8.6"
+            URL="https://github.com/Mozilla-Ocho/llamafile/releases/download/0.8.13/llamafile-0.8.13"
             ;;
         *)
             echo "Unsupported OS: $OS"

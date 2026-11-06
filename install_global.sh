@@ -21,12 +21,15 @@ COMMAND_SCRIPT="/usr/local/bin/LuciferAI"
 
 echo -e "${YELLOW}Creating global LuciferAI command...${RESET}"
 
-# Create the command with sudo
-sudo tee "$COMMAND_SCRIPT" > /dev/null << 'EOF'
+# Create the command: write the template to a temp file, substitute the
+# real project directory (portable sed — no `sed -i ''`, which is macOS-only),
+# then install it with sudo. No user or machine path is hardcoded anywhere.
+TMP_SCRIPT="$(mktemp)"
+cat > "$TMP_SCRIPT" << 'EOF'
 #!/bin/bash
 # LuciferAI Global Command
 
-PROJECT_DIR="/Users/TheRustySpoon/Desktop/Projects/LuciferAI_Local"
+PROJECT_DIR="__LUCIFER_PROJECT_DIR__"
 
 # Colors
 PURPLE='\033[35m'
@@ -51,7 +54,7 @@ if [ $# -eq 0 ]; then
     echo ""
     echo -e "${YELLOW}Quick Commands:${RESET}"
     echo "  LuciferAI test             - Run test suite"
-    echo "  LuciferAI test-all         - Test all commands"
+    echo "  LuciferAI test-all         - Full test suite (pytest)"
     echo "  LuciferAI version          - Show version"
     echo "  LuciferAI help             - Show help"
     echo ""
@@ -122,12 +125,12 @@ case "$1" in
     
     "test")
         echo -e "${PURPLE}🩸 Running LuciferAI Tests${RESET}"
-        cd "$PROJECT_DIR" && python3 test_comprehensive_fixes.py
+        cd "$PROJECT_DIR" && python3 tests/test_master_controller.py
         ;;
     
     "test-all")
         echo -e "${PURPLE}🩸 Running Complete Test Suite${RESET}"
-        cd "$PROJECT_DIR" && python3 test_all.py
+        cd "$PROJECT_DIR" && python3 -m pytest tests/
         ;;
     
     "version")
@@ -155,11 +158,12 @@ case "$1" in
 esac
 EOF
 
+# Substitute this machine's project directory and install the command.
+sed "s|__LUCIFER_PROJECT_DIR__|$PROJECT_DIR|g" "$TMP_SCRIPT" | sudo tee "$COMMAND_SCRIPT" > /dev/null
+rm -f "$TMP_SCRIPT"
+
 # Make it executable
 sudo chmod +x "$COMMAND_SCRIPT"
-
-# Update the script with actual project directory
-sudo sed -i '' "s|PROJECT_DIR=\".*\"|PROJECT_DIR=\"$PROJECT_DIR\"|g" "$COMMAND_SCRIPT"
 
 echo -e "${GREEN}✅ Global command created: $COMMAND_SCRIPT${RESET}"
 echo ""

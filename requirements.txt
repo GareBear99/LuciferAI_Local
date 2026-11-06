@@ -19,6 +19,20 @@ psutil>=5.9.8
 pyyaml>=6.0.1
 python-dotenv>=1.0.0
 
+# HTTP + downloads (imported by core/llm_backend.py, core/model_download.py,
+# core/enhanced_agent.py, core/ollama_agent.py and others)
+requests>=2.31.0
+tqdm>=4.66.0
+
+# Encryption (Fernet — core/fixnet_uploader.py, core/lucifer_auth.py)
+cryptography>=42.0.0
+
+# Scheduler (top-level import in core/fixnet_daemon.py)
+schedule>=1.2.0
+
+# Tests (README tells contributors to run `python -m pytest tests/`)
+pytest>=8.0.0
+
 # Later: AI models (test without these first)
 # mistralai>=0.1.0
 # openai>=1.12.0
