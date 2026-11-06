@@ -142,13 +142,13 @@ class PackageManager:
                 'bundled': True,  # Comes with package
                 'sources': {
                     'macos': {
-                        'url': 'https://github.com/Mozilla-Ocho/llamafile/releases/download/0.8.6/llamafile-0.8.6',
+                        'url': 'https://github.com/Mozilla-Ocho/llamafile/releases/download/0.8.13/llamafile-0.8.13',
                         'method': 'binary',
                         'size': '~34MB',
                         'install_path': 'PROJECT/.luciferai/bin/llamafile'  # PROJECT will be replaced with project root
                     },
                     'linux': {
-                        'url': 'https://github.com/Mozilla-Ocho/llamafile/releases/download/0.8.6/llamafile-0.8.6',
+                        'url': 'https://github.com/Mozilla-Ocho/llamafile/releases/download/0.8.13/llamafile-0.8.13',
                         'method': 'binary',
                         'size': '~34MB',
                         'install_path': 'PROJECT/.luciferai/bin/llamafile'
@@ -503,7 +503,8 @@ class PackageManager:
                 0: "🟢 Tier 0: Ultra-Lightweight",
                 1: "🔵 Tier 1: Lightweight",
                 2: "🟡 Tier 2: Mid-Size",
-                3: "🔴 Tier 3: Advanced"
+                3: "🔴 Tier 3: Advanced",
+                4: "🟣 Tier 4: Ultra-Expert"
             }
             print(f"{CYAN}Tier:{RESET} {tier_names.get(tier, f'Tier {tier}')}")
             if 'use_case' in package_info:
@@ -1033,7 +1034,9 @@ class PackageManager:
                     pass
                 
                 # Wait for heartbeat to complete its current cycle (up to 1 second)
-                import time
+                # (time is imported at module level — do NOT `import time`
+                # here: a function-level import makes `time` local to the
+                # whole function and breaks the time.sleep() calls above.)
                 time.sleep(1.1)
                 
                 # Clear the heartbeat line above by moving up, clearing, then moving back
@@ -1048,7 +1051,6 @@ class PackageManager:
                 sys.stdout.flush()
                 
                 try:
-                    import sys
                     import tty
                     import termios
                     
@@ -1192,7 +1194,7 @@ class PackageManager:
                     print(f"\n{GOLD}Skipped installing package managers{RESET}")
                     print()
                     # Fall through to GitHub fallback
-            except (EOFError, KeyboardInterrupt):
+            except (EOFError, KeyboardInterrupt, OSError):  # OSError: unreadable stdin (pytest capture, closed stdin) — same as EOF here
                 # Restore heartbeat
                 try:
                     import lucifer
@@ -1731,7 +1733,7 @@ class PackageManager:
                 else:
                     print(f"\n{GOLD}Skipped installing package managers{RESET}")
                     print()
-            except (EOFError, KeyboardInterrupt):
+            except (EOFError, KeyboardInterrupt, OSError):  # OSError: unreadable stdin (pytest capture, closed stdin) — same as EOF here
                 # Restore heartbeat
                 try:
                     import lucifer
@@ -2052,10 +2054,11 @@ class PackageManager:
             0: "🟢 Tier 0: Ultra-Lightweight (Bundled/Emergency)",
             1: "🔵 Tier 1: Lightweight (Quick & Efficient)",
             2: "🟡 Tier 2: Mid-Size (Balanced Performance)",
-            3: "🔴 Tier 3: Advanced (Expert-Level)"
+            3: "🔴 Tier 3: Advanced (Expert-Level)",
+            4: "🟣 Tier 4: Ultra-Expert (Research-Grade)"
         }
         
-        tier_icons = {0: "🟢", 1: "🔵", 2: "🟡", 3: "🔴"}
+        tier_icons = {0: "🟢", 1: "🔵", 2: "🟡", 3: "🔴", 4: "🟣"}
         
         for tier in sorted(tier_names.keys()):
             models_in_tier = [(name, info) for name, info in self.package_db.items() 

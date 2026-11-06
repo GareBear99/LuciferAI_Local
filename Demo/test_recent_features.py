@@ -22,8 +22,8 @@ def print_test_header(test_name: str):
     print()
 
 def test_model_tier_assignments():
-    """Test that all 85+ models are correctly assigned to tiers."""
-    print_test_header("Model Tier Assignments (85+ Models)")
+    """Test that all 74 models are correctly assigned to tiers."""
+    print_test_header("Model Tier Assignments (74 Models)")
     
     # Test all models in MODEL_TIERS dictionary
     tier_counts = {0: 0, 1: 0, 2: 0, 3: 0}

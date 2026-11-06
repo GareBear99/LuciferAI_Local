@@ -298,6 +298,13 @@ def move_file(source: str, destination: str, overwrite: bool = False) -> Dict[st
                 "source": str(source_path)
             }
         
+        # If destination is an existing directory, move INTO it (standard
+        # mv behaviour). This check must come FIRST: the exists-check below
+        # would otherwise reject every move into a directory, and this
+        # branch was dead code.
+        if dest_path.is_dir():
+            dest_path = dest_path / source_path.name
+
         # Check if destination exists
         if dest_path.exists() and not overwrite:
             return {
@@ -305,10 +312,6 @@ def move_file(source: str, destination: str, overwrite: bool = False) -> Dict[st
                 "error": f"Destination already exists: {destination}. Use overwrite=True to replace.",
                 "destination": str(dest_path)
             }
-        
-        # If destination is a directory, move into it
-        if dest_path.is_dir():
-            dest_path = dest_path / source_path.name
         
         # Create parent directories if needed
         dest_path.parent.mkdir(parents=True, exist_ok=True)
