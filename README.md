@@ -28,11 +28,15 @@ standalone Python system in this repo is where it started; Lucid is where it
 lives now.
 
 On Lucid, LuciferAI is one plugin with two surfaces — the **Synth view**
-(its shell) and the **AI chat panel** — plus the `lucifer` terminal commands
-(`help`, `plan`, `fix`, `fixnet`, `llm`, `build`, `create`, `workflow`,
-`tokens`, `history`, `agent`) and the `🩸 Idle • Awaiting Commands...`
-heartbeat. Your message in the AI chat renders as a bubble against the
-backwall; the assistant's reply stays flat.
+(its shell) and the **blood drop terminal** (the creation place) — plus the
+`lucifer` terminal commands (`help`, `plan`, `fix`, `fixnet`, `llm`, `build`,
+`create`, `workflow`, `tokens`, `history`, `agent`) and the
+`🩸 Idle • Awaiting Commands...` heartbeat, which shows only while the
+plugin is on, idle, and not silenced. The **AI chat panel is not a
+LuciferAI surface any more**: it is Lucid AI, its own plugin, independent
+of LuciferAI — it works with the plugin on or off, and its model is the
+ping server, an API key, or a local model, never LuciferAI. With
+LuciferAI off, the terminal is a plain terminal, zero residue.
 
 📘 **[LuciferAI on Lucid — the living embodiment](docs/LUCID_EMBODIMENT.md)**
 — what the plugin is, how it mounts, and how to run it.

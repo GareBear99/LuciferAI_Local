@@ -24,11 +24,38 @@ It has **two surfaces, one plugin** (`src/data/toolbarPlugins.ts`:
 *"two buttons for the same plugin, not two plugins"*):
 
 - **Synth view** — the plugin shell, where the Sentinel lives.
-- **AI chat panel** — the chat surface. A message you send renders as a
-  bubble hugging the right edge of the chat area (the "backwall");
-  assistant and system messages render as flat full-width rows
-  (`src/components/AI/chatBubbles.ts`). Every message carries a wall-clock
-  timestamp for display and a ritual tick for causal order.
+- **Blood drop terminal** — the creation place. Both blood drops (the
+  toolbar one and the prompt-bar one) open the same creation place
+  (`src/data/toolbarPlugins.ts`, Gary 2026-11-07).
+
+The **AI chat panel is not a LuciferAI surface any more** (Gary,
+2026-11-07): it is **Lucid AI, its own plugin**, unmounted from
+LuciferAI and mounted as a top-level panel. Its model is the ping server
+(Llama 3.2 1B via Cloudflare), an API key, or a local model — never
+LuciferAI — so it works with the plugin on or off, on every view, and no
+gate on the panel may read the plugin. The backwall-bubble rendering
+(a message you send hugging the right edge, assistant and system
+messages as flat full-width rows, `src/components/AI/chatBubbles.ts`)
+now belongs to Lucid AI's chat, not to LuciferAI.
+
+## On, off, and silenced — three states
+
+- **On:** the plugin is active; the terminal shows the heartbeat
+  (`🩸 Idle • Awaiting Commands...`, cycling red ↔ purple) while idle,
+  and the fangs drip while an AI-chat generation or a LuciferAI plugin
+  task is running.
+- **Off:** the terminal is a plain terminal, zero residue — no blood
+  drop, no heartbeat, no Sentinel face, and LuciferAI words go to the
+  shell (`src/components/Terminal/Terminal.tsx`, "off = plain terminal,
+  zero residue").
+- **Silenced:** the blood drop greys and holds causal order while the
+  runtime and ticks keep running; the heartbeat is gone (it renders
+  only when the plugin is available, on the active tab, and not
+  silenced), and `lucifer` commands are not accepted while silenced.
+
+The FixNet line in the status bar still renders with LuciferAI off:
+LucidCore is initialised at startup (`src/App.tsx`), so FixNet stats
+and the online indicator are there either way.
 
 ## In the terminal
 
@@ -37,12 +64,6 @@ The `lucifer` command set, routed by the terminal
 
 `help` · `plan` · `fix` · `fixnet` · `llm` · `build` · `create` ·
 `workflow` · `tokens` · `history` · `agent`
-
-When the plugin is active and idle, the terminal shows the heartbeat —
-`🩸 Idle • Awaiting Commands...` (cycling red ↔ purple,
-`src/components/Terminal/heartbeatLogic.ts`, `Heartbeat.tsx`) — and the
-fangs drip while an AI-chat generation or a LuciferAI plugin task is
-running (`src/components/Synth/blood.ts`, `shouldDrip`).
 
 ## The model
 
